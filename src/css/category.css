@@ -1,0 +1,12 @@
+#square{
+    margin-bottom: 30px;
+}
+#square p{
+    background-color: rgb(33, 26, 127);
+    height: 100%;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    padding: 10% 20%;
+    text-align: center;
+    font-size: 1.2rem;
+}
