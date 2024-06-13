@@ -9,7 +9,7 @@ import header2 from "../../images/header3.png";
 import { JobList } from "../JobPage/JobList";
 
 export const HeaderSmaller: React.FC = () => {
-  const [user, setUser] = useState<{ role: string } | null>(null);
+  const [user, setUser] = useState<{ fullName: string } | null>(null);
   const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export const HeaderSmaller: React.FC = () => {
                     Workplace
                   </a>
                   <div className="dropdown-menu" aria-labelledby="dropdown04">
-                    <a className="dropdown-item" href="#">Manager</a>
+                    <Link className="dropdown-item" to="/Workplace/Manager">Manager</Link>
                     <a className="dropdown-item" href="#">Internship Coordinator</a>
                     <a className="dropdown-item" href="#">Internship</a>
                     <a className="dropdown-item" href="#">Mentor</a>
@@ -97,15 +97,16 @@ export const HeaderSmaller: React.FC = () => {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        Hello, {user.role}
+                        Hello, {user.fullName}
                       </a>
-                      <div className="dropdown-menu" aria-labelledby="dropdown04">
-                        <li
+                      <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
+                        <Link
                           onClick={handleLogout}
                           className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                          id="button-sign-out">
+                          id="button-sign-out"
+                          to="/">
                           Logout
-                        </li>
+                        </Link>
                       </div>
                     </div>
                   )}

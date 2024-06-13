@@ -1,16 +1,17 @@
-import { Link, useNavigate } from "react-router-dom";
+// src/components/HeaderSmaller.tsx
+import { Link } from "react-router-dom";
 import { SearchButton } from "./button/search";
 import "../../css/header.css";
 import "../../css/search.css";
 import { useEffect, useState } from "react";
 import AuthService from "../../service/AuthService";
-import { useToast } from "../../context/ToastContext";
-export const Header: React.FC = () => {
-  const navigate = useNavigate();
-  const [user, setUser] = useState<{ fullName: string } | null>(null);
-  const { showToast } = useToast();
+import header2 from "../../images/header4.png";
+import { JobList } from "../JobPage/JobList";
 
-  
+export const HeaderWorkplace: React.FC = () => {
+  const [user, setUser] = useState<{ fullName: string } | null>(null);
+  const [search, setSearch] = useState<string>('');
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -18,21 +19,17 @@ export const Header: React.FC = () => {
     }
   }, []);
 
-
   const handleLogout = async () => {
     await AuthService.logout();
-    localStorage.removeItem('user');
-    navigate("/");
     setUser(null);
-    showToast("Logout successful!", 'success');
   };
 
   return (
     <div>
-      <header role="banner">
+      <header role="banner" id="headerSmallerHeight">
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
           <div className="container-fluid">
-            <svg
+          <svg
               width="50"
               height="50"
               viewBox="0 0 146 146"
@@ -44,9 +41,7 @@ export const Header: React.FC = () => {
                 fill="#006ACC"
               />
             </svg>
-            <a className="navbar-brand" href="index.html">
-              InternBridge
-            </a>
+            <Link className="navbar-brand" to="/home">InternBridge</Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -59,25 +54,15 @@ export const Header: React.FC = () => {
               <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div
-              className="collapse navbar-collapse ms-5"
-              id="navbarsExample05"
-            >
+            <div className="collapse navbar-collapse ms-5" id="navbarsExample05">
               <ul className="navbar-nav ml-auto pl-lg-5 pl-0">
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link active" href="index.html">
-                    Home
-                  </a>
+                  <Link className="nav-link active" to="/home">Home</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link" to="/jobs">
-                    Jobs
-                  </Link>
+                  <Link className="nav-link" to="/jobs">Jobs</Link>
                 </li>
-                <li
-                  className="nav-item dropdown"
-                  style={{ paddingRight: "2rem" }}
-                >
+                <li className="nav-item dropdown" style={{ paddingRight: "2rem" }}>
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -89,54 +74,42 @@ export const Header: React.FC = () => {
                     Workplace
                   </a>
                   <div className="dropdown-menu" aria-labelledby="dropdown04">
-                    <Link className="dropdown-item" to="/Workplace/Manager">
-                      Manager
-                    </Link>
-                    <Link className="dropdown-item" to="">
-                      Internship Coordinator
-                    </Link>
-                    <a className="dropdown-item" href="#">
-                      Internship
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Mentor
-                    </a>
+                    <a className="dropdown-item" href="#">Manager</a>
+                    <a className="dropdown-item" href="#">Internship Coordinator</a>
+                    <a className="dropdown-item" href="#">Internship</a>
+                    <a className="dropdown-item" href="#">Mentor</a>
                   </div>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link" href="#">
-                    About us
-                  </a>
+                  <a className="nav-link" href="#">About us</a>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link" href="#">
-                    Helps
-                  </a>
+                  <a className="nav-link" href="#">Helps</a>
                 </li>
                 <div>
-              {user && (
-                <div>
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="dropdown04"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Hello, {user.fullName}
-                  </a>
-                  <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
-                    <Link
-                  onClick={handleLogout}
-                  className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                  id="button-sign-out" to="/">
-                      Logout
-                  </Link>
-                  </div>
+                  {user && (
+                    <div>
+                      <a
+                        className="nav-link dropdown-toggle"
+                        href="#"
+                        id="dropdown04"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Hello, {user.fullName}
+                      </a>
+                      <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
+                        <li
+                          onClick={handleLogout}
+                          className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                          id="button-sign-out">
+                          Logout
+                        </li>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
               </ul>
 
               <ul className="navbar-nav ml-auto">
@@ -153,26 +126,21 @@ export const Header: React.FC = () => {
                   </li>
                 )}
               </ul>
-              
             </div>
-
           </div>
         </nav>
         <div className="container-fluid d-flex justify-content-center">
           <div className="title-header">
-            <h1>Reach Your Dreams,</h1>
-            <h1> Apply Today!</h1>
-            <div>
-              {/* <SearchButton></SearchButton> */}
-            </div>
+            <h1>Workplace</h1>
           </div>
         </div>
       </header>
 
       <div>
-        <div className="hero"></div>
-        <div className="color-header"></div>
+        <img className="stricky-top" src={header2} alt="" id="img-header-2" />
       </div>
+
+      {/* Truyền giá trị tìm kiếm và hàm cập nhật xuống JobList */}
     </div>
   );
 };
