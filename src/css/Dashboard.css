@@ -1,0 +1,15 @@
+.dashboard-container {
+    background-color: #F0F8FF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgb(0, 0, 0, 0.1);
+}
+
+.course-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.on-going-courses{
+    font-size: 30px;
+}
