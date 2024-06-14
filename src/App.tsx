@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react";
+
 import "./App.css";
-import { Footer } from "./layouts/HeaderAndFooter/Footer";
 import "./style.css";
-import { AboutUs } from "./layouts/HeaderAndFooter/AboutUs";
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { Header } from "./layouts/HeaderAndFooter/Header";
 import { HomePage } from "./layouts/HomePage/HomePage";
 import LoginPage from "./layouts/LoginPage/LoginPage";
 import AuthService from "./service/AuthService";
 import { ToastProvider } from "./context/ToastContext";
 
 import { JobpPage } from "./layouts/JobPage/JobPage";
-import { JobDetailList } from "./layouts/JobDetailPage/JobDetailList";
 import { JobDetailPage } from "./layouts/JobDetailPage/JobDetailPage";
 import { ManagerPage } from "./layouts/ManagerPage/ManagerPage";
-import { LoadingSpinner2 } from "./layouts/Loading/LoadingSpinner2";
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-
+import {DashboardPage} from "./layouts/InternPage/DashBoardPage/DashboardPage";
+import CourseActivityPage from "./layouts/InternPage/CourseActivityPage/CourseActivityPage";
 export const App = () => {
 
   const currentUser =AuthService.getCurrentUser();
@@ -36,6 +31,8 @@ export const App = () => {
             <Route path="/jobs/search=:id" element={<JobpPage/>} />
             <Route path="/jobs/:id" element={<JobDetailPage/>} />
             <Route path="/Workplace/Manager" element={<ManagerPage/>} />
+            <Route path="/intern/:internId" element={<DashboardPage />} />
+            <Route path="/intern/:internId/course/:courseId" element={<CourseActivityPage />} />
           </Routes>
         </div>
       </div>
