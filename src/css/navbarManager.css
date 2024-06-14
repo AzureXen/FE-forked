@@ -1,0 +1,17 @@
+#nav-workplace{
+    background-color: black;
+}
+.nav-custom {
+    background-color: black; 
+    padding: 35px 0 !important;
+}
+.nav-custom  .nav-link {
+    font-size: 1.3rem; /* Tăng kích thước chữ */
+    color: white !important;
+}
+#h1-welcome{
+    color: black;
+    font-size: 3rem;
+    margin: 1%;
+    text-align: center;
+}

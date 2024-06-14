@@ -55,21 +55,21 @@
   }
   
   .s128 form .inner-form .row .input-field input.placeholder {
-    color: #ccc;
+    color: #000000;
     font-size: 18px;
     font-weight: 300;
     opacity: 1;
   }
   
   .s128 form .inner-form .row .input-field input:-moz-placeholder {
-    color: #ccc;
+    color: #000000;
     font-size: 18px;
     font-weight: 300;
     opacity: 1;
   }
   
   .s128 form .inner-form .row .input-field input::-webkit-input-placeholder {
-    color: #ccc;
+    color:#000000;
     font-size: 18px;
     font-weight: 300;
     opacity: 1;

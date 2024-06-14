@@ -10,7 +10,7 @@ export const JobpPage = () => {
   return (
     <>
       <div className="d-flex flex-column">
-        <HeaderSmaller />
+        <HeaderSmaller/>
         <div>
           <JobList search={search} />
         </div>

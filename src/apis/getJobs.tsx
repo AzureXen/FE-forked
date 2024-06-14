@@ -13,7 +13,7 @@ export interface Job {
   id: number;
   jobName: string;
   jobDescription: string;
-  company: Company;  // Thêm đối tượng Company vào Job
+  company: Company; 
 }
 
 export interface SearchJobsResponse {
