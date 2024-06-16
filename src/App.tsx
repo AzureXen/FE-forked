@@ -10,33 +10,35 @@ import { ToastProvider } from "./context/ToastContext";
 import { JobpPage } from "./layouts/JobPage/JobPage";
 import { JobDetailPage } from "./layouts/JobDetailPage/JobDetailPage";
 import { ManagerPage } from "./layouts/ManagerPage/ManagerPage";
-import {DashboardPage} from "./layouts/InternPage/DashBoardPage/DashboardPage";
+import { DashboardPage } from "./layouts/InternPage/DashBoardPage/DashboardPage";
 import CourseActivityPage from "./layouts/InternPage/CourseActivityPage/CourseActivityPage";
+import ShowCourse from "./layouts/ShowCourse/ShowCourse";
 export const App = () => {
 
-  const currentUser =AuthService.getCurrentUser();
+  const currentUser = AuthService.getCurrentUser();
 
 
   return (
     <ToastProvider>
-    <Router>
-      <div className="d-flex flex-column min-vh-100">
-        <div className="flex-grow-1">
-          
-          <Routes>
-            <Route path="/" element={<Navigate to="/home" />} />
-            <Route path="/home" element={<HomePage/>} />
-            <Route path="/login" element={ currentUser ? <Navigate to="/home"/>: <LoginPage/>} />
-            <Route path="/jobs" element={<JobpPage/>} />
-            <Route path="/jobs/search=:id" element={<JobpPage/>} />
-            <Route path="/jobs/:id" element={<JobDetailPage/>} />
-            <Route path="/Workplace/Manager" element={<ManagerPage/>} />
-            <Route path="/intern/:internId" element={<DashboardPage />} />
-            <Route path="/intern/:internId/course/:courseId" element={<CourseActivityPage />} />
-          </Routes>
+      <Router>
+        <div className="d-flex flex-column min-vh-100">
+          <div className="flex-grow-1">
+
+            <Routes>
+              <Route path="/" element={<Navigate to="/home" />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/login" element={currentUser ? <Navigate to="/home" /> : <LoginPage />} />
+              <Route path="/jobs" element={<JobpPage />} />
+              <Route path="/jobs/search=:id" element={<JobpPage />} />
+              <Route path="/jobs/:id" element={<JobDetailPage />} />
+              <Route path="/Workplace/Manager" element={<ManagerPage />} />
+              <Route path="/intern/:internId" element={<DashboardPage />} />
+              <Route path="/intern/:internId/course/:courseId" element={<CourseActivityPage />} />
+              <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
     </ToastProvider>
   );
 };
