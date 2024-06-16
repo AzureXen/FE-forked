@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../css/CourseCard.css'
+import '../../../css/InternDashboard/CourseCard.css'
 import { useNavigate} from "react-router-dom";
 
 interface CourseCardProps {

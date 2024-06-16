@@ -22,7 +22,7 @@ const OnGoingCourses : React.FC<OnGoingCourseProps>= ({internId} ) => {
         };
 
         fetchData();
-    }, [internId]);
+    }, []);
 
     return (
             <div>

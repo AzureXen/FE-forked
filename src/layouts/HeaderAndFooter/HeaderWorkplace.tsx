@@ -6,7 +6,6 @@ import "../../css/search.css";
 import { useEffect, useState } from "react";
 import AuthService from "../../service/AuthService";
 import header2 from "../../images/header4.png";
-import { JobList } from "../JobPage/JobList";
 
 export const HeaderWorkplace: React.FC = () => {
   const [user, setUser] = useState<{ fullName: string } | null>(null);
