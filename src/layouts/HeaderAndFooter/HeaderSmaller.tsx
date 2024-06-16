@@ -1,5 +1,5 @@
 // src/components/HeaderSmaller.tsx
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SearchButton } from "./button/search";
 import "../../css/header.css";
 import "../../css/search.css";
@@ -7,11 +7,15 @@ import { useEffect, useState } from "react";
 import AuthService from "../../service/AuthService";
 import header2 from "../../images/header3.png";
 import { JobList } from "../JobPage/JobList";
+import { useToast } from "../../context/ToastContext";
 
 export const HeaderSmaller: React.FC = () => {
   const [user, setUser] = useState<{ fullName: string } | null>(null);
   const [search, setSearch] = useState<string>('');
-
+  const navigate = useNavigate();
+  const { showToast } = useToast();
+  
+  
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -21,9 +25,12 @@ export const HeaderSmaller: React.FC = () => {
 
   const handleLogout = async () => {
     await AuthService.logout();
+    const storedUser = localStorage.getItem("user");
+    console.log("HeaderSmaller "+storedUser);
+    navigate("/");
     setUser(null);
+    showToast("Logout successful!", 'success');
   };
-
   return (
     <div>
       <header role="banner" id="headerSmallerHeight">
@@ -100,13 +107,12 @@ export const HeaderSmaller: React.FC = () => {
                         Hello, {user.fullName}
                       </a>
                       <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
-                        <Link
+                        <li
                           onClick={handleLogout}
                           className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                          id="button-sign-out"
-                          to="/">
+                          id="button-sign-out">
                           Logout
-                        </Link>
+                        </li>
                       </div>
                     </div>
                   )}

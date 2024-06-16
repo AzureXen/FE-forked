@@ -5,6 +5,9 @@ import "../../css/search.css";
 import { useEffect, useState } from "react";
 import AuthService from "../../service/AuthService";
 import { useToast } from "../../context/ToastContext";
+
+
+
 export const Header: React.FC = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<{ fullName: string } | null>(null);
@@ -12,8 +15,8 @@ export const Header: React.FC = () => {
 
   
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser !=null) {
       setUser(JSON.parse(storedUser));
     }
   }, []);
@@ -26,7 +29,6 @@ export const Header: React.FC = () => {
     setUser(null);
     showToast("Logout successful!", 'success');
   };
-
   return (
     <div>
       <header role="banner">

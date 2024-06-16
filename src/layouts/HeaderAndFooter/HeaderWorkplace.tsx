@@ -1,5 +1,5 @@
 // src/components/HeaderSmaller.tsx
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SearchButton } from "./button/search";
 import "../../css/header.css";
 import "../../css/search.css";
@@ -7,11 +7,13 @@ import { useEffect, useState } from "react";
 import AuthService from "../../service/AuthService";
 import header2 from "../../images/header4.png";
 import { JobList } from "../JobPage/JobList";
+import { useToast } from "../../context/ToastContext";
 
 export const HeaderWorkplace: React.FC = () => {
   const [user, setUser] = useState<{ fullName: string } | null>(null);
   const [search, setSearch] = useState<string>('');
-
+  const navigate = useNavigate();
+  const { showToast } = useToast();
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -21,7 +23,12 @@ export const HeaderWorkplace: React.FC = () => {
 
   const handleLogout = async () => {
     await AuthService.logout();
+    localStorage.removeItem('user');
+    const storedUser = localStorage.getItem("user");
+    console.log(storedUser);
+    navigate("/");
     setUser(null);
+    showToast("Logout successful!", 'success');
   };
 
   return (

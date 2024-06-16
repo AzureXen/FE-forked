@@ -9,16 +9,16 @@ export const NavbarManager = () => {
             <div className="collapse navbar-collapse ms-5" id="navbarsExample05">
               <ul className="navbar-nav ml-auto pl-lg-5 pl-0">
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link active" to="/home">View Application</Link>
+                  <Link className="nav-link active" to="/Workplace/Manager">View Application</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link" to="/jobs">Post Recruitment</Link>
+                  <Link className="nav-link" to="/Workplace/Manager/postJob">Post Recruitment</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link" href="#">View Report</a>
+                  <Link className="nav-link" to="/Workplace/Manager/Report">View Report</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link" href="#">Helps</a>
+                  <Link className="nav-link" to="/Workplace/Manager/Report">Helps</Link>
                 </li>
               </ul>
             </div>

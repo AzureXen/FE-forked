@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getJobApplication } from "../../apis/ApiJobApplication";
-import {
-  Job,
-  JobApplication,
-  JobApplicationResponse,
-} from "../../model/JobApplication";
+import { Job, JobApplication, JobApplicationResponse} from "../../model/JobApplication";
 import { downloadCV } from "../../apis/ApiDownloadCV";
 import "../../css/managertable.css";
 import { UpdateJobApplicationPopup } from "../popup/UpdateJobApplicationPopup";
@@ -18,7 +14,7 @@ export const ViewApplication = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [statusFilter, setStatusFilter] = useState<number | undefined>(
+  const [statusFilter, setStatusFilter] = useState<number | null | undefined>(
     undefined
   );
   const [selectedJobApplication, setSelectedJobApplication] =
@@ -47,11 +43,9 @@ export const ViewApplication = () => {
       const fetchJobApplications = async () => {
         setLoading(true);
         try {
-          const data: JobApplicationResponse = await getJobApplication(
-            pageNo,
-            pageSize,
-            user.company_id
-          );
+          console.log("Fetching job applications with params:", { pageNo, pageSize, companyId: user.company_id });
+          const data: JobApplicationResponse = await getJobApplication(pageNo, pageSize, user.company_id);
+          console.log("Fetched data:", data);
           setJobList(data.jobList);
           setTotalItems(data.totalItems);
           setTotalPages(data.totalPages);
@@ -61,18 +55,16 @@ export const ViewApplication = () => {
           setLoading(false);
         }
       };
-
       fetchJobApplications();
     }
   }, [pageNo, pageSize, user]);
+
 
   const handlePageChange = (newPageNo: number) => {
     setPageNo(newPageNo);
   };
 
-  const handlePageSizeChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(parseInt(event.target.value, 10));
     setPageNo(0);
   };
@@ -105,8 +97,29 @@ export const ViewApplication = () => {
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    setStatusFilter(value ? parseInt(value, 10) : undefined);
+    setStatusFilter(value === "" ? undefined : value === "2" ? null : parseInt(value, 10));
     setPageNo(0);
+  };
+  const handleUpdateStatus = (id: number, newStatus: number) => {
+    if (newStatus === 0) { // 0 means 'Reject'
+      setJobList((prevJobList) =>
+        prevJobList.map((job) => ({
+          ...job,
+          jobApplications: job.jobApplications.filter(
+            (application) => application.id !== id
+          ),
+        }))
+      );
+    } else {
+      setJobList((prevJobList) =>
+        prevJobList.map((job) => ({
+          ...job,
+          jobApplications: job.jobApplications.map((application) =>
+            application.id === id ? { ...application, status: newStatus } : application
+          ),
+        }))
+      );
+    }
   };
 
   const filteredJobList = jobList
@@ -123,6 +136,19 @@ export const ViewApplication = () => {
       ),
     }))
     .filter((job) => job.jobApplications.length > 0);
+
+    const getStatusLabel = (status: number | null) =>{
+      switch(status){
+        case 0:
+          return "Reject";
+        case 1:
+          return "Accept";
+        case null:
+          return "Pending";
+        default:
+          return;
+      }
+    }
 
   return (
     <div className="application-container">
@@ -142,10 +168,11 @@ export const ViewApplication = () => {
             </span>
           </div>
         </div>
-        <select value={statusFilter} onChange={handleStatusChange} id="filter">
-          <option value="">Filter</option>
-          <option value={0}>Pending</option>
-          <option value={1}>Approve</option>
+        <select value={statusFilter === null ? "2" : statusFilter} onChange={handleStatusChange} id="filter">
+          <option value={""}>Filter</option>
+          <option value={"2"}>Pending</option>
+          <option value={0}>Reject</option>
+          <option value={1}>Accept</option>
         </select>
       </div>
       {loading ? (
@@ -169,7 +196,7 @@ export const ViewApplication = () => {
                     <tr key={application.id}>
                       <td>{application.email}</td>
                       <td>{application.fullName}</td>
-                      <td>{application.status}</td>
+                      <td>{getStatusLabel(application.status)}</td>
                       <td>{job.jobName}</td>
                       <td>
                         <button
@@ -190,6 +217,7 @@ export const ViewApplication = () => {
                           isOpen={isPopupOpen}
                           onClose={closePopup}
                           jobApplication={selectedJobApplication}
+                          onUpdateStatus={handleUpdateStatus}
                         />
                       </td>
                     </tr>
@@ -233,15 +261,7 @@ export const ViewApplication = () => {
               <i className="fa fa-angle-double-right" aria-hidden="true"></i>
             </a>
           </div>
-          <div className="page-size-controls">
-            <label>
-              Page Size:
-              <select value={pageSize} onChange={handlePageSizeChange}>
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-              </select>
-            </label>
-          </div>
+  
         </div>
       )}
     </div>

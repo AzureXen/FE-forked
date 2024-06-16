@@ -5,9 +5,9 @@ import { NavbarManager } from "../HeaderAndFooter/Navbar/NavbarManager";
 import { ViewApplication } from "./ViewApplication";
 import { UpdateJobApplicationPopup } from "../popup/UpdateJobApplicationPopup";
 import "../../css/managertable.css"; // Nhớ import CSS đã tạo
-import { ShowCourse } from './ShowCourse';
+import { PostJob } from './PostJob';
 
-export const ManagerPage: React.FC = () => {
+export const PostJobPage: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const openPopup = () => setIsPopupOpen(true);
@@ -20,8 +20,7 @@ export const ManagerPage: React.FC = () => {
         <NavbarManager/>
       </div>
       <div>
-        <ViewApplication/>
-        {/* <ShowCourse/> */}
+        <PostJob/>
       </div>
       <Footer />
     </div>
