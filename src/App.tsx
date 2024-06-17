@@ -13,6 +13,8 @@ import { ManagerPage } from "./layouts/ManagerPage/ManagerPage";
 import { DashboardPage } from "./layouts/InternPage/DashBoardPage/DashboardPage";
 import CourseActivityPage from "./layouts/InternPage/CourseActivityPage/CourseActivityPage";
 import ShowCourse from "./layouts/ShowCourse/ShowCourse";
+import CreateCourse from "./model/CreateCourse";
+import CreateCourseComponent from "./layouts/CreateCourse/CreateCourseComponent";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -35,6 +37,7 @@ export const App = () => {
               <Route path="/intern/:internId" element={<DashboardPage />} />
               <Route path="/intern/:internId/course/:courseId" element={<CourseActivityPage />} />
               <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
+              <Route path="coordinator/createCourse/:companyId" element={<CreateCourseComponent />} />
             </Routes>
           </div>
         </div>

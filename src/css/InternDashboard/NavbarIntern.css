@@ -1,0 +1,17 @@
+.NavbarInternItem{
+    font-size: 30px;
+    color:white;
+    margin-left:5em;
+    margin-right:5em;
+}
+.NavbarIntern{
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+    background: #0d1a3e;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.SelectedPage{
+    font-weight: bold;
+}

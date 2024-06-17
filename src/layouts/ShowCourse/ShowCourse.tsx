@@ -1,10 +1,9 @@
-// src/components/ShowCourse.js
-
 import React, { useState, useEffect } from "react";
 import CourseShow from "../../model/CourseShow";
 import { FetchShowCoordiantorCourse } from "../../apis/ShowCourse";
 import { HeaderSmaller } from "../HeaderAndFooter/HeaderSmaller";
 import { Footer } from "../HeaderAndFooter/Footer";
+import { SearchBar } from "./SearchBar";
 
 interface ShowCourseListProps {
     courseId: number;
@@ -39,7 +38,7 @@ export const ShowCourse = () => {
         <div>
             <HeaderSmaller />
             <div>
-                <div>Search for course</div>
+                <SearchBar />
                 <div>Result</div>
                 <h2>Course Details</h2>
                 <p><strong>Course Description:</strong> {course.courseDescription}</p>

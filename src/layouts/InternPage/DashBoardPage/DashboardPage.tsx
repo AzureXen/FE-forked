@@ -1,24 +1,27 @@
 
 import OnGoingCourses from './OnGoingCourses'
-import '../../../css/CourseCard.css'
-import '../../../css/Dashboard.css'
-import {HeaderSmaller} from "../../HeaderAndFooter/HeaderSmaller";
+import '../../../css/InternDashboard/CourseCard.css'
+import '../../../css/InternDashboard/Dashboard.css'
+import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import { useParams} from "react-router-dom";
+import NavbarIntern from "./NavbarIntern";
 export const DashboardPage:React.FC = () =>{
     const {internId} = useParams<{internId : string}>();
 
-    const checkedIntenId = internId ?? '';
+    const checkedInternId = internId ?? '';
     return(
         <>
         <div>
-            <HeaderSmaller />
+            <HeaderWorkplace/>
         </div>
-
+            <div>
+                <NavbarIntern internId={checkedInternId} selectedPage="Dashboard"/>
+            </div>
             <div className="dashboard-container">
-                <p className="on-going-courses">On Going Courses:</p>
+                <p className="highlight1">On Going Courses:</p>
                 <div className="course-container">
-                    <OnGoingCourses internId={checkedIntenId}></OnGoingCourses>
+                    <OnGoingCourses internId={checkedInternId}></OnGoingCourses>
                 </div>
             </div>
         <div>
