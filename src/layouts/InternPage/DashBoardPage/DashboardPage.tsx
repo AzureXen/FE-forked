@@ -5,7 +5,7 @@ import '../../../css/InternDashboard/Dashboard.css'
 import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import { useParams} from "react-router-dom";
-import NavbarIntern from "./NavbarIntern";
+import NavbarIntern from "../NavbarIntern/NavbarIntern";
 export const DashboardPage:React.FC = () =>{
     const {internId} = useParams<{internId : string}>();
 
