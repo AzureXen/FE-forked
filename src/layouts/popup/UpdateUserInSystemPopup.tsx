@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import '../../css/popup.css';
-import { JobApplication } from '../../model/JobApplication';
-import { ApiUpdateStatus } from '../../apis/ApiUpdateStatus';
 import { useToast } from '../../context/ToastContext';
+import UserInSysTem from '../../model/UserInSysTem';
 
-interface UpdateJobApplicationPopupProps {
+interface UpdateUserInSystemPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  jobApplication: JobApplication | null;
-  onUpdateStatus: (id: number, status: number) => void;
+  userInSysTem: UserInSysTem | null;
+//   onUpdateStatus: (id: number, status: number) => void;
 }
 
-export const UpdateJobApplicationPopup: React.FC<UpdateJobApplicationPopupProps> = ({ isOpen, onClose, jobApplication, onUpdateStatus }) => {
+export const UpdateUserInSystemPopup: React.FC<UpdateUserInSystemPopupProps> = ({ isOpen, onClose, userInSysTem}) => {
   const [animationClass, setAnimationClass] = useState('popup-entering');
   const [isClosing, setIsClosing] = useState(false);
-  const [status, setStatus] = useState<number>(0);
   const {showToast} = useToast();
 
   useEffect(() => {
@@ -24,8 +22,7 @@ export const UpdateJobApplicationPopup: React.FC<UpdateJobApplicationPopupProps>
       setTimeout(() => {
         setAnimationClass('popup-entered');
       }, 100);
-      if (jobApplication) {
-        setStatus(jobApplication.status);
+      if (userInSysTem) {
       }
     } else {
       setAnimationClass('popup-exiting');
@@ -33,38 +30,38 @@ export const UpdateJobApplicationPopup: React.FC<UpdateJobApplicationPopupProps>
         setIsClosing(true);
       }, 300); 
     }
-  }, [isOpen, jobApplication]);
+  }, [isOpen, userInSysTem]);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    try {
-      if (jobApplication) {
-        await ApiUpdateStatus(status, jobApplication.id);
-        switch(status){
-            case 0:
-              showToast('Application rejected!', 'success');
-              onUpdateStatus(jobApplication.id, status);
-              onClose();
-              break;
-            case 1:
-              showToast('Application accepted!', 'success');
-              onUpdateStatus(jobApplication.id, status);
-              onClose();
-              break;
-            case 2:
-              showToast('You can not set Pending!', 'error');
-              break;
+  // const handleSubmit = async (event: React.FormEvent) => {
+  //   event.preventDefault();
+  //   try {
+  //     if (jobApplication) {
+  //       await ApiUpdateStatus(status, jobApplication.id);
+  //       switch(status){
+  //           case 0:
+  //             showToast('Application rejected!', 'success');
+  //             onUpdateStatus(jobApplication.id, status);
+  //             onClose();
+  //             break;
+  //           case 1:
+  //             showToast('Application accepted!', 'success');
+  //             onUpdateStatus(jobApplication.id, status);
+  //             onClose();
+  //             break;
+  //           case 2:
+  //             showToast('You can not set Pending!', 'error');
+  //             break;
               
-            default:
-              onClose();
-              break;
-        }
-      }
-    } catch (error) {
-      showToast('You can not set Pending!', 'error');
+  //           default:
+  //             onClose();
+  //             break;
+  //       }
+  //     }
+  //   } catch (error) {
+  //     showToast('You can not set Pending!', 'error');
 
-    }
-  };
+  //   }
+  // };
 
   if (isClosing) return null;
 
@@ -73,13 +70,13 @@ export const UpdateJobApplicationPopup: React.FC<UpdateJobApplicationPopupProps>
       <div className='container d-flex align-items-center justify-content-center h-100'>
         <div className={`popup-content`}>
           <h2>Update Job Application</h2>
-          <form onSubmit={handleSubmit}>
+          <form >{/*onSubmit={handleSubmit} */}
             <div className="col-xs-12">
               <div className="styled-input wide">
                 <input
                   type="text"
                   id="input"
-                  value={jobApplication?.fullName || ''}
+                  value={userInSysTem?.fullName || ''}
                   required
                 />
                 <label>Name</label>
@@ -91,7 +88,7 @@ export const UpdateJobApplicationPopup: React.FC<UpdateJobApplicationPopupProps>
                   <input
                     type="text"
                     id="input"
-                    value={jobApplication?.email || ''}
+                    value={userInSysTem?.email || ''}
                     required
                   />
                   <label>Email</label>
@@ -99,11 +96,6 @@ export const UpdateJobApplicationPopup: React.FC<UpdateJobApplicationPopupProps>
               </div>
               <div className="col-md-6 col-sm-12">
                 <div className="styled-input" style={{ float: "right" }}>
-                  <select value={status}  onChange={(e) => setStatus(Number(e.target.value))} required id="input">
-                  <option value={"2"}>Pending</option>
-                    <option value={0}>Reject</option>
-                    <option value={1}>Accept</option>
-                  </select>
                 </div>
               </div>
             </div>

@@ -14,7 +14,7 @@ export const postJob = async (jobData: JobData) => {
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data"  // Ensure this is set correctly
+          "Content-Type": "multipart/form-data" 
         }
       }
     );

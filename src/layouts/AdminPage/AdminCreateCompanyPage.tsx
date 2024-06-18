@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { Footer } from "../HeaderAndFooter/Footer";
 import { HeaderWorkplace } from "../HeaderAndFooter/HeaderWorkplace";
-import { NavbarManager } from "../HeaderAndFooter/Navbar/NavbarManager";
-import { UpdateJobApplicationPopup } from "../popup/UpdateJobApplicationPopup";
 import "../../css/managertable.css"; // Nhớ import CSS đã tạo
-import { ViewRegisterUser } from "./ViewRegisterUser";
-import { Header } from "../HeaderAndFooter/Header";
+import { CreateCompanyPage } from "./CreateCompany";
 import { NavbarAdmin } from "../HeaderAndFooter/Navbar/NavbarAdmin";
 
-export const AdminPage: React.FC = () => {
+export const AdminCreateCompanyPage: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const openPopup = () => setIsPopupOpen(true);
@@ -18,10 +15,10 @@ export const AdminPage: React.FC = () => {
     <>
       <HeaderWorkplace />
       <div>
-      <NavbarAdmin/>
+        <NavbarAdmin/>
       </div>
       <div>
-        <ViewRegisterUser />
+        <CreateCompanyPage/>
       </div>
       <Footer />
     </>

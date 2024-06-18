@@ -25,6 +25,9 @@
   width: 40%;
   height: 100%;
 }
+#aboutUs-content div p{
+  color: white;
+}
 @media (max-width: 768px) {
   #img-about-us {
     margin-left: 20px;

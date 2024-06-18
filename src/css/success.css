@@ -1,0 +1,75 @@
+.box00 {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #198754; /* Green background color */
+    border: 2px solid #000; /* Black border for visibility */
+}
+
+.success-animation svg {
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+}
+
+.success-animation .path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+}
+
+.success-animation .path.circle {
+    animation: dash 0.9s ease-in-out;
+}
+
+.success-animation .path.check {
+    stroke-dashoffset: -100;
+    animation: dash-check 0.9s 0.35s ease-in-out forwards;
+}
+
+@-webkit-keyframes dash { 
+	0% {
+		stroke-dashoffset: 1000;
+	}
+	100% {
+		stroke-dashoffset: 0;
+	}
+}
+@keyframes dash { 
+	0% {
+		stroke-dashoffset: 1000;
+	}
+	100%{
+		stroke-dashoffset: 0;
+	}
+}
+@-webkit-keyframes dash { 
+	0% {
+		stroke-dashoffset: 1000;
+	}
+	100% {
+		stroke-dashoffset: 0;
+	}
+}
+@keyframes dash { 
+	0% {
+		stroke-dashoffset: 1000;}
+	100% {
+		stroke-dashoffset: 0;
+	}
+}
+@-webkit-keyframes dash-check { 
+	0% {
+		stroke-dashoffset: -100;
+	}
+	100% {
+		stroke-dashoffset: 900;
+	}
+}
+@keyframes dash-check {
+	0% {
+		stroke-dashoffset: -100;
+	}
+	100% {
+		stroke-dashoffset: 900;
+	}
+}

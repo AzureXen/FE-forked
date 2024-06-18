@@ -70,6 +70,7 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
                     {job.jobName}
                   </p>
                   <p id="p-location">{job.company.location}</p>
+                  <p>Company: {job.company.companyName}</p>
                   </div>
                   <div className="col-md-3">
                   <button id="btn-apply" onClick={() => handleJobClick(job.id)}>

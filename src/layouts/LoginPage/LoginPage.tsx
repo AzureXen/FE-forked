@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "../../css/loginStyle.css";
 import image from "../../images/loginIMG.jpg";
 import { useToast } from "../../context/ToastContext";
+import { Link } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -76,13 +77,13 @@ const LoginPage: React.FC = () => {
                     required
                   />
                 </div>
-                <div className="d-flex mb-5 align-items-center">
+                <div className="d-flex mb-5 align-items-center d-flex justify-content-between">
                   <label className="control control--checkbox mb-0">
                     <span className="caption">Remember me</span>
                     <input type="checkbox" />
                     <div className="control__indicator"></div>
                   </label>
-                  <span className="ml-auto"><a href="#" className="forgot-pass">Forgot Password</a></span>
+                 <Link to="/forgotPassword" className="forgot-pass">Forgot Password</Link>
                 </div>
                 {message && <p className="message" id="message">{message}</p>}
                 <button type="submit" className="btn btn-block btn-primary">Log In</button>
