@@ -18,8 +18,7 @@ export const ViewUserInsystem = () => {
   const [totalPages, setTotalPages] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-  const [selectedUserInSystem, setSelectedUserInSystem] =
-    useState<UserInSysTem | null>(null);
+  const [selectedUserInSystem, setSelectedUserInSystem] =useState<UserInSysTem | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<number | null | undefined>(
     undefined

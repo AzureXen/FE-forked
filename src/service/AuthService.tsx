@@ -5,7 +5,11 @@ const API_URL = 'http://localhost:8080/internbridge/auth/';
 
 class AuthService {
   async login(loginRequest: LoginRequest): Promise<UserInfoResponse | MessageResponse> {
-    const response = await axios.post<UserInfoResponse | MessageResponse>(`${API_URL}signin`, loginRequest);
+    const response = await axios.post<UserInfoResponse | MessageResponse>(
+      `${API_URL}signin`,
+      loginRequest,
+      { withCredentials: true }  // Include this line to enable cookies
+    );
     if ('userInfo' in response.data) {
       localStorage.setItem('user', JSON.stringify(response.data.userInfo));
     }
@@ -13,7 +17,7 @@ class AuthService {
   }
 
   async logout(): Promise<void> {
-    await axios.post(`${API_URL}signout`);
+    await axios.post(`${API_URL}signout`, {}, { withCredentials: true });
     localStorage.removeItem('user');
   }
 
