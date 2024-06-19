@@ -15,3 +15,12 @@
     margin: 1%;
     text-align: center;
 }
+#dropdown-inAdmin{
+    background-color: black;
+}
+#dropdown-inAdmin-item{
+    color: white;
+}
+#dropdown-inAdmin-item:hover{
+    color: black;
+}

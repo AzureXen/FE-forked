@@ -1,11 +1,17 @@
-import React from "react";
+import React,{useState} from "react";
 import {Link} from "react-router-dom";
 import '../../../css/InternDashboard/NavbarIntern.css'
+import DropDownCourses from "./DropDownCourses";
 interface NavbarProps{
     internId : string;
     selectedPage : string;
 }
 const NavbarIntern :React.FC<NavbarProps> = ({internId, selectedPage})=>{
+    const [isOpenDropDown, setIsOpenDropDown] = useState(false);
+    const handleClick = ()=>{
+        setIsOpenDropDown(prevState => !prevState);
+    }
+
     return(
         <div className="NavbarIntern">
             <Link
@@ -14,12 +20,14 @@ const NavbarIntern :React.FC<NavbarProps> = ({internId, selectedPage})=>{
                 }`}
                 to={`/intern/${internId}`}
             >Dashboard</Link>
-            <Link
-                className={`NavbarInternItem ${
-                    selectedPage === "Activities" ? "SelectedPage" : ""
-                }`}
-                to={`/intern/${internId}`}
-            >Activities</Link>
+            <div className={'NavbarInternItem ' +
+                `${selectedPage === "Activities" ? "SelectedPage" : ""}`}
+                 onClick = {handleClick}>
+                Activities
+                {isOpenDropDown && (
+                    <DropDownCourses internId={internId}></DropDownCourses>
+                )}
+            </div>
             <Link
                 className={`NavbarInternItem ${
                     selectedPage === "Feedbacks" ? "SelectedPage" : ""

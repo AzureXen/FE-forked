@@ -14,8 +14,28 @@ export const NavbarAdmin = () => {
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <Link className="nav-link" to="/Admin/CreateCompany">Create Company</Link>
                 </li>
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link" to="/Admin/ViewUser">Manage account</Link>
+                <li
+                  className="nav-item dropdown"
+                  style={{ paddingRight: "2rem" }}
+                >
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    id="dropdown04"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Manage account
+                  </a>
+                  <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown-inAdmin">
+                    <Link className="dropdown-item" to="/Admin/ViewUser" id="dropdown-inAdmin-item">
+                      View User
+                    </Link>
+                    <Link className="dropdown-item" to="/Admin/CreateUser" id="dropdown-inAdmin-item">
+                      Register User
+                    </Link>
+                  </div>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <Link className="nav-link" to="/Workplace/Manager/Report">Helps</Link>

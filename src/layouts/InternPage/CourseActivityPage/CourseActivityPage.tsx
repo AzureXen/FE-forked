@@ -5,7 +5,7 @@ import CourseName from "./CourseName";
 import '../../../css/InternDashboard/ActivityCard.css'
 import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
-import NavbarIntern from "../DashBoardPage/NavbarIntern";
+import NavbarIntern from "../NavbarIntern/NavbarIntern";
 const CourseActivityPage = (() => {
     const {courseId, internId} = useParams();
     const checkedcourseId = courseId ?? '';

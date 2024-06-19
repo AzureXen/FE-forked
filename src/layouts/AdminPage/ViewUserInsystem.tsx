@@ -27,7 +27,6 @@ export const ViewUserInsystem = () => {
   const [selectedUsers, setSelectedUsers] = useState<UserInSysTem[]>(
     []
   );
-  const [submitting, setSubmitting] = useState<boolean>(false);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -106,20 +105,6 @@ export const ViewUserInsystem = () => {
       }
     });
   };
-
-//   const handleSubmit = async () => {
-//     setSubmitting(true);
-//     try {
-//       await registerInterns(selectedUsers);
-//       setSelectedUsers([]);
-//       fetchUserList();
-//     } catch (error) {
-//       console.error("Error registering users:", error);
-//     } finally {
-//       showToast("Success to register", "success");
-//       setSubmitting(false);
-//     }
-//   };
   const filteredUserList = userList.filter(
     (user) =>
       (user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -155,7 +140,7 @@ export const ViewUserInsystem = () => {
           <option value={1}>Accept</option>
         </select>
       </div>
-      {loading || submitting ? ( // Display loading state when loading or submitting
+      {loading ? ( // Display loading state when loading or submitting
         <div className="loading-overlay">
           <p>
             <Loading />

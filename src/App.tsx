@@ -10,7 +10,7 @@ import { ToastProvider } from "./context/ToastContext";
 import { JobpPage } from "./layouts/JobPage/JobPage";
 import { JobDetailPage } from "./layouts/JobDetailPage/JobDetailPage";
 import { ManagerPage } from "./layouts/ManagerPage/ManagerPage";
-import {DashboardPage} from "./layouts/InternPage/DashBoardPage/DashboardPage";
+import { DashboardPage } from "./layouts/InternPage/DashBoardPage/DashboardPage";
 import CourseActivityPage from "./layouts/InternPage/CourseActivityPage/CourseActivityPage";
 import { LoadingSpinner2 } from "./layouts/Loading/LoadingSpinner2";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -24,9 +24,13 @@ import { SuccessPage } from "./layouts/SuccessPage/SuccessPage";
 import { AdminCreateCompanyPage } from "./layouts/AdminPage/AdminCreateCompanyPage";
 import { AdminViewUserInSystem } from "./layouts/AdminPage/AdminViewUserInSystem";
 
+import ShowCourse from "./layouts/ShowCourse/ShowCourse";
+import CreateCourse from "./model/CreateCourse";
+import CreateCourseComponent from "./layouts/CreateCourse/CreateCourseComponent";
+import { AdminCreateUser } from "./layouts/AdminPage/AdminCreateUser";
 export const App = () => {
 
-  const currentUser =AuthService.getCurrentUser();
+  const currentUser = AuthService.getCurrentUser();
 
 
   return (
@@ -44,13 +48,16 @@ export const App = () => {
               <Route path="/Workplace/Manager" element={<ManagerPage />} />
               <Route path="/Workplace/Manager/postJob" element={<PostJobPage />} />
               <Route path="/Admin" element={<AdminPage />} />
-              <Route path="/intern/:internId" element={<DashboardPage />} />
+              <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/:internId/course/:courseId" element={<CourseActivityPage />} />
+              <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
+              <Route path="coordinator/createCourse/:companyId" element={<CreateCourseComponent />} />
               <Route path="verify" element={<ForgotPasswordPage/>}/>
               <Route path="/forgotPassword" element={<ForgotPasswordPage2/>}/>
               <Route path="/verifyPassword" element={<VerificationForgotPage/>}/>
               <Route path="/Admin/CreateCompany" element={<AdminCreateCompanyPage/>}/>
               <Route path="/Admin/ViewUser" element={<AdminViewUserInSystem/>}/>
+              <Route path="Admin/CreateUser" element={<AdminCreateUser/>}/>
               <Route path="*" element={<ErrorPage/>} />
               <Route path="/s" element={<SuccessPage/>}/>
             </Routes>
