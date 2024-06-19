@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import CreateCourse from '../../model/CreateCourse';
-import fetchCreateCourse from '../../apis/CreateCourse';
-import axios from 'axios';
-import { Footer } from '../HeaderAndFooter/Footer';
-import { HeaderSmaller } from '../HeaderAndFooter/HeaderSmaller';
+import React, { useState } from 'react';
+import createCourse from '../../apis/CreateCourseApi';
 
 const CreateCourseComponent: React.FC = () => {
     const [mentorId, setMentorId] = useState<number | null>(null);
@@ -11,53 +7,36 @@ const CreateCourseComponent: React.FC = () => {
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await fetchCreateCourse(1); // Assuming 1 is the company ID
-                if (data) {
-                    setMentorId(data.mentor_id);
-                    setCourseDescription(data.courseDescription);
-                    setStartDate(data.start_date.toISOString().substring(0, 10)); // Convert date to string for input field
-                    setEndDate(data.end_date.toISOString().substring(0, 10)); // Convert date to string for input field
-                }
-            } catch (error) {
-                setError("Error fetching course data");
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    if (error) {
-        return <div>Error: {error}</div>;
+    const changeDateFormat = (date: string) => {
+        const newDate = date.split('-')
+        return `${newDate[1]}-${newDate[2]}-${newDate[0]}`
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Form submitted');
 
         if (mentorId === null) {
             setError('Mentor ID is required');
             return;
         }
 
-        const newCourse = new CreateCourse(
-            mentorId,
-            courseDescription,
-            new Date(startDate),
-            new Date(endDate)
-        );
+        const newCourse = {
+            mentorId: mentorId,
+            courseDescription: courseDescription,
+            startDate: changeDateFormat(startDate),
+            endDate: changeDateFormat(endDate)
+        };
+
+        console.log('Submitting new course:', newCourse);
 
         try {
-            const response = await axios.post('http://localhost:8080/internbridge/coordinator/createCourse/1', newCourse, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            console.log('Course created successfully:', response.data);
+            const companyId = 1;
+            const response = await createCourse(newCourse, companyId);
+            console.log('Course created successfully:', response);
+            setSuccessMessage('Course created successfully!');
+            setError(null);
 
             // Reset form fields
             setMentorId(null);
@@ -66,13 +45,15 @@ const CreateCourseComponent: React.FC = () => {
             setEndDate('');
         } catch (error) {
             console.error('Error creating course:', error);
+            setError('Error creating course');
         }
     };
 
     return (
         <div>
-            <HeaderSmaller />
             <h2>Create New Course</h2>
+            {error && <div style={{ color: 'red' }}>{error}</div>}
+            {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Mentor ID:</label>
@@ -111,7 +92,6 @@ const CreateCourseComponent: React.FC = () => {
                 </div>
                 <button type="submit">Create Course</button>
             </form>
-            <Footer />
         </div>
     );
 };
