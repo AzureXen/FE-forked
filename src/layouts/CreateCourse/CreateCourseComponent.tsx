@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import createCourse from '../../apis/CreateCourseApi';
+import { Loading } from '../Loading/Loading';
 
 const CreateCourseComponent: React.FC = () => {
     const [mentorId, setMentorId] = useState<number | null>(null);
@@ -8,11 +9,12 @@ const CreateCourseComponent: React.FC = () => {
     const [endDate, setEndDate] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const changeDateFormat = (date: string) => {
-        const newDate = date.split('-')
-        return `${newDate[1]}-${newDate[2]}-${newDate[0]}`
-    }
+        const newDate = date.split('-');
+        return `${newDate[1]}-${newDate[2]}-${newDate[0]}`;
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -30,9 +32,10 @@ const CreateCourseComponent: React.FC = () => {
         };
 
         console.log('Submitting new course:', newCourse);
+        setIsLoading(true);
 
         try {
-            const companyId = 1;
+            const companyId = 1; // Replace with actual company ID if needed
             const response = await createCourse(newCourse, companyId);
             console.log('Course created successfully:', response);
             setSuccessMessage('Course created successfully!');
@@ -46,52 +49,91 @@ const CreateCourseComponent: React.FC = () => {
         } catch (error) {
             console.error('Error creating course:', error);
             setError('Error creating course');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
-        <div>
-            <h2>Create New Course</h2>
-            {error && <div style={{ color: 'red' }}>{error}</div>}
-            {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
-            <form onSubmit={handleSubmit}>
+        <div className="job-detail">
+            {isLoading ? (
                 <div>
-                    <label>Mentor ID:</label>
-                    <input
-                        type="number"
-                        value={mentorId ?? ''}
-                        onChange={(e) => setMentorId(parseInt(e.target.value))}
-                        required
-                    />
+                    <Loading />
                 </div>
-                <div>
-                    <label>Course Description:</label>
-                    <textarea
-                        value={courseDescription}
-                        onChange={(e) => setCourseDescription(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Start Date:</label>
-                    <input
-                        type="date"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>End Date:</label>
-                    <input
-                        type="date"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Create Course</button>
-            </form>
+            ) : (
+                <>
+                    <div className="container rounded mb-5" id="job-block">
+                        <div className="row input-container">
+                            <h1 id="h1-apply-now">Create Course Now</h1>
+                            <form onSubmit={handleSubmit}>
+                                <div className="col-xs-12">
+                                    <div className="styled-input wide">
+                                        <input
+                                            type="number"
+                                            id="input"
+                                            value={mentorId ?? ''}
+                                            onChange={(e) => setMentorId(parseInt(e.target.value))}
+                                            required
+                                        />
+                                        <label>Mentor ID</label>
+                                    </div>
+                                </div>
+                                <div className="col-xs-12">
+                                    <div className="styled-input wide">
+                                        <input
+                                            type="text"
+                                            id="input"
+                                            value={courseDescription}
+                                            onChange={(e) => setCourseDescription(e.target.value)}
+                                            required
+                                        />
+                                        <label>Course Description</label>
+                                    </div>
+                                </div>
+                                <div className="col-xs-12">
+                                    <div className="styled-input wide">
+                                        <input
+                                            type="date"
+                                            id="input"
+                                            value={startDate}
+                                            onChange={(e) => setStartDate(e.target.value)}
+                                            required
+                                        />
+                                        <label>Start Date</label>
+                                    </div>
+                                </div>
+                                <div className="col-xs-12">
+                                    <div className="styled-input wide">
+                                        <input
+                                            type="date"
+                                            id="input"
+                                            value={endDate}
+                                            onChange={(e) => setEndDate(e.target.value)}
+                                            required
+                                        />
+                                        <label>End Date</label>
+                                    </div>
+                                </div>
+                                <div className="col-xs-12">
+                                    <button
+                                        type="submit"
+                                        id="btn-apply"
+                                        className="btn-lrg submit-btn"
+                                    >
+                                        Create
+                                        <span className="first"></span>
+                                        <span className="second"></span>
+                                        <span className="third"></span>
+                                        <span className="fourth"></span>
+                                    </button>
+                                </div>
+                            </form>
+                            {error && <p className="error-message">{error}</p>}
+                            {successMessage && <p className="success-message">{successMessage}</p>}
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
