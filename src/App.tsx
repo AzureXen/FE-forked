@@ -49,7 +49,7 @@ export const App = () => {
               <Route path="/Workplace/Manager/postJob" element={<PostJobPage />} />
               <Route path="/Admin" element={<AdminPage />} />
               <Route path="/intern" element={<DashboardPage />} />
-              <Route path="/intern/:internId/course/:courseId" element={<CourseActivityPage />} />
+              <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
               <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
               <Route path="coordinator/createCourse/:companyId" element={<CreateCourseComponent />} />
               <Route path="verify" element={<ForgotPasswordPage/>}/>

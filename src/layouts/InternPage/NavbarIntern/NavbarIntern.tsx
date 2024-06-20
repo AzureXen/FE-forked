@@ -18,7 +18,7 @@ const NavbarIntern :React.FC<NavbarProps> = ({internId, selectedPage})=>{
                 className={`NavbarInternItem ${
                     selectedPage === "Dashboard" ? "SelectedPage" : ""
                 }`}
-                to={`/intern/${internId}`}
+                to={`/intern`}
             >Dashboard</Link>
             <div className={'NavbarInternItem ' +
                 `${selectedPage === "Activities" ? "SelectedPage" : ""}`}
@@ -28,12 +28,6 @@ const NavbarIntern :React.FC<NavbarProps> = ({internId, selectedPage})=>{
                     <DropDownCourses internId={internId}></DropDownCourses>
                 )}
             </div>
-            <Link
-                className={`NavbarInternItem ${
-                    selectedPage === "Feedbacks" ? "SelectedPage" : ""
-                }`}
-                to={`/intern/${internId}`}
-            >Feedbacks</Link>
         </div>
     )
 }

@@ -11,7 +11,7 @@ interface CourseCardProps {
 const CourseCard : React.FC<CourseCardProps> = ({ internId, courseId, courseName, mentorName }) => {
     const navigate = useNavigate();
     const handleCourseClick = () => {
-        navigate(`/intern/${internId}/course/${courseId}`);
+        navigate(`/intern/course/${courseId}`);
     }
     return (
         <div className="course-card" onClick = {handleCourseClick}>

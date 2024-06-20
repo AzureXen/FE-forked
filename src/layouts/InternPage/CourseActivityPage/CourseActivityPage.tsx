@@ -6,10 +6,26 @@ import '../../../css/InternDashboard/ActivityCard.css'
 import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";
-const CourseActivityPage = (() => {
-    const {courseId, internId} = useParams();
-    const checkedcourseId = courseId ?? '';
-    const checkedInternId = internId ?? '';
+import {useEffect, useRef, useState} from "react";
+const CourseActivityPage: React.FC = () => {
+    const {courseId} = useParams();
+
+    const [user, setUser] = useState<{ user_id: number } | null>(null);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+    const StringInternId = user?.user_id.toString();
+    const checkedInternId = StringInternId ?? "";
+
+    const checkedcourseId = courseId ?? "";
+
+    if (!user) {
+        return <p>Loading...</p>;
+    }
     return (
         <>
             <div>
@@ -24,7 +40,7 @@ const CourseActivityPage = (() => {
                 </div>
                 <hr style={{height: '4px', backgroundColor: 'aqua', border: 'none'}}/>
                 <div>
-                    <CourseActivities courseId={checkedcourseId}/>
+                    <CourseActivities courseId={checkedcourseId} internId={checkedInternId}/>
                 </div>
             </div>
             <div>
@@ -32,5 +48,5 @@ const CourseActivityPage = (() => {
             </div>
         </>
     )
-})
+}
 export default CourseActivityPage;
