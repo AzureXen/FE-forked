@@ -101,7 +101,7 @@ export const ViewApplication = () => {
     setPageNo(0);
   };
   const handleUpdateStatus = (id: number, newStatus: number) => {
-    if (newStatus === 0) { // 0 means 'Reject'
+    if (newStatus === 0) { 
       setJobList((prevJobList) =>
         prevJobList.map((job) => ({
           ...job,

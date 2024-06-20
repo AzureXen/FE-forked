@@ -139,7 +139,7 @@ export const CreateUser: React.FC = () => {
                   onChange={(e) => setCompanyId(e.target.value)}
                 >
                   <option value="" disabled selected>
-                    Select Field
+                    Select Company
                   </option>
                   {company.map((company) => (
                     <option key={company.id} value={company.id}>

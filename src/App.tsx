@@ -29,6 +29,8 @@ import CreateCourse from "./model/CreateCourse";
 import CreateCourseComponent from "./layouts/CreateCourse/CreateCourseComponent";
 import { AdminCreateUser } from "./layouts/AdminPage/AdminCreateUser";
 import { ManagerViewJobByCompany } from "./layouts/ManagerPage/ManagerViewJobByCompany";
+import { AdminViewAllCompanyPage } from "./layouts/AdminPage/AdminViewAllCompanyPage";
+import { MentorViewAllCoursePage } from "./layouts/MentorPage/Page/MentorViewAllCoursePage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -60,6 +62,8 @@ export const App = () => {
               <Route path="/Admin/CreateCompany" element={<AdminCreateCompanyPage/>}/>
               <Route path="/Admin/ViewUser" element={<AdminViewUserInSystem/>}/>
               <Route path="Admin/CreateUser" element={<AdminCreateUser/>}/>
+              <Route path="/Admin/ViewAllCompany" element={<AdminViewAllCompanyPage/>}/>
+              <Route path="/Mentor/ViewCourse" element={<MentorViewAllCoursePage/>}/>
               <Route path="*" element={<ErrorPage/>} />
               <Route path="/s" element={<SuccessPage/>}/>
             </Routes>

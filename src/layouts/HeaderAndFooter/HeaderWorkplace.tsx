@@ -81,7 +81,7 @@ export const HeaderWorkplace: React.FC = () => {
                     Workplace
                   </a>
                   <div className="dropdown-menu" aria-labelledby="dropdown04">
-                    <a className="dropdown-item" href="#">Manager</a>
+                    <Link className="dropdown-item" to="/Workplace/Manager">Manager</Link>
                     <a className="dropdown-item" href="#">Internship Coordinator</a>
                     <a className="dropdown-item" href="#">Internship</a>
                     <a className="dropdown-item" href="#">Mentor</a>
