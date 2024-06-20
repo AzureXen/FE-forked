@@ -4,6 +4,7 @@ import { useToast } from "../../../context/ToastContext";
 import CourseMentorModel from "../../../model/CourseMentorModel";
 import { ApiViewAllCourseMentor } from "../../../apis/ApiViewAllCourseMentor";
 import { Loading } from "../../Loading/Loading";
+import { InsertActivitesPopup } from "../../popup/InsertActivitesPopup";
 
 export const ViewAllCourseMentor = () => {
   const [courses, setCourses] = useState<CourseMentorModel[]>([]);
@@ -39,6 +40,7 @@ export const ViewAllCourseMentor = () => {
     setLoading(true);
     try {
       if (user) {
+        console.log(user.user_id);
         const data = await ApiViewAllCourseMentor(
           user.user_id,
           pageNo,
@@ -176,10 +178,12 @@ export const ViewAllCourseMentor = () => {
 
                     <td>{course.mentorName}</td>
                     <td>
-                      <button onClick={() => openPopup(course)}>Update</button>
-                      <button onClick={() => handleDeleteUser(course.courseId)}>
-                        Delete
-                      </button>
+                      <button onClick={() => openPopup(course)}>Insert</button>
+                      <InsertActivitesPopup
+                                                isOpen={isPopupOpen}
+                                                onClose={closePopup}
+                                                courseId={course.courseId}
+                                            />
                     </td>
                   </tr>
                 ))}
