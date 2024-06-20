@@ -35,8 +35,7 @@ const CreateCourseComponent: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const companyId = 1; // Replace with actual company ID if needed
-            const response = await createCourse(newCourse, companyId);
+            const response = await createCourse(newCourse);
             console.log('Course created successfully:', response);
             setSuccessMessage('Course created successfully!');
             setError(null);
