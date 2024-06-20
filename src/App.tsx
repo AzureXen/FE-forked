@@ -11,6 +11,7 @@ import { JobpPage } from "./layouts/JobPage/JobPage";
 import { JobDetailPage } from "./layouts/JobDetailPage/JobDetailPage";
 import { ManagerPage } from "./layouts/ManagerPage/ManagerPage";
 import { DashboardPage } from "./layouts/InternPage/DashBoardPage/DashboardPage";
+import MentorDashboard from "./layouts/MentorPage/DashBoardPage/MentorDashboard";
 import CourseActivityPage from "./layouts/InternPage/CourseActivityPage/CourseActivityPage";
 import { LoadingSpinner2 } from "./layouts/Loading/LoadingSpinner2";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -53,7 +54,8 @@ export const App = () => {
               <Route path="/Workplace/Manager/viewJob" element={<ManagerViewJobByCompany/>}/>
               <Route path="/Admin" element={<AdminPage />} />
               <Route path="/intern" element={<DashboardPage />} />
-              <Route path="/intern/:internId/course/:courseId" element={<CourseActivityPage />} />
+              <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
+              <Route path="/mentor" element={<MentorDashboard/>}/>
               <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
               <Route path="coordinator/createCourse/:companyId" element={<CreateCourseComponent />} />
               <Route path="verify" element={<ForgotPasswordPage/>}/>

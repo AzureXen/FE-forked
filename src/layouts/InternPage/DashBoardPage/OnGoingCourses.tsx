@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import fetchCoursesForIntern from '../../../apis/CourseIntern';
+import fetchCoursesForIntern from '../../../apis/InternApis/CourseIntern';
 import CourseCard from './CourseCard';
 import Course from '../../../model/CourseIntern'
 

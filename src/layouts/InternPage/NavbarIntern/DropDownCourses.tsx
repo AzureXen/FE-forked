@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import Course from '../../../model/CourseIntern'
-import fetchCoursesForIntern from '../../../apis/CourseIntern';
+import fetchCoursesForIntern from '../../../apis/InternApis/CourseIntern';
 import {Link} from "react-router-dom";
 import '../../../css/InternDashboard/NavbarIntern.css'
 interface DropDownCoursesProps{
@@ -25,7 +25,7 @@ const DropDownCourses:React.FC<DropDownCoursesProps> = ({internId}) =>{
         <div className="NavbarDropDown">
             {
                 Courses.map(courseIntern =>(
-                    <Link to={`/intern/${internId}/course/${courseIntern.course_id}`}>{courseIntern.course_description}</Link>
+                    <Link to={`/intern/course/${courseIntern.course_id}`}>{courseIntern.course_description}</Link>
                 ))
             }
         </div>
