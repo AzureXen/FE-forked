@@ -33,23 +33,30 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({ isOp
     }
   }, [isOpen]);
 
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}-${day}-${year}`;
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       if (courseId) {
-        // Parse the date strings into Date objects
-        // const parsedStartDate = new Date(startDate);
-        // const parsedEndDate = new Date(endDate);
-        
-        // const courseData: ActivitesRequest = { 
-        //   taskContent, 
-        //   startDate: parsedStartDate, 
-        //   endDate: parsedEndDate 
-        // };
+        const formattedStartDate = formatDate(startDate);
+        const formattedEndDate = formatDate(endDate);
 
-        // await ApiAddActivities(courseData, courseId);
-        // showToast('Activities added successfully!', 'success');
-        // onClose();
+        const courseData: ActivitesRequest = { 
+          taskContent, 
+          startDate: formattedStartDate,
+          endDate: formattedEndDate
+        };
+
+        await ApiAddActivities(courseData, courseId);
+        showToast('Activities added successfully!', 'success');
+        onClose();
       }
     } catch (error) {
       showToast('Error adding activities!', 'error');
@@ -62,7 +69,7 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({ isOp
     <div className={`blur-background ${animationClass}`}>
       <div className='container d-flex align-items-center justify-content-center h-100'>
         <div className={`popup-content`}>
-          <h2>Add Activities For Course</h2>
+          <h2>Add Activities For Course {courseId}</h2>
           <form onSubmit={handleSubmit}>
             <div className="col-xs-12">
               <div className="styled-input wide">
@@ -74,20 +81,20 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({ isOp
                 <label>Task Content</label>
               </div>
             </div>
-            <div className='row'>
-              <div className="col-md-6 col-sm-12">
-                <div className="styled-input">
-                  <label>Start Date</label>
-                  <input
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="col-md-6 col-sm-12">
-                <div className="styled-input">
+            <div className="col-xs-12">
+                                    <div className="styled-input wide">
+                                        <input
+                                            type="date"
+                                            id="input"
+                                            value={startDate}
+                                            onChange={(e) => setStartDate(e.target.value)}
+                                            required
+                                        />
+                                        <label>Start Date</label>
+                                    </div>
+                                </div>
+              <div className="col-xs-12">
+                <div className="styled-input wide">
                   <label>End Date</label>
                   <input
                     type="date"
@@ -97,7 +104,6 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({ isOp
                   />
                 </div>
               </div>
-            </div>
             <button type="submit" className="btn btn-primary">Add Activities</button>
           </form>
           <i className="fa-solid fa-x position-absolute top-0 end-0" id='x-button' onClick={onClose}></i>

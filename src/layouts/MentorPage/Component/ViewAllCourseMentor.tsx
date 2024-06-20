@@ -179,11 +179,6 @@ export const ViewAllCourseMentor = () => {
                     <td>{course.mentorName}</td>
                     <td>
                       <button onClick={() => openPopup(course)}>Insert</button>
-                      <InsertActivitesPopup
-                                                isOpen={isPopupOpen}
-                                                onClose={closePopup}
-                                                courseId={course.courseId}
-                                            />
                     </td>
                   </tr>
                 ))}
@@ -236,6 +231,13 @@ export const ViewAllCourseMentor = () => {
           </select>
         </label>
       </div>
+      {isPopupOpen && selectedCourse && (
+        <InsertActivitesPopup
+          isOpen={isPopupOpen}
+          onClose={closePopup}
+          courseId={selectedCourse.courseId}
+        />
+      )}
     </div>
   );
 };
