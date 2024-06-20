@@ -10,7 +10,7 @@ const fetchCoursesForIntern = async (internId : string) => {
                 courseIntern.course.company.id,
                 courseIntern.course.courseDescription,
                 courseIntern.course.mentor.fullName,
-                courseIntern.id.internId
+                courseIntern.id.internId,
             ));
     } catch (error) {
         console.error("Error fetching courses for intern", error);

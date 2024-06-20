@@ -7,7 +7,6 @@ import NavbarIntern from "../NavbarIntern/NavbarIntern";
 import { useEffect, useState } from 'react';
 
 export const DashboardPage: React.FC = () => {
-    //const { internId } = useParams<{ internId: string }>();
     const [user, setUser] = useState<{ user_id: number } | null>(null);
 
     useEffect(() => {
