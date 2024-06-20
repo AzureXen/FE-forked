@@ -29,6 +29,7 @@ import ShowCourse from "./layouts/ShowCourse/ShowCourse";
 import CreateCourse from "./model/CreateCourse";
 import CreateCourseComponent from "./layouts/CreateCourse/CreateCourseComponent";
 import { AdminCreateUser } from "./layouts/AdminPage/AdminCreateUser";
+import { ManagerViewJobByCompany } from "./layouts/ManagerPage/ManagerViewJobByCompany";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -48,6 +49,7 @@ export const App = () => {
               <Route path="/jobs/:id" element={<JobDetailPage />} />
               <Route path="/Workplace/Manager" element={<ManagerPage />} />
               <Route path="/Workplace/Manager/postJob" element={<PostJobPage />} />
+              <Route path="/Workplace/Manager/viewJob" element={<ManagerViewJobByCompany/>}/>
               <Route path="/Admin" element={<AdminPage />} />
               <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />

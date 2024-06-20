@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.1); /* Đặt nền đen bán trong suốt */
+    background: rgba(0, 0, 0, 0.1) !important; /* Đặt nền đen bán trong suốt */
     backdrop-filter: blur(2px); /* Hiệu ứng làm mờ */
     z-index: 1050; /* Đảm bảo popup nằm trên cùng */
     opacity: 0;
@@ -27,7 +27,7 @@
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) ;
   }
   .popup-content{
     padding: 5% 50px;
