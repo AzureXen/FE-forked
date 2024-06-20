@@ -1,6 +1,6 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import fetchCourseName from "../../../apis/CourseName";
+import fetchCourseName from "../../../apis/InternApis/CourseName";
 import '../../../css/InternDashboard/Dashboard.css'
 interface CourseId{
     courseId: string;

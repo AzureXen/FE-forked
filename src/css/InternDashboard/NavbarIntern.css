@@ -28,13 +28,13 @@
     top: 100%; /* Position the dropdown menu below the navbar item */
     left: 50%;
     transform: translateX(-50%); /* Horizontally center the dropdown */
-    background-color: #fff;
+    background-color: #0d1a3e;
+    opacity: 1;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
     z-index: 1;
     display: none;
     min-width: 0;
-    opacity: 0; /* Initial opacity */
     animation: fadeIn 0.1s ease-in-out forwards; /* Add the fadeIn animation */
 }
 .NavbarDropDown,
@@ -51,5 +51,5 @@
     width: 20rem;
 }
 .NavbarDropDown a:hover {
-    background-color: #f5f5f5;
+    background-color: #09215c;
 }

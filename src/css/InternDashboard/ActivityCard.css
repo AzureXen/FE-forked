@@ -1,9 +1,10 @@
-.course-activity-items{
+.course-activity-items {
     background: radial-gradient(circle at center, #c3d6f5, #a3c7f2);
+    padding: 40px;
 }
 .course-activity-cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 20px;
 }
 
@@ -11,19 +12,29 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 24px;
-    flex-grow: 0;
-    flex-shrink: 0;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+
+.id-description-holder {
+    display: flex;
+    align-items: center;
 }
 
 .activity-id {
+    background-color: #f2f2f2;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-right: 16px;
     font-weight: bold;
     font-size: 18px;
-    margin-bottom: 12px;
 }
 
 .activity-description {
-    font-size: 16px;
-    margin-bottom: 20px;
+    flex-grow: 1;
+    font-size: 20px;
 }
 
 .date-range {
@@ -31,9 +42,36 @@
     justify-content: space-between;
     font-size: 16px;
     color: #666;
+    margin-top: 16px;
 }
 
 .start-date,
 .end-date {
     flex-basis: auto;
+    font-size: 20px;
+}
+
+.task-status {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.set-done-button {
+    background-color: #007bff;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+.set-done-button:hover {
+    background-color: #0056b3;
+}
+
+.done-message{
+    color:green;
 }
