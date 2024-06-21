@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "../../../css/navbarManager.css";
-export const NavbarManager = () => {
+export const NavbarMentor = () => {
     return (
         <div>
       <div className="nav-workplace" role="banner" id="headerSmallerHeight">
@@ -8,8 +8,29 @@ export const NavbarManager = () => {
           <div className="container-fluid">
             <div className="collapse navbar-collapse ms-5" id="navbarsExample05">
               <ul className="navbar-nav ml-auto pl-lg-5 pl-0">
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link active" to="/Workplace/Manager">Manage Course</Link>
+              <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                  <li
+                  className="nav-item dropdown"
+                >
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    id="dropdown04"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Manage Course
+                  </a>
+                  <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown-inAdmin">
+                    <Link className="dropdown-item" to="/mentor" id="dropdown-inAdmin-item">
+                    Course
+                    </Link>
+                    <Link className="dropdown-item" to="/mentor/ViewCourse" id="dropdown-inAdmin-item">
+                    View Course By Table
+                    </Link>
+                  </div>
+                </li>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <li
@@ -23,14 +44,14 @@ export const NavbarManager = () => {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Manage Recruitment
+                    Manage Activities
                   </a>
                   <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown-inAdmin">
-                    <Link className="dropdown-item" to="/Workplace/Manager/postJob" id="dropdown-inAdmin-item">
-                    Post Recruitment News
+                    <Link className="dropdown-item" to="/mentor" id="dropdown-inAdmin-item">
+                    Activites
                     </Link>
                     <Link className="dropdown-item" to="/Workplace/Manager/viewJob" id="dropdown-inAdmin-item">
-                    View Recruitment News
+                    View Activities By Table
                     </Link>
                   </div>
                 </li>

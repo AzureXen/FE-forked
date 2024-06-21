@@ -56,9 +56,8 @@ export const App = () => {
               <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
               <Route path="/mentor" element={<MentorDashboard />} />
-              <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
               <Route path="coordinator/createCourse" element={<CreateCourseComponent />} />
-              <Route path="verify" element={<ForgotPasswordPage />} />
+              <Route path="/verify" element={<ForgotPasswordPage />} />
               <Route path="/forgotPassword" element={<ForgotPasswordPage2 />} />
               <Route path="/verifyPassword" element={<VerificationForgotPage />} />
               <Route path="/Admin/CreateCompany" element={<AdminCreateCompanyPage />} />
