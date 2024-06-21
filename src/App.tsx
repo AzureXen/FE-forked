@@ -26,10 +26,12 @@ import { AdminCreateCompanyPage } from "./layouts/AdminPage/AdminCreateCompanyPa
 import { AdminViewUserInSystem } from "./layouts/AdminPage/AdminViewUserInSystem";
 
 import ShowCourse from "./layouts/ShowCourse/ShowCourse";
-import CreateCourse from "./model/CreateCourse";
 import CreateCourseComponent from "./layouts/CreateCourse/CreateCourseComponent";
 import { AdminCreateUser } from "./layouts/AdminPage/AdminCreateUser";
 import { ManagerViewJobByCompany } from "./layouts/ManagerPage/ManagerViewJobByCompany";
+import { ViewCourseInsystem } from "./layouts/CoordinatorCoursePage/CoordinatorCoursePage"
+import { AdminViewAllCompanyPage } from "./layouts/AdminPage/AdminViewAllCompanyPage";
+import { MentorViewAllCoursePage } from "./layouts/MentorPage/Page/MentorViewAllCoursePage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -49,21 +51,24 @@ export const App = () => {
               <Route path="/jobs/:id" element={<JobDetailPage />} />
               <Route path="/Workplace/Manager" element={<ManagerPage />} />
               <Route path="/Workplace/Manager/postJob" element={<PostJobPage />} />
-              <Route path="/Workplace/Manager/viewJob" element={<ManagerViewJobByCompany/>}/>
+              <Route path="/Workplace/Manager/viewJob" element={<ManagerViewJobByCompany />} />
               <Route path="/Admin" element={<AdminPage />} />
               <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
-              <Route path="/mentor" element={<MentorDashboard/>}/>
+              <Route path="/mentor" element={<MentorDashboard />} />
               <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
-              <Route path="coordinator/createCourse/:companyId" element={<CreateCourseComponent />} />
-              <Route path="verify" element={<ForgotPasswordPage/>}/>
-              <Route path="/forgotPassword" element={<ForgotPasswordPage2/>}/>
-              <Route path="/verifyPassword" element={<VerificationForgotPage/>}/>
-              <Route path="/Admin/CreateCompany" element={<AdminCreateCompanyPage/>}/>
-              <Route path="/Admin/ViewUser" element={<AdminViewUserInSystem/>}/>
-              <Route path="Admin/CreateUser" element={<AdminCreateUser/>}/>
-              <Route path="*" element={<ErrorPage/>} />
-              <Route path="/s" element={<SuccessPage/>}/>
+              <Route path="coordinator/createCourse" element={<CreateCourseComponent />} />
+              <Route path="verify" element={<ForgotPasswordPage />} />
+              <Route path="/forgotPassword" element={<ForgotPasswordPage2 />} />
+              <Route path="/verifyPassword" element={<VerificationForgotPage />} />
+              <Route path="/Admin/CreateCompany" element={<AdminCreateCompanyPage />} />
+              <Route path="/Admin/ViewUser" element={<AdminViewUserInSystem />} />
+              <Route path="Admin/CreateUser" element={<AdminCreateUser />} />
+              <Route path="/Admin/ViewAllCompany" element={<AdminViewAllCompanyPage/>}/>
+              <Route path="/mentor/ViewCourse" element={<MentorViewAllCoursePage/>}/>
+              <Route path="*" element={<ErrorPage />} />
+              <Route path="/s" element={<SuccessPage />} />
+              <Route path="/coordinator/course" element={<ViewCourseInsystem />} />
             </Routes>
           </div>
         </div>

@@ -78,7 +78,9 @@ export const ViewJobByCompany = () => {
     (job) =>
       job.jobName.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
+    const refreshJobList = () => {
+        fetchJobList();
+      };
   return (
     <div className="application-container">
       <h1>Job List</h1>
@@ -125,6 +127,7 @@ export const ViewJobByCompany = () => {
                                                 isOpen={isPopupOpen}
                                                 onClose={closePopup}
                                                 jobInComay={selectedJobInSystem}
+                                                onJobUpdated={refreshJobList}
                                             />
                   </tr>
                 ))}

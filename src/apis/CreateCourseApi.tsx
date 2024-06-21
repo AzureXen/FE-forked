@@ -7,8 +7,17 @@ interface CreateCourseRequest {
     endDate: string;
 }
 
-const createCourse = async (createCourseRequest: CreateCourseRequest, companyId: number) => {
+const createCourse = async (createCourseRequest: CreateCourseRequest) => {
     try {
+        // Retrieve user information from local storage
+        const storedUser = localStorage.getItem('user');
+        if (!storedUser) {
+            throw new Error('User not logged in');
+        }
+
+        const user = JSON.parse(storedUser);
+        const companyId = user.company_id;
+
         console.log(`Sending request to create course: ${JSON.stringify(createCourseRequest)} for company ID: ${companyId}`);
         const response = await axios.post(`http://localhost:8080/internbridge/coordinator/createCourse/${companyId}`, createCourseRequest, {
             headers: {
@@ -24,3 +33,4 @@ const createCourse = async (createCourseRequest: CreateCourseRequest, companyId:
 };
 
 export default createCourse;
+

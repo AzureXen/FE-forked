@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "../../../css/navbarManager.css";
-export const NavbarAdmin = () => {
+export const NavbarManager = () => {
     return (
         <div>
       <div className="nav-workplace" role="banner" id="headerSmallerHeight">
@@ -9,12 +9,11 @@ export const NavbarAdmin = () => {
             <div className="collapse navbar-collapse ms-5" id="navbarsExample05">
               <ul className="navbar-nav ml-auto pl-lg-5 pl-0">
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link active" to="/Admin">Manage pending user</Link>
+                  <Link className="nav-link active" to="/Workplace/Manager">View Application</Link>
                 </li>
-
-                <li
+                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                  <li
                   className="nav-item dropdown"
-                  style={{ paddingRight: "2rem" }}
                 >
                   <a
                     className="nav-link dropdown-toggle"
@@ -24,39 +23,20 @@ export const NavbarAdmin = () => {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Manage company
+                    Manage Recruitment
                   </a>
                   <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown-inAdmin">
-                    <Link className="dropdown-item" to="/Admin/CreateCompany" id="dropdown-inAdmin-item">
-                      Create company
+                    <Link className="dropdown-item" to="/Workplace/Manager/postJob" id="dropdown-inAdmin-item">
+                    Post Recruitment News
                     </Link>
-                    <Link className="dropdown-item" to="/Admin/ViewAllCompany" id="dropdown-inAdmin-item">
-                      View All Company
+                    <Link className="dropdown-item" to="/Workplace/Manager/viewJob" id="dropdown-inAdmin-item">
+                    View Recruitment News
                     </Link>
                   </div>
                 </li>
-                <li
-                  className="nav-item dropdown"
-                  style={{ paddingRight: "2rem" }}
-                >
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="dropdown04"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Manage account
-                  </a>
-                  <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown-inAdmin">
-                    <Link className="dropdown-item" to="/Admin/ViewUser" id="dropdown-inAdmin-item">
-                      View User
-                    </Link>
-                    <Link className="dropdown-item" to="/Admin/CreateUser" id="dropdown-inAdmin-item">
-                      Register User
-                    </Link>
-                  </div>
+                </li>
+                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                  <Link className="nav-link" to="/Workplace/Manager/Report">View Report</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <Link className="nav-link" to="/Workplace/Manager/Report">Helps</Link>
