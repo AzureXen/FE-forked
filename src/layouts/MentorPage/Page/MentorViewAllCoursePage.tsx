@@ -5,6 +5,7 @@ import { NavbarManager } from '../../HeaderAndFooter/Navbar/NavbarManager';
 import { Footer } from '../../HeaderAndFooter/Footer';
 import { CourseMentorCard } from '../Component/CourseMentorCard';
 import { ViewAllCourseMentor } from '../Component/ViewAllCourseMentor';
+import { NavbarMentor } from '../../HeaderAndFooter/Navbar/NavbarMentor';
 
 export const MentorViewAllCoursePage: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -27,9 +28,10 @@ export const MentorViewAllCoursePage: React.FC = () => {
     <div className="d-flex flex-column">
       <HeaderWorkplace />
       <div>
-        <NavbarManager />
+      <NavbarMentor/>
       </div>
       <div>
+        
         {/* <>
           {mentorId !== 0 && <CourseMentorCard mentorId={mentorId} />}
         </> */}

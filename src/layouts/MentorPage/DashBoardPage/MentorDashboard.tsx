@@ -3,6 +3,7 @@ import MentorCourses from "./MentorCourses";
 import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import OnGoingCourses from "../../InternPage/DashBoardPage/OnGoingCourses";
 import {Footer} from "../../HeaderAndFooter/Footer";
+import { NavbarMentor } from "../../HeaderAndFooter/Navbar/NavbarMentor";
 
 
 const MentorDashboard: React.FC = () => {
@@ -25,6 +26,7 @@ const MentorDashboard: React.FC = () => {
             <div>
                 <HeaderWorkplace/>
             </div>
+            <NavbarMentor/>
             <div className="dashboard-container">
                 <p className="highlight1">On Going Courses:</p>
                 <div className="course-container">

@@ -6,6 +6,8 @@ import { Loading } from "../Loading/Loading";
 import { useToast } from "../../context/ToastContext";
 import { UpdateJobApplicationPopup } from "../popup/UpdateJobApplicationPopup";
 import { UpdateJobInCompanyPopup } from "../popup/UpdateJobInCompanyPopup";
+import { ApiDeleteJobInCompany } from "../../apis/ManagerApis/ApiDeleteJobInCompany";
+import { ConfirmDialog } from "../popup/ConfirmationPopup";
 
 export const ViewJobByCompany = () => {
   const [jobList, setJobList] = useState<JobByCompanyResponse[]>([]);
@@ -18,7 +20,10 @@ export const ViewJobByCompany = () => {
   const { showToast } = useToast();
   const [user, setUser] = useState<{ company_id: number } | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-  const [selectedJobInSystem, setSelectedJobInSystem] =useState<JobByCompanyResponse | null>(null);
+  const [selectedJobInSystem, setSelectedJobInSystem] =
+    useState<JobByCompanyResponse | null>(null);
+    const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState<boolean>(false);
+    const [jobToDelete, setJobToDelete] = useState<number | null>(null);
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -36,7 +41,8 @@ export const ViewJobByCompany = () => {
     setLoading(true);
     try {
       if (user) {
-        const { jobs, totalItems, totalPages } = await getAllJobByCompanyResponse(user.company_id, pageNo, pageSize);
+        const { jobs, totalItems, totalPages } =
+          await getAllJobByCompanyResponse(user.company_id, pageNo, pageSize);
         setJobList(jobs);
         setTotalItems(totalItems);
         setTotalPages(totalPages);
@@ -54,7 +60,9 @@ export const ViewJobByCompany = () => {
     setPageNo(newPageNo);
   };
 
-  const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handlePageSizeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setPageSize(parseInt(event.target.value, 10));
     setPageNo(0);
   };
@@ -74,13 +82,34 @@ export const ViewJobByCompany = () => {
     setSelectedJobInSystem(null);
   };
 
-  const filteredJobList = jobList.filter(
-    (job) =>
-      job.jobName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    const refreshJobList = () => {
+  const filteredJobList = jobList.filter((job) =>
+    job.jobName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const refreshJobList = () => {
+    fetchJobList();
+  };
+  const openConfirmDialog = (jobId: number) => {
+    setJobToDelete(jobId);
+    setIsConfirmDialogOpen(true);
+  };
+
+  const closeConfirmDialog = () => {
+    setIsConfirmDialogOpen(false);
+    setJobToDelete(null);
+  };
+  const handleConfirmDelete = async () => {
+    if (jobToDelete !== null) {
+      try {
+        const data = await ApiDeleteJobInCompany(jobToDelete);
+        showToast(data, "success");
         fetchJobList();
-      };
+      } catch (error) {
+        showToast("Failed to delete job", "error");
+      } finally {
+        closeConfirmDialog();
+      }
+    }
+  };
   return (
     <div className="application-container">
       <h1>Job List</h1>
@@ -122,13 +151,18 @@ export const ViewJobByCompany = () => {
                   <tr key={job.id}>
                     <td>{job.jobName}</td>
                     <td>{formatParagraphs(job.jobDescription)}</td>
-                    <button onClick={() => openPopup(job)} className="mt-5">Update</button>
+                    <button onClick={() => openPopup(job)} className="mt-5">
+                      Update
+                    </button>
+                    <button onClick={() => openConfirmDialog(job.id)} className="mt-5">
+                        Delete
+                      </button>
                     <UpdateJobInCompanyPopup
-                                                isOpen={isPopupOpen}
-                                                onClose={closePopup}
-                                                jobInComay={selectedJobInSystem}
-                                                onJobUpdated={refreshJobList}
-                                            />
+                      isOpen={isPopupOpen}
+                      onClose={closePopup}
+                      jobInComay={selectedJobInSystem}
+                      onJobUpdated={refreshJobList}
+                    />
                   </tr>
                 ))}
               </tbody>
@@ -142,7 +176,10 @@ export const ViewJobByCompany = () => {
         <a onClick={() => handlePageChange(0)} aria-disabled={pageNo === 0}>
           <i className="fa fa-angle-double-left" aria-hidden="true"></i>
         </a>
-        <a onClick={() => handlePageChange(pageNo - 1)} aria-disabled={pageNo === 0}>
+        <a
+          onClick={() => handlePageChange(pageNo - 1)}
+          aria-disabled={pageNo === 0}
+        >
           Prev
         </a>
         {[...Array(totalPages)].map((_, index) => (
@@ -155,10 +192,16 @@ export const ViewJobByCompany = () => {
             {index + 1}
           </a>
         ))}
-        <a onClick={() => handlePageChange(pageNo + 1)} aria-disabled={pageNo >= totalPages - 1}>
+        <a
+          onClick={() => handlePageChange(pageNo + 1)}
+          aria-disabled={pageNo >= totalPages - 1}
+        >
           Next
         </a>
-        <a onClick={() => handlePageChange(totalPages - 1)} aria-disabled={pageNo >= totalPages - 1}>
+        <a
+          onClick={() => handlePageChange(totalPages - 1)}
+          aria-disabled={pageNo >= totalPages - 1}
+        >
           <i className="fa fa-angle-double-right" aria-hidden="true"></i>
         </a>
       </div>
@@ -171,6 +214,12 @@ export const ViewJobByCompany = () => {
           </select>
         </label>
       </div>
+      <ConfirmDialog
+        message="This action is irreversible. Do you want to proceed?"
+        onConfirm={handleConfirmDelete}
+        onCancel={closeConfirmDialog}
+        isOpen={isConfirmDialogOpen}
+      />
     </div>
   );
 };
