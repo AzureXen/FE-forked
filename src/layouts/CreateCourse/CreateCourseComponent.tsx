@@ -39,8 +39,6 @@ const CreateCourseComponent: React.FC = () => {
             console.log('Course created successfully:', response);
             setSuccessMessage('Course created successfully!');
             setError(null);
-
-            // Reset form fields
             setMentorId(null);
             setCourseDescription('');
             setStartDate('');
