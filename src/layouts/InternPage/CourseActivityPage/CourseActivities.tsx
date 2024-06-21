@@ -18,8 +18,8 @@ const CourseActivities : React.FC<CAProps> =({courseId,internId}) => {
                 console.log("Found an error while fetching activities for course: ", error);
             }
         }
-        fetchData()
-    }, [courseId]);
+        fetchData();
+    }, []);
     return(
         <div className="course-activity-cards-container">
             {activities.map(activities=>(

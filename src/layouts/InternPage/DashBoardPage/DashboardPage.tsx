@@ -16,6 +16,7 @@ export const DashboardPage: React.FC = () => {
         }
     }, []);
     const checkedInternId = user?.user_id.toString(); // Convert to string
+
     return (
         <>
             <div>
