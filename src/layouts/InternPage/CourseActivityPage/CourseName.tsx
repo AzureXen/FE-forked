@@ -4,13 +4,14 @@ import fetchCourseName from "../../../apis/InternApis/CourseName";
 import '../../../css/InternDashboard/Dashboard.css'
 interface CourseId{
     courseId: string;
+    internId: string;
 }
-const CourseName:React.FC<CourseId> = ({courseId}) => {
+const CourseName:React.FC<CourseId> = ({courseId, internId}) => {
     const [courseName, setCourseName] = useState<string>("");
     useEffect( ()=>{
         const fetchData = async ()=>{
             try{
-                const data = await fetchCourseName(courseId);
+                const data = await fetchCourseName(courseId, internId);
                 console.log(data);
                 setCourseName(data);
             }catch(error){

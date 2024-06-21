@@ -10,7 +10,7 @@ interface OnGoingCourseProps{
 
 const OnGoingCourses : React.FC<OnGoingCourseProps>= ({internId} ) => {
     const [courseIntern, setCourseIntern] = useState<Course[]>([]);
-
+    const [visibleCount, setVisibleCount] = useState(5);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -23,10 +23,12 @@ const OnGoingCourses : React.FC<OnGoingCourseProps>= ({internId} ) => {
 
         fetchData();
     }, []);
-
+    const showMoreCourses = () => {
+        setVisibleCount(prevCount => prevCount + 5); // Increment the count by 5 each time
+    };
     return (
             <div>
-                {courseIntern.map(courseIntern => (
+                {courseIntern.slice(0, visibleCount).map(courseIntern => (
                     <CourseCard
                         key={courseIntern.course_id}
                         internId= {courseIntern.intern_id}
@@ -35,6 +37,10 @@ const OnGoingCourses : React.FC<OnGoingCourseProps>= ({internId} ) => {
                         mentorName={courseIntern.course_mentor}
                     />
                 ))}
+                {visibleCount < courseIntern.length && (
+                    <p style={{color:"blue", cursor:"pointer",
+                        fontWeight:"bold", marginLeft:"1rem", fontSize:"large"}} onClick={showMoreCourses}>Show More</p>
+                )}
             </div>
     );
 };

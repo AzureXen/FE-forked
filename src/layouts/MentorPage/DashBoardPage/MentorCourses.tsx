@@ -8,7 +8,7 @@ interface MentorCoursesProps{
 }
 const MentorCourses: React.FC<MentorCoursesProps> = ({mentorId}) => {
     const [courses, setCourses] = useState<CourseMentor[]>([]);
-
+    const [visibleCount, setVisibleCount] = useState(5);
     useEffect(()=>{
         const fetchData = async () =>{
             try{
@@ -20,10 +20,13 @@ const MentorCourses: React.FC<MentorCoursesProps> = ({mentorId}) => {
         }
         fetchData();
     }
-    ,[])
+    ,[]);
+    const showMoreCourses = () => {
+        setVisibleCount(prevCount => prevCount + 5); // Increment the count by 5 each time
+    };
     return(
         <div>
-            {courses.map(courseMentor => (
+            {courses.slice(0, visibleCount).map(courseMentor => (
                 <MentorCourseCard
                     key={courseMentor.course_id}
                     mentorId={courseMentor.mentor_id}
@@ -32,6 +35,10 @@ const MentorCourses: React.FC<MentorCoursesProps> = ({mentorId}) => {
                     mentorName={courseMentor.mentorName}
                 />
             ))}
+            {visibleCount < courses.length && (
+                <p style={{color:"blue", cursor:"pointer",
+                    fontWeight:"bold", marginLeft:"1rem", fontSize:"large"}} onClick={showMoreCourses}>Show More</p>
+            )}
         </div>
     )
 }

@@ -11,8 +11,6 @@
     justify-content: center;
     padding: 1em;
     background: #0d1a3e;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
 }
 .SelectedPage{
     font-weight: bold;

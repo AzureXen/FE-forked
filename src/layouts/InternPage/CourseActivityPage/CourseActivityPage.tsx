@@ -6,7 +6,7 @@ import '../../../css/InternDashboard/ActivityCard.css'
 import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 const CourseActivityPage: React.FC = () => {
     const {courseId} = useParams();
 
@@ -26,23 +26,27 @@ const CourseActivityPage: React.FC = () => {
     if (!user) {
         return <p>Loading...</p>;
     }
+    console.log(checkedInternId);
     return (
         <>
             <div>
                 <HeaderWorkplace/>
             </div>
+
                 <div>
                     <NavbarIntern internId={checkedInternId} selectedPage="Activities"/>
                 </div>
+
             <div className="course-activity-items">
                 <div>
-                    <CourseName courseId={checkedcourseId}/>
+                    <CourseName courseId={checkedcourseId} internId={checkedInternId}/>
                 </div>
                 <hr style={{height: '4px', backgroundColor: 'aqua', border: 'none'}}/>
                 <div>
                     <CourseActivities courseId={checkedcourseId} internId={checkedInternId}/>
                 </div>
             </div>
+
             <div>
                 <Footer/>
             </div>

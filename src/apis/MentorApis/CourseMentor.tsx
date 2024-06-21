@@ -3,7 +3,7 @@ import "../../model/CourseMentor"
 import CourseMentor from "../../model/CourseMentor";
 const fetchCourseMentor = async (mentorId: string) => {
     try{
-        const response = await axios.get(`http://localhost:8080/internbridge/mentor/course/${mentorId}`)
+        const response = await axios.get(`http://localhost:8080/internbridge/mentor/course/${mentorId}?pageNo=0&pageSize=999`)
         return response.data.courses.map( (courseMentor: any) => new CourseMentor(
             courseMentor.courseId,
             courseMentor.courseName,
