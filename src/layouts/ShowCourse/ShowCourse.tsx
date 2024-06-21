@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CourseShow from "../../model/CourseShow";
-import { FetchShowCoordiantorCourse } from "../../apis/ShowCourse";
+import FetchShowCoordiantorCourse from "../../apis/CoordinatorApis/ShowCourse";
 import { HeaderSmaller } from "../HeaderAndFooter/HeaderSmaller";
 import { Footer } from "../HeaderAndFooter/Footer";
 import { SearchBar } from "./SearchBar";

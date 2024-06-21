@@ -1,7 +1,7 @@
 // src/apis/ShowCourse.js
 
 import axios from "axios";
-import CourseShow from "../model/CourseShow";
+import CourseShow from "../../model/CourseShow";
 
 export const FetchShowCoordiantorCourse = async (courseId: number): Promise<CourseShow | null> => {
     try {

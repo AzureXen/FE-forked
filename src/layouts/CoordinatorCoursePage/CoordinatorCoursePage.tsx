@@ -3,10 +3,12 @@ import "../../css/managertable.css"; // Nhớ import CSS đã tạo
 import { Loading } from "../Loading/Loading";
 import { useToast } from "../../context/ToastContext";
 import CourseInSystem from "../../model/CourseInSystem";
-import deleteCourse from "../../apis/ApiDeleteCourse";
-import { ApiViewAllCompany } from "../../apis/ApiCoordinatorShowCourse";
+import deleteCourse from "../../apis/CoordinatorApis/ApiDeleteCourse";
+import { ApiViewAllCompany } from "../../apis/CoordinatorApis/ApiCoordinatorShowCourse";
+import { Footer } from "../HeaderAndFooter/Footer";
+import { HeaderWorkplace } from "../HeaderAndFooter/HeaderWorkplace";
 
-export const ViewCourseInsystem = () => {
+export const ViewCourseInsystemByCoordinator = () => {
     const [courses, setCourses] = useState<CourseInSystem[]>([]);
     const [pageNo, setPageNo] = useState<number>(0);
     const [pageSize, setPageSize] = useState<number>(5);
@@ -119,126 +121,130 @@ export const ViewCourseInsystem = () => {
     });
 
     return (
-        <div className="application-container">
-            <h1>Course List</h1>
-            <div className="filter-controls">
-                <div className="input-group d-flex flex-row justify-content-center">
-                    <input
-                        type="text"
-                        className="input-search"
-                        placeholder="Search by Course Name, Course ID"
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                    />
-                    <div className="input-group-prepend" id="icon">
-                        <span className="input-group-text" id="basic-addon1">
-                            <i className="fas fa-search"></i>
-                        </span>
+        <div>
+            <HeaderWorkplace />
+            <div className="application-container">
+                <h1>Course List</h1>
+                <div className="filter-controls">
+                    <div className="input-group d-flex flex-row justify-content-center">
+                        <input
+                            type="text"
+                            className="input-search"
+                            placeholder="Search by Course Name, Course ID"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
+                        <div className="input-group-prepend" id="icon">
+                            <span className="input-group-text" id="basic-addon1">
+                                <i className="fas fa-search"></i>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <select
-                    value={statusFilter === null ? "2" : statusFilter}
-                    onChange={handleStatusChange}
-                    id="filter"
-                >
-                    <option value={""}>Filter</option>
-                    <option value={"2"}>Pending</option>
-                    <option value={0}>Reject</option>
-                    <option value={1}>Accept</option>
-                </select>
-            </div>
-            {loading ? (
-                <div className="loading-overlay">
-                    <p>
-                        <Loading />
-                    </p>
-                </div>
-            ) : (
-                <div className="table-responsive">
-                    {filteredUserList.length > 0 ? (
-                        <table className="table rounded" id="table">
-                            <thead className="header">
-                                <tr>
-                                    <th>Course ID</th>
-                                    <th>Course Name</th>
-                                    <th>Company ID</th>
-                                    <th>Company name</th>
-                                    <th>Mentor ID</th>
-                                    <th>Mentor name</th>
-                                    <th>Start date</th>
-                                    <th>End date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredUserList.map((course) => (
-                                    <tr key={course.courseId}>
-                                        <td>{course.courseId}</td>
-                                        <td>{course.courseName}</td>
-                                        <td>{course.companyId}</td>
-                                        <td>{course.companyName}</td>
-                                        <td>{course.mentorId}</td>
-                                        <td>{course.mentorName}</td>
-                                        <td>
-                                            {new Date(course.startDate).toLocaleDateString("en-GB")}
-                                        </td>
-                                        <td>
-                                            {new Date(course.endDate).toLocaleDateString("en-GB")}
-                                        </td>
-                                        <td>
-                                            <button onClick={() => handleDeleteCourse(course.courseId)}>Delete</button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    ) : (
-                        <p>No courses found.</p>
-                    )}
-                </div>
-            )}
-            <div className="pagination-controls pagination-style-one m-t-20 justify-content-center align-items-center">
-                <a onClick={() => handlePageChange(0)} aria-disabled={pageNo === 0}>
-                    <i className="fa fa-angle-double-left" aria-hidden="true"></i>
-                </a>
-                <a
-                    onClick={() => handlePageChange(pageNo - 1)}
-                    aria-disabled={pageNo === 0}
-                >
-                    Prev
-                </a>
-                {[...Array(totalPages)].map((_, index) => (
-                    <a
-                        key={index}
-                        className={pageNo === index ? "selected" : ""}
-                        id="pagination-number-box"
-                        onClick={() => handlePageChange(index)}
+                    <select
+                        value={statusFilter === null ? "2" : statusFilter}
+                        onChange={handleStatusChange}
+                        id="filter"
                     >
-                        {index + 1}
-                    </a>
-                ))}
-                <a
-                    onClick={() => handlePageChange(pageNo + 1)}
-                    aria-disabled={pageNo >= totalPages - 1}
-                >
-                    Next
-                </a>
-                <a
-                    onClick={() => handlePageChange(totalPages - 1)}
-                    aria-disabled={pageNo >= totalPages - 1}
-                >
-                    <i className="fa fa-angle-double-right" aria-hidden="true"></i>
-                </a>
-            </div>
-            <div className="page-size-controls">
-                <label>
-                    Page Size:
-                    <select value={pageSize} onChange={handlePageSizeChange}>
-                        <option value={5}>5</option>
-                        <option value={10}>10</option>
+                        <option value={""}>Filter</option>
+                        <option value={"2"}>Pending</option>
+                        <option value={0}>Reject</option>
+                        <option value={1}>Accept</option>
                     </select>
-                </label>
+                </div>
+                {loading ? (
+                    <div className="loading-overlay">
+                        <p>
+                            <Loading />
+                        </p>
+                    </div>
+                ) : (
+                    <div className="table-responsive">
+                        {filteredUserList.length > 0 ? (
+                            <table className="table rounded" id="table">
+                                <thead className="header">
+                                    <tr>
+                                        <th>Course ID</th>
+                                        <th>Course Name</th>
+                                        <th>Company ID</th>
+                                        <th>Company name</th>
+                                        <th>Mentor ID</th>
+                                        <th>Mentor name</th>
+                                        <th>Start date</th>
+                                        <th>End date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredUserList.map((course) => (
+                                        <tr key={course.courseId}>
+                                            <td>{course.courseId}</td>
+                                            <td>{course.courseName}</td>
+                                            <td>{course.companyId}</td>
+                                            <td>{course.companyName}</td>
+                                            <td>{course.mentorId}</td>
+                                            <td>{course.mentorName}</td>
+                                            <td>
+                                                {new Date(course.startDate).toLocaleDateString("en-GB")}
+                                            </td>
+                                            <td>
+                                                {new Date(course.endDate).toLocaleDateString("en-GB")}
+                                            </td>
+                                            <td>
+                                                <button onClick={() => handleDeleteCourse(course.courseId)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <p>No courses found.</p>
+                        )}
+                    </div>
+                )}
+                <div className="pagination-controls pagination-style-one m-t-20 justify-content-center align-items-center">
+                    <a onClick={() => handlePageChange(0)} aria-disabled={pageNo === 0}>
+                        <i className="fa fa-angle-double-left" aria-hidden="true"></i>
+                    </a>
+                    <a
+                        onClick={() => handlePageChange(pageNo - 1)}
+                        aria-disabled={pageNo === 0}
+                    >
+                        Prev
+                    </a>
+                    {[...Array(totalPages)].map((_, index) => (
+                        <a
+                            key={index}
+                            className={pageNo === index ? "selected" : ""}
+                            id="pagination-number-box"
+                            onClick={() => handlePageChange(index)}
+                        >
+                            {index + 1}
+                        </a>
+                    ))}
+                    <a
+                        onClick={() => handlePageChange(pageNo + 1)}
+                        aria-disabled={pageNo >= totalPages - 1}
+                    >
+                        Next
+                    </a>
+                    <a
+                        onClick={() => handlePageChange(totalPages - 1)}
+                        aria-disabled={pageNo >= totalPages - 1}
+                    >
+                        <i className="fa fa-angle-double-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div className="page-size-controls">
+                    <label>
+                        Page Size:
+                        <select value={pageSize} onChange={handlePageSizeChange}>
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                        </select>
+                    </label>
+                </div>
             </div>
+            <Footer />
         </div>
     );
 };
-export default ViewCourseInsystem;
+export default ViewCourseInsystemByCoordinator;
