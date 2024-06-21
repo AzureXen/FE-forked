@@ -178,7 +178,7 @@ export const ViewAllCourseMentor = () => {
 
                     <td>{course.mentorName}</td>
                     <td>
-                      <button onClick={() => openPopup(course)}>Insert</button>
+                      <button onClick={() => openPopup(course)}>Add Activities</button>
                     </td>
                   </tr>
                 ))}

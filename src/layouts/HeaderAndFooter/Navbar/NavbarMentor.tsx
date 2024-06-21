@@ -9,7 +9,7 @@ export const NavbarManager = () => {
             <div className="collapse navbar-collapse ms-5" id="navbarsExample05">
               <ul className="navbar-nav ml-auto pl-lg-5 pl-0">
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link active" to="/Workplace/Manager">View Application</Link>
+                  <Link className="nav-link active" to="/Workplace/Manager">Manage Course</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <li
