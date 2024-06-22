@@ -94,7 +94,7 @@ export const Header: React.FC = () => {
                     <Link className="dropdown-item" to="/Workplace/Manager">
                       Manager
                     </Link>
-                    <Link className="dropdown-item" to="/coordinator">
+                    <Link className="dropdown-item" to="/coordinator/course">
                       Internship Coordinator
                     </Link>
                     <a className="dropdown-item" href="/intern">

@@ -53,6 +53,48 @@
   .popup-exiting .popup-content {
     transform: scale(0.2);
   }
+  .Cancel, .Delete, .Edit {
+    border-radius: 28px;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+  }
+  .Cancel{
+    background-color: #000000 !important;
+    transition: all 0.5s ease;
+  }
+  .Delete{
+    background-color: #fa2727 !important;
+    transition: all 0.5s ease;
+  }
+  .Edit{
+    background-color: #0091f9 !important;
+    transition: all 0.5s ease;
+    
+  }
+  .Edit:hover{
+    background-color: #165887 !important;
+    animation: cancelAnimation 0.5s forwards;
+  }
+  .Delete:hover{
+    background-color: #891616 !important;
+    animation: deleteAnimation 0.5s forwards;
+  }
+  .Cancel:hover{
+    background-color: #626262!important;
+    animation: cancelAnimation 0.5s forwards;
+  }
+  .Edit:focus,.Delete:focus,.Cancel:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
   @media (max-width: 575.98px) {
     .popup-content{
       padding: 5% 10%;  
@@ -65,5 +107,42 @@
     }
     #input{
       margin-bottom: 20%;
+    }
+  }
+  @keyframes cancelAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1) rotate(5deg); }
+    100% { transform: scale(1); }
+  }
+  
+  @keyframes deleteAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1) rotate(-5deg); }
+    100% { transform: scale(1); }
+  }
+  
+  @keyframes editAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1) rotate(5deg); }
+    100% { transform: scale(1); }
+  }
+  
+  /* Responsive styles for buttons */
+  @media only screen and (max-width: 979px) {
+    .Cancel, .Delete, .Edit {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media only screen and (max-width: 767px) {
+    .Cancel, .Delete, .Edit {
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media only screen and (max-width: 639px) {
+    .Cancel, .Delete, .Edit {
+      font-size: 0.7rem;
+      padding: 8px 16px;
     }
   }

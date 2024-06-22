@@ -5,6 +5,7 @@ const fetchCoursesForIntern = async (internId : string) => {
     try {
         const response =
             await axios.get(`http://localhost:8080/internbridge/intern/allCourse/${internId}`)
+            
             return response.data.map((courseIntern: any) => new CourseIntern(
                 courseIntern.course.id,
                 courseIntern.course.company.id,
@@ -12,6 +13,7 @@ const fetchCoursesForIntern = async (internId : string) => {
                 courseIntern.course.mentor.fullName,
                 courseIntern.id.internId,
             ));
+            
     } catch (error) {
         console.error("Error fetching courses for intern", error);
         throw error;

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import CourseShow from "../../model/CourseShow";
-import { FetchShowCoordiantorCourse } from "../../apis/ShowCourse";
+import FetchShowCoordiantorCourse from "../../apis/CoordinatorApis/ShowCourse";
 
 interface ShowCourseListProps {
   courseId: number;
