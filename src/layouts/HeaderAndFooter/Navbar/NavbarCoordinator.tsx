@@ -44,30 +44,6 @@ export const NavbarCoordinator = () => {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Manage Activities
-                  </a>
-                  <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown-inAdmin">
-                    <Link className="dropdown-item" to="/mentor" id="dropdown-inAdmin-item">
-                    Activites
-                    </Link>
-                    <Link className="dropdown-item" to="/mentor/viewactivities" id="dropdown-inAdmin-item">
-                    View Activities By Table
-                    </Link>
-                  </div>
-                </li>
-                </li>
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <li
-                  className="nav-item dropdown"
-                >
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="dropdown04"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
                     Create Course
                   </a>
                   <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown-inAdmin">
@@ -79,6 +55,9 @@ export const NavbarCoordinator = () => {
                     </Link>
                   </div>
                 </li>
+                </li>
+                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                  <Link className="nav-link" to="/coordinator/createSchedule">Create Interview Schedule</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <Link className="nav-link" to="/Workplace/Manager/Report">Helps</Link>

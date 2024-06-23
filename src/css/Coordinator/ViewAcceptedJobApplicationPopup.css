@@ -1,0 +1,24 @@
+.add-application {
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    border: none;
+    background-color: #e97f2f  !important;
+}
+
+.add-application:hover {
+    background-color: #ae6626  !important;
+    animation: scaleFadeAnimation 0.5s forwards;
+}
+
+.add-application:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}

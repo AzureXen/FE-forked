@@ -1,50 +1,48 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import "../../../css/JobDetail.css";
-import logoSample from "../../images/logoSample-.png";
-import { Loading } from "../../Loading/Loading";
+import React, { useState, useEffect } from "react";
 import { useToast } from "../../../context/ToastContext";
-import ActivitesRequest from "../../../model/ActivitesRequest";
-import { ApiAddActivities } from "../../../apis/MentorApis/ApiAddActivities";
-import CourseMentorModel from "../../../model/CourseMentorModel";
-import fetchCourseMentor from "../../../apis/MentorApis/CourseMentor";
+import { Loading } from "../../Loading/Loading";
+import { ViewAcceptedJobApplicationPopup } from "../../popup/Coordinator/ViewAcceptedJobApplicationPopup";
+import { ApiCreateScheduleForInterview } from "../../../apis/CoordinatorApis/ApiCreateScheduleForInterview";
 import { ApiGetAllCourseOfMentor } from "../../../apis/MentorApis/ApiGetAllCourseOfMentor";
+import AddScheduleRequest from "../../../model/AddScheduleRequest";
+import CourseMentorModel from "../../../model/CourseMentorModel";
+import "../../../css/Coordinator/CreateScheduleCoordinator.css";
 
-export const AddActivities: React.FC = () => {
+export const CreateSchedule: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { showToast } = useToast();
-  const [taskContent, setTaskContent] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
   const [courses, setCourses] = useState<CourseMentorModel[]>([]);
   const [courseId, setCourseId] = useState<string>("");
   const [companyId, setCompanyId] = useState<string>("");
-  const [user, setUser] = useState<{user_id: number;company_id: number;} | null>(null);
+  const [user, setUser] = useState<{ user_id: number; company_id: number } | null>(null);
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const [selectedApplications, setSelectedApplications] = useState<AddScheduleRequest[]>([]);
+  const [time, setTime] = useState<string>("");
+  const [acceptedApplications, setAcceptedApplications] = useState<AddScheduleRequest[]>([]); // New state
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      setCompanyId(parsedUser.company_id.toString());
     }
   }, []);
-  
 
   useEffect(() => {
     const fetchData = async () => {
-        if(user){
-            setCompanyId(user.company_id.toString());
-            console.log(companyId)
-        }
-        try {
-          const data = await ApiGetAllCourseOfMentor(parseInt(companyId));
-          setCourses(data.courses);
-        } catch (error) {
-          console.log("Error:", error);
-        }
-      
+      try {
+        const data = await ApiGetAllCourseOfMentor(parseInt(companyId));
+        setCourses(data.courses);
+      } catch (error) {
+        console.log("Error:", error);
+      }
     };
-    fetchData();
+    if (companyId) {
+      fetchData();
+    }
   }, [companyId]);
 
   const formatDate = (dateString: string): string => {
@@ -55,33 +53,45 @@ export const AddActivities: React.FC = () => {
     return `${month}-${day}-${year}`;
   };
 
+  const formatTime = (timeString: string): string => {
+    const [hours, minutes] = timeString.split(":");
+    return `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}:00`;
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       setLoading(true);
-      if (courseId) {
-        const formattedStartDate = formatDate(startDate);
-        const formattedEndDate = formatDate(endDate);
 
-        const courseData: ActivitesRequest = {
-          taskContent,
-          startDate: formattedStartDate,
-          endDate: formattedEndDate,
-        };
+      const formattedStartDate = formatDate(startDate) + ' ' + formatTime(time);
 
-        const data = await ApiAddActivities(courseData, parseInt(courseId));
-        setMessage(data);
-        showToast(data, "success");
-      }
+      const scheduleRequest = {
+        time: formattedStartDate,
+        applicationId: selectedApplications.map((jobApplication) => ({ applicationId: jobApplication.applicationId })),
+        location: location,
+      };
+
+      console.log('Request Payload:', scheduleRequest);
+
+      const data = await ApiCreateScheduleForInterview(selectedApplications, formattedStartDate, location);
+      showToast(data, "success");
+
     } catch (error: unknown) {
       if (error instanceof Error) {
+        console.error('Error occurred:', error.message);
         showToast(error.message, "error");
       } else {
+        console.error('Unexpected error:', error);
         showToast("An unexpected error occurred", "error");
       }
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSelectApplications = (applications: AddScheduleRequest[]) => {
+    setSelectedApplications(applications);
+    setAcceptedApplications((prev) => [...prev, ...applications]);
   };
 
   return (
@@ -94,47 +104,12 @@ export const AddActivities: React.FC = () => {
         <>
           <div className="container rounded mb-5" id="job-block">
             <div className="row input-container">
-              <h1 id="h1-apply-now">Create Activities Now</h1>
+              <h1 id="h1-apply-now">Create Schedule</h1>
               <form onSubmit={handleSubmit}>
-                <div className="col-xs-12">
-                  <div className="styled-input wide">
-                    <select
-                      id="input"
-                      required
-                      value={courseId}
-                      onChange={(e) => setCourseId(e.target.value)}
-                    >
-                      <option value="" disabled selected>
-                        Select Your Course
-                      </option>
-                      {courses.map((course) => (
-                        <option key={course.courseId} value={course.courseId}>
-                          {course.courseName}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-xs-12">
-                  <label htmlFor="startDate" style={{ display: "block" }}>
-                    Task content
-                  </label>
-                  <div className="styled-input wide">
-                    <input
-                      type="text"
-                      id="input"
-                      value={taskContent}
-                      onChange={(e) => setTaskContent(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
                 <div className="col-xs-12">
                   <label htmlFor="startDate" style={{ display: "block" }}>
                     Start Date
                   </label>
-
                   <div className="styled-input wide">
                     <input
                       type="date"
@@ -146,19 +121,42 @@ export const AddActivities: React.FC = () => {
                   </div>
                 </div>
                 <div className="col-xs-12">
-                  <label htmlFor="startDate" style={{ display: "block" }}>
-                    End Date
+                  <label htmlFor="time" style={{ display: "block" }}>
+                    Start Time
                   </label>
-
                   <div className="styled-input wide">
                     <input
-                      type="date"
+                      type="time"
                       id="input"
-                      value={endDate}
-                      onChange={(e) => setEndDate(e.target.value)}
+                      value={time}
+                      onChange={(e) => setTime(e.target.value)}
                       required
                     />
                   </div>
+                </div>
+                <div className="col-xs-12">
+                  <label htmlFor="location" style={{ display: "block" }}>
+                    Location
+                  </label>
+                  <div className="styled-input wide">
+                    <input
+                      type="text"
+                      id="input"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="col-xs-12">
+                  <button
+                    type="button"
+                    id=""
+                    className="btn-lrg insert rounded"
+                    onClick={() => setIsPopupOpen(true)}
+                  >
+                    Add Accepted Job Applications ({acceptedApplications.length})
+                  </button>
                 </div>
                 <div className="col-xs-12">
                   <button
@@ -176,6 +174,14 @@ export const AddActivities: React.FC = () => {
               </form>
             </div>
           </div>
+          {isPopupOpen && (
+            <ViewAcceptedJobApplicationPopup
+              isOpen={isPopupOpen}
+              onClose={() => setIsPopupOpen(false)}
+              companyId={companyId}
+              onSelectApplications={handleSelectApplications}
+            />
+          )}
         </>
       )}
     </div>

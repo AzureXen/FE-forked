@@ -6,15 +6,12 @@ import { HomePage } from "./layouts/HomePage/HomePage";
 import LoginPage from "./layouts/LoginPage/LoginPage";
 import AuthService from "./service/AuthService";
 import { ToastProvider } from "./context/ToastContext";
-
 import { JobpPage } from "./layouts/JobPage/JobPage";
 import { JobDetailPage } from "./layouts/JobDetailPage/JobDetailPage";
 import { ManagerPage } from "./layouts/ManagerPage/ManagerPage";
 import { DashboardPage } from "./layouts/InternPage/DashBoardPage/DashboardPage";
 import MentorDashboard from "./layouts/MentorPage/DashBoardPage/MentorDashboard";
 import CourseActivityPage from "./layouts/InternPage/CourseActivityPage/CourseActivityPage";
-import { LoadingSpinner2 } from "./layouts/Loading/LoadingSpinner2";
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { PostJobPage } from "./layouts/ManagerPage/PostJobPage";
 import { AdminPage } from "./layouts/AdminPage/AdminPage";
 import { ErrorPage } from "./layouts/404Page/ErrorPage";
@@ -24,9 +21,6 @@ import { VerificationForgotPage } from "./layouts/ForgotPasswordPage/Verificatio
 import { SuccessPage } from "./layouts/SuccessPage/SuccessPage";
 import { AdminCreateCompanyPage } from "./layouts/AdminPage/AdminCreateCompanyPage";
 import { AdminViewUserInSystem } from "./layouts/AdminPage/AdminViewUserInSystem";
-
-import ShowCourse from "./layouts/ShowCourse/ShowCourse";
-import CreateCourseComponent from "./layouts/CoordinatorCoursePage/CreateCourse/CreateCourseComponent";
 import { AdminCreateUser } from "./layouts/AdminPage/AdminCreateUser";
 import { ManagerViewJobByCompany } from "./layouts/ManagerPage/ManagerViewJobByCompany";
 import { AdminViewAllCompanyPage } from "./layouts/AdminPage/AdminViewAllCompanyPage";
@@ -35,6 +29,7 @@ import { MentorViewAllActivitiesInCourse } from "./layouts/MentorPage/Page/Mento
 import ViewCourseInsystemByCoordinator from "./layouts/CoordinatorCoursePage/CoordinatorCoursePage";
 import { CoordinatorCreateCoursePage } from "./layouts/CoordinatorCoursePage/CoordinatorCreateCoursePage";
 import { MentorCreateActivitiesForCourse } from "./layouts/MentorPage/Page/MentorCreateActivitiesForCourse";
+import { CoordinatorCreateSchedulePage } from "./layouts/CoordinatorCoursePage/CoordinatorCreateSchedulePage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -73,6 +68,7 @@ export const App = () => {
               <Route path="*" element={<ErrorPage />} />
               <Route path="/s" element={<SuccessPage />} />
               <Route path="/coordinator/course" element={<ViewCourseInsystemByCoordinator />} />
+              <Route path="/coordinator/createSchedule" element={<CoordinatorCreateSchedulePage/>}/>
             </Routes>
           </div>
         </div>
