@@ -26,13 +26,15 @@ import { AdminCreateCompanyPage } from "./layouts/AdminPage/AdminCreateCompanyPa
 import { AdminViewUserInSystem } from "./layouts/AdminPage/AdminViewUserInSystem";
 
 import ShowCourse from "./layouts/ShowCourse/ShowCourse";
-import CreateCourseComponent from "./layouts/CreateCourse/CreateCourseComponent";
+
 import { AdminCreateUser } from "./layouts/AdminPage/AdminCreateUser";
 import { ManagerViewJobByCompany } from "./layouts/ManagerPage/ManagerViewJobByCompany";
-import { ViewCourseInsystem } from "./layouts/CoordinatorCoursePage/CoordinatorCoursePage"
+
 import { AdminViewAllCompanyPage } from "./layouts/AdminPage/AdminViewAllCompanyPage";
 import { MentorViewAllCoursePage } from "./layouts/MentorPage/Page/MentorViewAllCoursePage";
 import MentorActivityPage from "./layouts/MentorPage/CreateActivityPage/MentorActivityPage";
+import ViewCourseInsystemByCoordinator from "./layouts/CoordinatorCoursePage/CoordinatorCoursePage";
+import CreateCourseComponent from "./layouts/CoordinatorCoursePage/CreateCourse/CreateCourseComponent";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -59,7 +61,7 @@ export const App = () => {
               <Route path="/mentor" element={<MentorDashboard />} />
               <Route path="/mentor/:courseId" element={<MentorActivityPage/>}/>
               <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
-              <Route path="coordinator/createCourse" element={<CreateCourseComponent />} />
+              <Route path="coordinator/createCourse" element={<CreateCourseComponent/>} />
               <Route path="verify" element={<ForgotPasswordPage />} />
               <Route path="/forgotPassword" element={<ForgotPasswordPage2 />} />
               <Route path="/verifyPassword" element={<VerificationForgotPage />} />
@@ -70,7 +72,7 @@ export const App = () => {
               <Route path="/mentor/ViewCourse" element={<MentorViewAllCoursePage/>}/>
               <Route path="*" element={<ErrorPage />} />
               <Route path="/s" element={<SuccessPage />} />
-              <Route path="/coordinator/course" element={<ViewCourseInsystem />} />
+              <Route path="/coordinator/course" element={<ViewCourseInsystemByCoordinator/>} />
             </Routes>
           </div>
         </div>
