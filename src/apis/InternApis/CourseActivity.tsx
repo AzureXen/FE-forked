@@ -1,5 +1,5 @@
 import axios from 'axios';
-import CourseTask from "../../model/CourseTask";
+import CourseTask from "../../model/Intern/CourseTask";
 const fetchActivityCourseIntern = async (courseId: string, internId: string) =>{
     try{
         const response =

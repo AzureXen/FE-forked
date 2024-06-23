@@ -21,15 +21,18 @@ import { VerificationForgotPage } from "./layouts/ForgotPasswordPage/Verificatio
 import { SuccessPage } from "./layouts/SuccessPage/SuccessPage";
 import { AdminCreateCompanyPage } from "./layouts/AdminPage/AdminCreateCompanyPage";
 import { AdminViewUserInSystem } from "./layouts/AdminPage/AdminViewUserInSystem";
+
+import ShowCourse from "./layouts/ShowCourse/ShowCourse";
 import { AdminCreateUser } from "./layouts/AdminPage/AdminCreateUser";
 import { ManagerViewJobByCompany } from "./layouts/ManagerPage/ManagerViewJobByCompany";
+
 import { AdminViewAllCompanyPage } from "./layouts/AdminPage/AdminViewAllCompanyPage";
 import { MentorViewAllCoursePage } from "./layouts/MentorPage/Page/MentorViewAllCoursePage";
-import { MentorViewAllActivitiesInCourse } from "./layouts/MentorPage/Page/MentorViewAllActivitiesInCourse";
+import MentorActivityPage from "./layouts/MentorPage/CourseActivityPage/MentorActivityPage";
 import ViewCourseInsystemByCoordinator from "./layouts/CoordinatorCoursePage/CoordinatorCoursePage";
-import { CoordinatorCreateCoursePage } from "./layouts/CoordinatorCoursePage/CoordinatorCreateCoursePage";
-import { MentorCreateActivitiesForCourse } from "./layouts/MentorPage/Page/MentorCreateActivitiesForCourse";
+import CreateCourseComponent from "./layouts/CoordinatorCoursePage/CreateCourse/CreateCourseComponent";
 import { CoordinatorCreateSchedulePage } from "./layouts/CoordinatorCoursePage/CoordinatorCreateSchedulePage";
+import { CoordinatorCreateCoursePage } from "./layouts/CoordinatorCoursePage/CoordinatorCreateCoursePage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -54,17 +57,17 @@ export const App = () => {
               <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
               <Route path="/mentor" element={<MentorDashboard />} />
-              <Route path="/mentor/viewactivities" element={<MentorViewAllActivitiesInCourse/>}/>
-              <Route path="/mentor/createActivities" element={<MentorCreateActivitiesForCourse/>}/>
-              <Route path="coordinator/createCourse" element={<CoordinatorCreateCoursePage />} />
-              <Route path="/verify" element={<ForgotPasswordPage />} />
+              <Route path="/mentor/:courseId" element={<MentorActivityPage/>}/>
+              <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
+              <Route path="coordinator/createCourse" element={<CoordinatorCreateCoursePage/>} />
+              <Route path="verify" element={<ForgotPasswordPage />} />
               <Route path="/forgotPassword" element={<ForgotPasswordPage2 />} />
               <Route path="/verifyPassword" element={<VerificationForgotPage />} />
               <Route path="/Admin/CreateCompany" element={<AdminCreateCompanyPage />} />
               <Route path="/Admin/ViewUser" element={<AdminViewUserInSystem />} />
               <Route path="Admin/CreateUser" element={<AdminCreateUser />} />
-              <Route path="/Admin/ViewAllCompany" element={<AdminViewAllCompanyPage />} />
-              <Route path="/mentor/ViewCourse" element={<MentorViewAllCoursePage />} />
+              <Route path="/Admin/ViewAllCompany" element={<AdminViewAllCompanyPage/>}/>
+              <Route path="/mentor/ViewCourse" element={<MentorViewAllCoursePage/>}/>
               <Route path="*" element={<ErrorPage />} />
               <Route path="/s" element={<SuccessPage />} />
               <Route path="/coordinator/course" element={<ViewCourseInsystemByCoordinator />} />

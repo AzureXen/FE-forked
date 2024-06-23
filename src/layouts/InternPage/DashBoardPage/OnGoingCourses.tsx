@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import fetchCoursesForIntern from '../../../apis/InternApis/CourseIntern';
 import CourseCard from './CourseCard';
-import Course from '../../../model/CourseIntern'
+import Course from '../../../model/Intern/CourseIntern'
 
 interface OnGoingCourseProps{
     internId: string;

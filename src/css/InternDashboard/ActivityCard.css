@@ -1,18 +1,22 @@
 .course-activity-items {
     background: radial-gradient(circle at center, #c3d6f5, #a3c7f2);
-    padding: 40px;
+    padding: 20px;
 }
 .course-activity-cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 20px;
+    margin : 20px;
+}
+.course-activity-cards-container:first-child{
+    margin-left : 60px;
 }
 
 .course-activity-card {
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 24px;
-    background-color: white;
+    background-color: #d1ecff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -24,7 +28,7 @@
 }
 
 .activity-id {
-    background-color: #f2f2f2;
+    background-color: #aee4ff;
     padding: 8px 12px;
     border-radius: 4px;
     margin-right: 16px;
@@ -74,4 +78,5 @@
 
 .done-message{
     color:green;
+    font-weight: bold;
 }

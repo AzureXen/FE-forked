@@ -1,5 +1,6 @@
 import React from "react";
 import '../../../css/InternDashboard/CourseCard.css'
+import {useNavigate} from "react-router-dom";
 interface CourseCardProps {
     mentorId : number;
     courseId : number;
@@ -7,8 +8,12 @@ interface CourseCardProps {
     mentorName: string;
 }
 const MentorCourseCard:React.FC<CourseCardProps> = ({mentorId, courseId, courseName, mentorName}) =>{
+    const navigate = useNavigate();
+    const handleClick = ()=>{
+        navigate(`/mentor/${courseId}`);
+    }
     return(
-        <div className="course-card">
+        <div onClick={handleClick} className="course-card">
             <div className="card-img"></div>
             <h3>{courseName}</h3>
         </div>

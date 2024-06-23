@@ -41,7 +41,7 @@ const CourseActivityPage: React.FC = () => {
                 <div>
                     <CourseName courseId={checkedcourseId} internId={checkedInternId}/>
                 </div>
-                <hr style={{height: '4px', backgroundColor: 'aqua', border: 'none'}}/>
+                <hr style={{height: '4px', backgroundColor: 'aliceblue', border: 'none'}}/>
                 <div>
                     <CourseActivities courseId={checkedcourseId} internId={checkedInternId}/>
                 </div>

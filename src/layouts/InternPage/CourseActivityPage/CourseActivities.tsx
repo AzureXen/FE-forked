@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import CourseTask from "../../../model/CourseTask";
+import CourseTask from "../../../model/Intern/CourseTask";
 import fetchActivityCourseIntern from "../../../apis/InternApis/CourseActivity";
 import ActivityCard from "./ActivityCard";
 import '../../../css/InternDashboard/ActivityCard.css'

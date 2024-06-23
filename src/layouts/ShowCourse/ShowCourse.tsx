@@ -4,6 +4,7 @@ import FetchShowCoordiantorCourse from "../../apis/CoordinatorApis/ShowCourse";
 import { HeaderSmaller } from "../HeaderAndFooter/HeaderSmaller";
 import { Footer } from "../HeaderAndFooter/Footer";
 import { SearchBar } from "./SearchBar";
+import { NavbarMentor } from "../HeaderAndFooter/Navbar/NavbarMentor";
 
 interface ShowCourseListProps {
     courseId: number;
@@ -37,6 +38,7 @@ export const ShowCourse = () => {
     return (
         <div>
             <HeaderSmaller />
+            
             <div>
                 <SearchBar />
                 <div>Result</div>

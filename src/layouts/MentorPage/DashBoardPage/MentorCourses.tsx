@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react';
-import CourseMentor from "../../../model/CourseMentor";
+import CourseMentor from "../../../model/Mentor/CourseMentor";
 import fetchCourseMentor from "../../../apis/MentorApis/CourseMentor";
 import MentorCourseCard from "./MentorCourseCard";
 
