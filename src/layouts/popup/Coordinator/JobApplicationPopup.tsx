@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
-import "../../css/popup.css";
-import { useToast } from "../../context/ToastContext";
-import ActivitesRequest from "../../model/ActivitesRequest";
-import { ApiAddActivities } from "../../apis/MentorApis/ApiAddActivities";
+import "../../../css/popup.css";
+import { useToast } from "../../../context/ToastContext";
+import ActivitesRequest from "../../../model/ActivitesRequest";
+import { ApiUpdateActivities } from "../../../apis/MentorApis/ApiUpdateActivities";
+import { Task } from "../../../model/CourseAndAllTaskResponse";
 
-interface InsertActivitesPopupProps {
+interface UpdateTaskPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  courseId: number | null;
+  onCloseFunctionOnTask: () => void;
+  taskId: number | null;
+  task: Task | null;
 }
 
-export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({
+export const JobApplicationPopup: React.FC<UpdateTaskPopupProps> = ({
   isOpen,
   onClose,
-  courseId,
+  onCloseFunctionOnTask,
+  taskId,
+  task,
 }) => {
   const [animationClass, setAnimationClass] = useState("popup-entering");
   const [isClosing, setIsClosing] = useState(false);
@@ -22,6 +27,7 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+
   useEffect(() => {
     if (isOpen) {
       setIsClosing(false);
@@ -29,13 +35,18 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({
       setTimeout(() => {
         setAnimationClass("popup-entered");
       }, 100);
+      if (task) {
+        setTaskContent(task.taskContent);
+        setStartDate(task.startDate);
+        setEndDate(task.endDate);
+      }
     } else {
       setAnimationClass("popup-exiting");
       setTimeout(() => {
         setIsClosing(true);
       }, 300);
     }
-  }, [isOpen]);
+  }, [isOpen, task]);
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
@@ -48,29 +59,29 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-        if (courseId) {
-            const formattedStartDate = formatDate(startDate);
-            const formattedEndDate = formatDate(endDate);
+      if (taskId) {
+        const formattedStartDate = formatDate(startDate);
+        const formattedEndDate = formatDate(endDate);
 
-            const courseData: ActivitesRequest = {
-                taskContent,
-                startDate: formattedStartDate,
-                endDate: formattedEndDate,
-            };
+        const taskData: ActivitesRequest = {
+          taskContent,
+          startDate: formattedStartDate,
+          endDate: formattedEndDate,
+        };
 
-            const data = await ApiAddActivities(courseData, courseId);
-            setMessage(data);
-            showToast(data, "success");
-            onClose();
-        }
+        const data = await ApiUpdateActivities(taskData, taskId);
+        setMessage(data);
+        showToast(data, "success");
+        onCloseFunctionOnTask(); // Call the function to close both popups
+      }
     } catch (error: unknown) {
-        if (error instanceof Error) {
-            showToast(error.message, "error");
-        } else {
-            showToast("An unexpected error occurred", "error");
-        }
+      if (error instanceof Error) {
+        showToast(error.message, "error");
+      } else {
+        showToast("An unexpected error occurred", "error");
+      }
     }
-};
+  };
 
   if (isClosing) return null;
 
@@ -78,14 +89,13 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({
     <div className={`blur-background ${animationClass}`}>
       <div className="container d-flex align-items-center justify-content-center h-100">
         <div className={`popup-content`}>
-          <h2>Add Activities For Course {courseId}</h2>
+          <h2>Update Task {taskId}</h2>
           <form onSubmit={handleSubmit}>
             <div className="col-xs-12">
-            <label htmlFor="startDate" style={{ display: "block" }}>
+              <label htmlFor="startDate" style={{ display: "block" }}>
                 Task content
               </label>
-            <div className="styled-input wide">
-           
+              <div className="styled-input wide">
                 <input
                   type="text"
                   id="input"
@@ -99,7 +109,6 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({
               <label htmlFor="startDate" style={{ display: "block" }}>
                 Start Date
               </label>
-
               <div className="styled-input wide">
                 <input
                   type="date"
@@ -114,7 +123,6 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({
               <label htmlFor="startDate" style={{ display: "block" }}>
                 End Date
               </label>
-
               <div className="styled-input wide">
                 <input
                   type="date"
@@ -126,7 +134,7 @@ export const InsertActivitesPopup: React.FC<InsertActivitesPopupProps> = ({
               </div>
             </div>
             <button type="submit" className="btn btn-primary">
-              Add Activities
+              Update Task
             </button>
           </form>
           <i

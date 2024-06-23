@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const ApiViewAllCourseMentor = async (mentorId: number, pageNo: number, pageSize: number) => {
     try {
-        const response = await axios.get(`http://localhost:8080/internbridge/mentor/course/${mentorId}?pageNo=${pageNo}&pageSize=${pageSize}`);
+        const response = await axios.get(`http://localhost:8080/internbridge/mentor/Allcourse/${mentorId}?pageNo=${pageNo}&pageSize=${pageSize}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching course data:", error);

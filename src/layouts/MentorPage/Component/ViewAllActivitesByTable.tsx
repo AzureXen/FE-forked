@@ -1,55 +1,75 @@
 import React, { useState, useEffect } from "react";
 import "../../../css/managertable.css";
 import { useToast } from "../../../context/ToastContext";
-import CourseMentorModel from "../../../model/CourseMentorModel";
-import { ApiViewAllCourseMentor } from "../../../apis/ApiViewAllCourseMentor";
 import { Loading } from "../../Loading/Loading";
 import { InsertActivitesPopup } from "../../popup/InsertActivitesPopup";
+import { ApiViewAllCourseTaskByTable } from "../../../apis/MentorApis/ApiViewAllCourseTaskByTable";
+import { CourseAndAllTaskResponse, Task } from "../../../model/CourseAndAllTaskResponse";
+import "../../../css/Mentor/ViewAllActivitiesByTable.css";
+import { FunctionOnTaskPopup } from "../../popup/Mentor/FunctionOnTaskPopup";
+import { ApiDeleteTask } from "../../../apis/MentorApis/ApiDeleteTask";
 
-export const ViewAllCourseMentor = () => {
-  const [courses, setCourses] = useState<CourseMentorModel[]>([]);
+export const ViewAllActivitesByTable = () => {
+  const [courses, setCourses] = useState<CourseAndAllTaskResponse[]>([]);
   const [pageNo, setPageNo] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(5);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-  const [selectedCourse, setSelectedCourse] =
-    useState<CourseMentorModel | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<CourseAndAllTaskResponse | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [statusFilter, setStatusFilter] = useState<number | null | undefined>(
-    undefined
-  );
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>(searchTerm);
+  const [statusFilter, setStatusFilter] = useState<number | null | undefined>(undefined);
   const { showToast } = useToast();
-  const [user, setUser] = useState<{ user_id: number } | null>(null);
-
+  const [user, setUser] = useState<{user_id: number;company_id: number;} | null>(null);
+  const [isFunctionPopupOpen, setIsFunctionPopupOpen] = useState<boolean>(false);
+  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+  
 
   useEffect(() => {
     if (user) {
-      fetchUserList();
+      fetchActivities();
     }
-  }, [pageNo, pageSize, searchTerm, statusFilter, user]);
+  }, [pageNo, pageSize, debouncedSearchTerm, statusFilter, user]);
 
-  const fetchUserList = async () => {
+  useEffect(() => {
+    setLoading(true);
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+      setLoading(false);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm]);
+
+  const fetchActivities = async () => {
     setLoading(true);
     try {
       if (user) {
         console.log(user.user_id);
-        const data = await ApiViewAllCourseMentor(
+        const data = await ApiViewAllCourseTaskByTable(
           user.user_id,
+          user.company_id,
           pageNo,
           pageSize
         );
         if (data) {
-          setCourses(data.courses);
+          setCourses(data.courseList);
           setTotalItems(data.totalItems);
-          setTotalPages(Math.ceil(data.totalItems / pageSize));
+          const pages = Math.ceil(data.totalItems / pageSize);
+          console.log("Total Pages:", pages); // Debugging log
+          setTotalPages(pages);
         }
       }
     } catch (error) {
@@ -77,7 +97,7 @@ export const ViewAllCourseMentor = () => {
     setPageNo(0);
   };
 
-  const openPopup = (course: CourseMentorModel) => {
+  const openPopup = (course: CourseAndAllTaskResponse) => {
     setSelectedCourse(course);
     setIsPopupOpen(true);
   };
@@ -95,32 +115,49 @@ export const ViewAllCourseMentor = () => {
     setPageNo(0);
   };
 
-  const handleDeleteUser = async (id: number) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
+
+  const handleTaskAction = (task: Task) => {
+    console.log("Selected Task:", task); 
+    console.log("task id: "+task.id);
+    setSelectedTaskId(task.id);
+    setSelectedTask(task);
+    setIsFunctionPopupOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsFunctionPopupOpen(false);
+    setSelectedTaskId(null);
+  };
+
+  const handleDelete = async () => {
+    if (selectedTaskId !== null) {
       try {
-        // await DeleteCompany(id);
-        showToast("User deleted successfully", "success");
-        fetchUserList();
+        await ApiDeleteTask(selectedTaskId)
+        showToast("Task deleted successfully", "success");
+        fetchActivities();
       } catch (error) {
-        showToast("Failed to delete user", "error");
+        showToast("Failed to delete task", "error");
+      } finally {
+        handleCancel();
       }
     }
   };
 
-  const filteredUserList = courses.filter((course) => {
+  const filteredList = courses.filter((course) => {
     return (
-      course.courseName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.courseName.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
       course.courseId
         .toString()
         .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+        .includes(debouncedSearchTerm.toLowerCase())
     );
   });
 
   return (
+    
     <div className="application-container">
       <h1>Course List</h1>
-      <div className="filter-controls">
+      <div className="filter-controls ">
         <div className="input-group d-flex flex-row justify-content-center">
           <input
             type="text"
@@ -154,32 +191,55 @@ export const ViewAllCourseMentor = () => {
         </div>
       ) : (
         <div className="table-responsive">
-          {filteredUserList.length > 0 ? (
+          {filteredList.length > 0 ? (
             <table className="table rounded" id="table">
               <thead className="header">
                 <tr>
                   <th>Course Name</th>
-                  <th>Start date</th>
-                  <th>End date</th>
-                  <th>Mentor name</th>
-                  <th>Actions</th>
+                  <th>Mentor Name</th>
+                  <th>Activities</th>
+                  {/* <th>Actions</th> */}
                 </tr>
               </thead>
               <tbody>
-                {filteredUserList.map((course) => (
+                {filteredList.map((course) => (
                   <tr key={course.courseId}>
                     <td>{course.courseName}</td>
-                    <td>
-                      {new Date(course.startDate).toLocaleDateString("en-GB")}
-                    </td>
-                    <td>
-                      {new Date(course.endDate).toLocaleDateString("en-GB")}
-                    </td>
-
                     <td>{course.mentorName}</td>
                     <td>
-                      <button onClick={() => openPopup(course)}>Add Activities</button>
+                     <div className="container row">
+                     {course.taskList.map((task) => (
+                        <div className="col-md-4" key={task.id}>
+                          <div className="ag-courses_item col-md-3" onClick={() => handleTaskAction(task)}>
+                            <div className="ag-courses-item_link">
+                              <div className="ag-courses-item_bg"></div>
+
+                              <div className="ag-courses-item_title">
+                                Task: {task.taskContent}
+                              </div>
+                              <div className="d-flex justify-content-between">
+                                <div className="ag-courses-item_date-box">
+                                  Start:
+                                  <span className="ag-courses-item_date">
+                                    {task.startDate}
+                                  </span>
+                                </div>
+                                <div className="ag-courses-item_date-box">
+                                  End:
+                                  <span className="ag-courses-item_date">
+                                    {task.endDate}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                     </div>
                     </td>
+                    {/* <td>
+                      <button onClick={() => openPopup(course)}>Add Activities</button>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
@@ -236,6 +296,16 @@ export const ViewAllCourseMentor = () => {
           isOpen={isPopupOpen}
           onClose={closePopup}
           courseId={selectedCourse.courseId}
+        />
+      )}
+      {isFunctionPopupOpen && (
+        <FunctionOnTaskPopup
+          message="Please choose an action for the task."
+          onCancel={handleCancel}
+          onDelete={handleDelete}
+          isOpen={isFunctionPopupOpen}
+          task={selectedTask}
+          onTaskUpdate={fetchActivities}
         />
       )}
     </div>

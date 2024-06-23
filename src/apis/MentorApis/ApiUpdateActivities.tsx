@@ -1,9 +1,9 @@
 import axios, { AxiosError } from "axios";
 import ActivitesRequest from "../../model/ActivitesRequest";
 
-export const ApiAddActivities = async (activitesRequest: ActivitesRequest, courseId: number) => {
+export const ApiUpdateActivities = async (activitesRequest: ActivitesRequest, taskId: number) => {
     try {
-        const response = await axios.post(`http://localhost:8080/internbridge/mentor/addactivities/${courseId}`, activitesRequest, {
+        const response = await axios.put(`http://localhost:8080/internbridge/mentor/task/update/${taskId}`, activitesRequest, {
             headers: {
                 'Content-Type': 'application/json',
             }

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "../../../css/navbarManager.css";
-export const NavbarMentor = () => {
+export const NavbarCoordinator = () => {
     return (
         <div>
       <div className="nav-workplace" role="banner" id="headerSmallerHeight">
@@ -26,7 +26,7 @@ export const NavbarMentor = () => {
                     <Link className="dropdown-item" to="/mentor" id="dropdown-inAdmin-item">
                     Course
                     </Link>
-                    <Link className="dropdown-item" to="/mentor/ViewCourse" id="dropdown-inAdmin-item">
+                    <Link className="dropdown-item" to="/coordinator/course" id="dropdown-inAdmin-item">
                     View Course By Table
                     </Link>
                   </div>
@@ -53,14 +53,32 @@ export const NavbarMentor = () => {
                     <Link className="dropdown-item" to="/mentor/viewactivities" id="dropdown-inAdmin-item">
                     View Activities By Table
                     </Link>
-                    <Link className="dropdown-item" to="/mentor/createActivities" id="dropdown-inAdmin-item">
-                    Create Activities
-                    </Link>
                   </div>
                 </li>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link" to="/Workplace/Manager/Report">View Report</Link>
+                  <li
+                  className="nav-item dropdown"
+                >
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    id="dropdown04"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Create Course
+                  </a>
+                  <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown-inAdmin">
+                    <Link className="dropdown-item" to="/coordinator/createCourse" id="dropdown-inAdmin-item">
+                    Create and add mentor to course
+                    </Link>
+                    <Link className="dropdown-item" to="coordinator/createCourse" id="dropdown-inAdmin-item">
+                    Add Intern to course
+                    </Link>
+                  </div>
+                </li>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <Link className="nav-link" to="/Workplace/Manager/Report">Helps</Link>

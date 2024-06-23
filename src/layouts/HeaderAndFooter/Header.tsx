@@ -94,21 +94,21 @@ export const Header: React.FC = () => {
                     <Link className="dropdown-item" to="/Workplace/Manager">
                       Manager
                     </Link>
-                    <Link className="dropdown-item" to="">
+                    <Link className="dropdown-item" to="/coordinator/course">
                       Internship Coordinator
                     </Link>
-                    <a className="dropdown-item" href="#">
+                    <a className="dropdown-item" href="/intern">
                       Internship
                     </a>
-                    <a className="dropdown-item" href="#">
+                    <Link className="dropdown-item" to="/mentor">
                       Mentor
-                    </a>
+                    </Link>
                   </div>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link" href="#">
+                  <Link className="nav-link" to="/home">
                     About us
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <a className="nav-link" href="#">
