@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom";
 import MentorActivities from "./MentorActivities";
 import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
+import CourseNameMentor from "./CourseNameMentor";
 
 
 const MentorActivityPage = () =>{
@@ -26,9 +27,17 @@ const MentorActivityPage = () =>{
             <div>
                 <HeaderWorkplace/>
             </div>
+
             <div className="course-activity-items">
-                <MentorActivities mentorId={checkedMentorId} courseId={checkedCourseId}/>
+                <div>
+                    <CourseNameMentor courseId={checkedCourseId} mentorId={checkedMentorId}/>
+                </div>
+                <hr style={{height: '4px', backgroundColor: 'aliceblue', border: 'none'}}/>
+                <div>
+                    <MentorActivities mentorId={checkedMentorId} courseId={checkedCourseId}/>
+                </div>
             </div>
+
             <div>
                 <Footer/>
             </div>

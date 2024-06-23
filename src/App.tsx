@@ -32,7 +32,7 @@ import { ManagerViewJobByCompany } from "./layouts/ManagerPage/ManagerViewJobByC
 
 import { AdminViewAllCompanyPage } from "./layouts/AdminPage/AdminViewAllCompanyPage";
 import { MentorViewAllCoursePage } from "./layouts/MentorPage/Page/MentorViewAllCoursePage";
-import MentorActivityPage from "./layouts/MentorPage/CreateActivityPage/MentorActivityPage";
+import MentorActivityPage from "./layouts/MentorPage/CourseActivityPage/MentorActivityPage";
 import ViewCourseInsystemByCoordinator from "./layouts/CoordinatorCoursePage/CoordinatorCoursePage";
 import CreateCourseComponent from "./layouts/CoordinatorCoursePage/CreateCourse/CreateCourseComponent";
 export const App = () => {
