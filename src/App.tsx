@@ -32,6 +32,7 @@ import { ManagerViewJobByCompany } from "./layouts/ManagerPage/ManagerViewJobByC
 import { ViewCourseInsystem } from "./layouts/CoordinatorCoursePage/CoordinatorCoursePage"
 import { AdminViewAllCompanyPage } from "./layouts/AdminPage/AdminViewAllCompanyPage";
 import { MentorViewAllCoursePage } from "./layouts/MentorPage/Page/MentorViewAllCoursePage";
+import MentorActivityPage from "./layouts/MentorPage/CreateActivityPage/MentorActivityPage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -56,6 +57,7 @@ export const App = () => {
               <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
               <Route path="/mentor" element={<MentorDashboard />} />
+              <Route path="/mentor/:courseId" element={<MentorActivityPage/>}/>
               <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
               <Route path="coordinator/createCourse" element={<CreateCourseComponent />} />
               <Route path="verify" element={<ForgotPasswordPage />} />

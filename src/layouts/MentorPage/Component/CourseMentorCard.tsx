@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import CourseCard from './CourseCardMentor';
-import Course from '../../../model/CourseIntern'
+import Course from '../../../model/Intern/CourseIntern'
 import CourseMentorModel from '../../../model/CourseMentorModel';
 import { ApiViewAllCourseMentor } from '../../../apis/ApiViewAllCourseMentor';
 

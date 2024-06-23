@@ -1,6 +1,6 @@
 import axios from "axios";
-import "../../model/CourseMentor"
-import CourseMentor from "../../model/CourseMentor";
+import "../../model/Mentor/CourseMentor"
+import CourseMentor from "../../model/Mentor/CourseMentor";
 const fetchCourseMentor = async (mentorId: string) => {
     try{
         const response = await axios.get(`http://localhost:8080/internbridge/mentor/course/${mentorId}?pageNo=0&pageSize=999`)

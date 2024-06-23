@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import CourseIntern from "../../model/CourseIntern"
+import CourseIntern from "../../model/Intern/CourseIntern"
 const fetchCoursesForIntern = async (internId : string) => {
     try {
         const response =
