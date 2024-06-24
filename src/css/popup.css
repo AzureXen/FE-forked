@@ -66,6 +66,7 @@
     overflow: hidden;
     transition: all 0.5s ease;
   }
+  
   .Cancel{
     background-color: #000000 !important;
     transition: all 0.5s ease;

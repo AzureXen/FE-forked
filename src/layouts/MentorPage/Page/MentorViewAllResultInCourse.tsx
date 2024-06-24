@@ -6,9 +6,9 @@ import { Footer } from '../../HeaderAndFooter/Footer';
 import { CourseMentorCard } from '../Component/CourseMentorCard';
 import { ViewAllCourseMentor } from '../Component/ViewAllCourseMentor';
 import { NavbarMentor } from '../../HeaderAndFooter/Navbar/NavbarMentor';
-import { ViewAllActivitesByTable } from '../Component/ViewAllActivitesByTable';
+import { BarChartReport } from '../Component/BarChartReport';
 
-export const MentorViewAllActivitiesInCourse: React.FC = () => {
+export const MentorViewAllResultInCourse: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [user, setUser] = useState<{ user_id: number } | null>(null);
   const [mentorId, setMentorId] = useState<number>(0);
@@ -36,8 +36,7 @@ export const MentorViewAllActivitiesInCourse: React.FC = () => {
         {/* <>
           {mentorId !== 0 && <CourseMentorCard mentorId={mentorId} />}
         </> */}
-        <ViewAllActivitesByTable/>
-
+        <BarChartReport/>
         {/* <ShowCourse/> */}
       </div>
       <Footer />

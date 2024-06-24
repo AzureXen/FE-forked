@@ -26,10 +26,19 @@ const createCourse = async (createCourseRequest: CreateCourseRequest) => {
         });
         console.log('Response from server:', response.data);
         return response.data;
-    } catch (error) {
-        console.error('Error in createCourse API call:', error);
-        throw error;
-    }
+    }catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response) {
+            throw new Error(error.response.data);
+          } else if (error.request) {
+            throw new Error("No response received from the server");
+          } else {
+            throw new Error("Error in setting up the request");
+          }
+        } else {
+          throw new Error("An unexpected error occurred");
+        }
+      }
 };
 
 export default createCourse;

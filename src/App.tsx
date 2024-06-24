@@ -33,11 +33,16 @@ import ViewCourseInsystemByCoordinator from "./layouts/CoordinatorCoursePage/Coo
 import CreateCourseComponent from "./layouts/CoordinatorCoursePage/CreateCourse/CreateCourseComponent";
 import { CoordinatorCreateSchedulePage } from "./layouts/CoordinatorCoursePage/CoordinatorCreateSchedulePage";
 import { CoordinatorCreateCoursePage } from "./layouts/CoordinatorCoursePage/CoordinatorCreateCoursePage";
+import { MentorCreateActivitiesForCourse } from "./layouts/MentorPage/Page/MentorCreateActivitiesForCourse";
+import { MentorViewAllActivitiesInCourse } from "./layouts/MentorPage/Page/MentorViewAllActivitiesInCourse";
+import { MentorViewAllResultInCourse } from "./layouts/MentorPage/Page/MentorViewAllResultInCourse";
+import { CoordinatorViewBarChart } from "./layouts/CoordinatorCoursePage/CoordinatorViewBarChart";
+import { CoordinatorAddInternToCoursePage } from "./layouts/CoordinatorCoursePage/CoordinatorAddInternToCoursePage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
 
-
+  // currentUser ? <Navigate to="/" /> : 
   return (
     <ToastProvider>
       <Router>
@@ -46,7 +51,7 @@ export const App = () => {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/home" element={<HomePage />} />
-              <Route path="/login" element={currentUser ? <Navigate to="/" /> : <LoginPage />} />
+              <Route path="/login" element={<LoginPage />} />
               <Route path="/jobs" element={<JobpPage />} />
               <Route path="/jobs/search=:id" element={<JobpPage />} />
               <Route path="/jobs/:id" element={<JobDetailPage />} />
@@ -68,10 +73,15 @@ export const App = () => {
               <Route path="Admin/CreateUser" element={<AdminCreateUser />} />
               <Route path="/Admin/ViewAllCompany" element={<AdminViewAllCompanyPage/>}/>
               <Route path="/mentor/ViewCourse" element={<MentorViewAllCoursePage/>}/>
+              <Route path="/mentor/createActivities" element={<MentorCreateActivitiesForCourse/>}/>
+              <Route path="/mentor/viewactivities" element={<MentorViewAllActivitiesInCourse/>}/>
+              <Route path="/mentor/report" element={<MentorViewAllResultInCourse/>}/>
               <Route path="*" element={<ErrorPage />} />
               <Route path="/s" element={<SuccessPage />} />
               <Route path="/coordinator/course" element={<ViewCourseInsystemByCoordinator />} />
               <Route path="/coordinator/createSchedule" element={<CoordinatorCreateSchedulePage/>}/>
+              <Route path="/coordinator/report" element={<CoordinatorViewBarChart/>}/>
+              <Route path="/coordinator/createIntern" element={<CoordinatorAddInternToCoursePage/>}/>
             </Routes>
           </div>
         </div>

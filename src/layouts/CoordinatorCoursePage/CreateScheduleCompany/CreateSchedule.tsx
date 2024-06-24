@@ -34,7 +34,7 @@ export const CreateSchedule: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await ApiGetAllCourseOfMentor(parseInt(companyId));
+        const data = await ApiGetAllCourseOfMentor(companyId);
         setCourses(data.courses);
       } catch (error) {
         console.log("Error:", error);

@@ -72,7 +72,7 @@ export const UpdateTaskPopup: React.FC<UpdateTaskPopupProps> = ({
         const data = await ApiUpdateActivities(taskData, taskId);
         setMessage(data);
         showToast(data, "success");
-        onCloseFunctionOnTask(); // Call the function to close both popups
+        onCloseFunctionOnTask();
       }
     } catch (error: unknown) {
       if (error instanceof Error) {

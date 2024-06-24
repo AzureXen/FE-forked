@@ -15,7 +15,7 @@ import { Loading } from "../Loading/Loading";
 export const CreateCompanyPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [companyName, setCompanyName] = useState<string>("");
-  const [companyDiscription, setCompanyDiscription] = useState<string>(""); // Updated variable name to camelCase
+  const [companyDescription, setCompanyDescription] = useState<string>(""); // Updated variable name to camelCase
   const [location, setLocation] = useState<string>("");
   const { showToast } = useToast();
   const [fields, setFields] = useState<Field[]>([]);
@@ -34,13 +34,13 @@ export const CreateCompanyPage: React.FC = () => {
     setLoading(true);
       if (
         companyName != null &&
-        companyDiscription != null &&
+        companyDescription != null &&
         location != null
       ) {
-        const companyData = { companyName, companyDiscription, location };
+        const companyData = { companyName, companyDescription, location };
         const response = await CreateCompany(companyData);
         showToast("success", "success");
-        setCompanyDiscription("");
+        setCompanyDescription("");
         setCompanyName("");
         setLocation("");
       }
@@ -83,8 +83,8 @@ export const CreateCompanyPage: React.FC = () => {
                     <input
                       type="text"
                       id="input"
-                      value={companyDiscription}
-                      onChange={(e) => setCompanyDiscription(e.target.value)}
+                      value={companyDescription}
+                      onChange={(e) => setCompanyDescription(e.target.value)}
                       required
                     />
                     <label>Company Discription</label>

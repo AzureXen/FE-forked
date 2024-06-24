@@ -58,7 +58,18 @@ export const ViewAllCourseMentor = () => {
       setLoading(false);
     }
   };
-
+  const getStatusLabel = (status: number | null) =>{
+    switch(status){
+      case 0:
+        return "Not start";
+      case 1:
+        return "On going";
+      case null:
+        return "Finished";
+      default:
+        return;
+    }
+  }
   const handlePageChange = (newPageNo: number) => {
     if (newPageNo >= 0 && newPageNo < totalPages) {
       setPageNo(newPageNo);
@@ -161,6 +172,7 @@ export const ViewAllCourseMentor = () => {
                   <th>Course Name</th>
                   <th>Start date</th>
                   <th>End date</th>
+                  <th>Status</th>
                   <th>Mentor name</th>
                   <th>Actions</th>
                 </tr>
@@ -175,7 +187,9 @@ export const ViewAllCourseMentor = () => {
                     <td>
                       {new Date(course.endDate).toLocaleDateString("en-GB")}
                     </td>
-
+                    <td>
+                      {getStatusLabel(course.status)}
+                    </td>
                     <td>{course.mentorName}</td>
                     <td>
                       <button onClick={() => openPopup(course)}>Add Activities</button>

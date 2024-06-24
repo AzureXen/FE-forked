@@ -1,15 +1,15 @@
 
 export default class CreateCompanyRequest {
     companyName: string;
-    companyDiscription: string;
+    companyDescription: string;
     location: string;
     constructor(
         companyName: string,
-        companyDiscription: string,
+        companyDescription: string,
         location: string
     ) {
        this.companyName=companyName;
-       this.companyDiscription=companyDiscription;
+       this.companyDescription=companyDescription;
        this.location=location;
     }
 

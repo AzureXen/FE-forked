@@ -1,5 +1,5 @@
 // LoginPage.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthService from "../../service/AuthService";
 import { useNavigate } from "react-router-dom";
 import "../../css/loginStyle.css";
@@ -14,6 +14,17 @@ const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const [user, setUser] = useState<{
+    user_id: number;
+    company_id: number;
+  } | null>(null);
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      navigate("/")
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

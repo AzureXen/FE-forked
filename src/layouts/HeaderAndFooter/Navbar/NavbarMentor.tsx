@@ -60,7 +60,7 @@ export const NavbarMentor = () => {
                 </li>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link" to="/Workplace/Manager/Report">View Report</Link>
+                  <Link className="nav-link" to="/mentor/report">View Report</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <Link className="nav-link" to="/Workplace/Manager/Report">Helps</Link>

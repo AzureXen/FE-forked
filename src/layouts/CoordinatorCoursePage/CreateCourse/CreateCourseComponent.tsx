@@ -4,6 +4,7 @@ import apiShowMentor from '../../../apis/CoordinatorApis/ApiShowMentor';
 import { Loading } from '../../Loading/Loading';
 import { Footer } from '../../HeaderAndFooter/Footer';
 import { HeaderWorkplace } from '../../HeaderAndFooter/HeaderWorkplace';
+import { useToast } from '../../../context/ToastContext';
 
 const CreateCourseComponent: React.FC = () => {
     const [mentorId, setMentorId] = useState<number>(0);
@@ -15,6 +16,7 @@ const CreateCourseComponent: React.FC = () => {
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [user, setUser] = useState<{ company_id: number } | null>(null);
+    const { showToast } = useToast();
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -72,18 +74,21 @@ const CreateCourseComponent: React.FC = () => {
         try {
             const response = await createCourse(newCourse);
             console.log('Course created successfully:', response);
-            setSuccessMessage('Course created successfully!');
+            showToast(response, "success");
             setError('');
-
-            // Reset form fields
             setMentorId(0);
             setCourseDescription('');
             setStartDate('');
             setEndDate('');
-        } catch (error) {
-            console.error('Error creating course:', error);
-            setError('Error creating course');
-        } finally {
+        }  catch (error: unknown) {
+            if (error instanceof Error) {
+              console.error('Error occurred:', error.message);
+              showToast(error.message, "error");
+            } else {
+              console.error('Unexpected error:', error);
+              showToast("An unexpected error occurred", "error");
+            }
+          } finally {
             setIsLoading(false);
         }
     };

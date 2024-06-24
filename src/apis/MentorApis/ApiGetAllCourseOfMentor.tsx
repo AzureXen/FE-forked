@@ -1,8 +1,9 @@
 import axios from "axios";
 
-export const ApiGetAllCourseOfMentor = async (id: number) => {
+export const ApiGetAllCourseOfMentor = async (id: string) => {
   try {
-    const response = await axios.get(`http://localhost:8080/internbridge/mentor/course/3`);
+    const idnew=parseInt(id);
+    const response = await axios.get(`http://localhost:8080/internbridge/mentor/course/${idnew}`);
     return response.data;
   } catch (error) {
     console.log(error);

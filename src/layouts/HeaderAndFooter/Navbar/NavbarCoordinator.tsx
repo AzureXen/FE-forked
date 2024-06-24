@@ -50,8 +50,8 @@ export const NavbarCoordinator = () => {
                     <Link className="dropdown-item" to="/coordinator/createCourse" id="dropdown-inAdmin-item">
                     Create and add mentor to course
                     </Link>
-                    <Link className="dropdown-item" to="coordinator/createCourse" id="dropdown-inAdmin-item">
-                    Add Intern to course
+                    <Link className="dropdown-item" to="/coordinator/createIntern" id="dropdown-inAdmin-item">
+                    Add intern to course
                     </Link>
                   </div>
                 </li>

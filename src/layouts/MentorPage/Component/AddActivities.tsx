@@ -19,25 +19,27 @@ export const AddActivities: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [courses, setCourses] = useState<CourseMentorModel[]>([]);
   const [courseId, setCourseId] = useState<string>("");
-  const [companyId, setCompanyId] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
   const [user, setUser] = useState<{user_id: number;company_id: number;} | null>(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      setUserId(parsedUser.user_id.toString());
     }
-  }, []);
+  }, [userId]);
   
 
   useEffect(() => {
     const fetchData = async () => {
         if(user){
-            setCompanyId(user.company_id.toString());
-            console.log(companyId)
+          setUserId(user.user_id.toString());
+          
         }
         try {
-          const data = await ApiGetAllCourseOfMentor(parseInt(companyId));
+          const data = await ApiGetAllCourseOfMentor(userId);
           setCourses(data.courses);
         } catch (error) {
           console.log("Error:", error);
@@ -45,7 +47,7 @@ export const AddActivities: React.FC = () => {
       
     };
     fetchData();
-  }, [companyId]);
+  }, [userId]);
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
