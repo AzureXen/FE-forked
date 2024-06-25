@@ -38,6 +38,10 @@ import { MentorViewAllActivitiesInCourse } from "./layouts/MentorPage/Page/Mento
 import { MentorViewAllResultInCourse } from "./layouts/MentorPage/Page/MentorViewAllResultInCourse";
 import { CoordinatorViewBarChart } from "./layouts/CoordinatorCoursePage/CoordinatorViewBarChart";
 import { CoordinatorAddInternToCoursePage } from "./layouts/CoordinatorCoursePage/CoordinatorAddInternToCoursePage";
+import MentorFeedbackInternPage
+  from "./layouts/MentorPage/FeedbackPages/MentorFeedbackInternPage/MentorFeedbackInternPage";
+import MentorFeedbackCoursePage
+  from "./layouts/MentorPage/FeedbackPages/MentorFeedbackCoursePage/MentorFeedbackCoursePage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -63,6 +67,8 @@ export const App = () => {
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
               <Route path="/mentor" element={<MentorDashboard />} />
               <Route path="/mentor/:courseId" element={<MentorActivityPage/>}/>
+              <Route path="/mentor/feedback" element={<MentorFeedbackCoursePage/>}/>
+              <Route path="/mentor/feedback/:courseId" element={<MentorFeedbackInternPage/>}/>
               <Route path="/coordinator/course/:courseId" element={<ShowCourse />} />
               <Route path="coordinator/createCourse" element={<CoordinatorCreateCoursePage/>} />
               <Route path="verify" element={<ForgotPasswordPage />} />
