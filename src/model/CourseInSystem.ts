@@ -7,8 +7,8 @@ export default class CourseInSystem {
     mentorName: string;
     startDate: Date;
     endDate: Date;
-
-    constructor(courseId: number, courseName: string, companyId: number, companyName: string, mentorId: number, mentorName: string, startDate: Date, endDate: Date) {
+    status: number;
+    constructor(courseId: number, courseName: string, companyId: number, companyName: string, mentorId: number, mentorName: string, startDate: Date, endDate: Date, status: number) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.companyId = companyId;
@@ -17,5 +17,6 @@ export default class CourseInSystem {
         this.mentorName = mentorName;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.status=status;
     };
 }

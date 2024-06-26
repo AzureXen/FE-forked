@@ -205,10 +205,27 @@
   }
 
 }
-@media (max-width: 768px) {
-  .application-container {
-      padding: 1rem;
-      height: 50%;
-      font-size: 10rem;
-  }
+.Not-start{
+  background-color: #f7b721 ;
+  padding: 2%;
+  text-align: center;
+  color: black !important;
+  font-weight: bold !important;
+  width: 70%;
+}
+.Finished{
+  background-color: #f51010 ;
+  padding: 2%;
+  text-align: center;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  width: 70%;
+}
+.On-going{
+  background-color: #40f896 ;
+  padding: 2%;
+  text-align: center;
+  color: black !important;
+  font-weight: bold !important;
+  width: 70%;
 }

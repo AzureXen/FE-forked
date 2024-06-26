@@ -27,18 +27,25 @@ export const BarChartReportForAllCourse: React.FC = () => {
   const [companyId, setCompanyId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<InternResult[]>([]);
+  const [pageNo, setPageNo] = useState<number>(0);
+  const itemsPerPage = 5;
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      setCompanyId(parsedUser.company_id.toString());
     }
-  }, []);
+  }, [companyId]);
+
   useEffect(() => {
     const fetchDataResult = async () => {
       try {
         setLoading(true);
         if (user) {
-          const data = await ApiViewResultCoordinator(user.company_id);
+          const data = await ApiViewResultCoordinator(parseInt(companyId));
+          console.log(data);
           setResult(data.getInternResultFromCourseResponses);
           console.log(data);
         }
@@ -50,32 +57,25 @@ export const BarChartReportForAllCourse: React.FC = () => {
       }
     };
     fetchDataResult();
-  }, [courseId]);
+  }, [companyId]);
+
+  const handlePageChange = (newPageNo: number) => {
+    setPageNo(newPageNo);
+  };
+
+  const paginatedResults = result.slice(
+    pageNo * itemsPerPage,
+    (pageNo + 1) * itemsPerPage
+  );
+
+  const totalPages = Math.ceil(result.length / itemsPerPage);
 
   return (
     <>
       <div className="container rounded mb-5" id="job-block">
         <div className="row input-container">
           <h1 id="h1-apply-now">View Report Now</h1>
-          <div className="col-xs-12">
-            <div className="styled-input wide">
-              <select
-                id="input"
-                required
-                value={courseId}
-                onChange={(e) => setCourseId(e.target.value)}
-              >
-                <option value="" disabled selected>
-                  Select Your Course
-                </option>
-                {courses.map((course) => (
-                  <option key={course.courseId} value={course.courseId}>
-                    {course.courseName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+
           {loading ? (
             <Loading />
           ) : (
@@ -84,12 +84,12 @@ export const BarChartReportForAllCourse: React.FC = () => {
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart
                   className="BarChart"
-                  data={result}
+                  data={paginatedResults}
                   layout="vertical"
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
+                  <XAxis type="number" domain={[0, 100]} />
                   <YAxis dataKey="internName" type="category" />
                   <Tooltip />
                   <Legend />
@@ -97,25 +97,20 @@ export const BarChartReportForAllCourse: React.FC = () => {
                 </BarChart>
               </ResponsiveContainer>
               <div>
-              <h2 id="h2">Access By Completed Task</h2>
+                <h2 id="h2">Access By Completed Task</h2>
                 <ResponsiveContainer width="100%" height={400}>
                   <BarChart
                     className="BarChart"
-                    data={result}
+                    data={paginatedResults}
                     layout="horizontal"
                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                   >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="internName" type="category" /> // Change to
-                    XAxis with dataKey="internName"
-                    <YAxis type="number" /> // Change to YAxis
+                    <XAxis dataKey="internName" type="category" />
+                    <YAxis type="number" />
                     <Tooltip />
                     <Legend />
-                    <Bar
-                      dataKey="totalTask"
-                      fill="#8884d8"
-                      name="Total Tasks"
-                    />
+                    <Bar dataKey="totalTask" fill="#8884d8" name="Total Tasks" />
                     <Bar
                       dataKey="completedTasks"
                       fill="#82ca9d"
@@ -123,6 +118,39 @@ export const BarChartReportForAllCourse: React.FC = () => {
                     />
                   </BarChart>
                 </ResponsiveContainer>
+              </div>
+              <div className="pagination-controls pagination-style-one m-t-20 justify-content-center align-items-center">
+                <a onClick={() => handlePageChange(0)} aria-disabled={pageNo === 0}>
+                  <i className="fa fa-angle-double-left" aria-hidden="true"></i>
+                </a>
+                <a
+                  onClick={() => handlePageChange(pageNo - 1)}
+                  aria-disabled={pageNo === 0}
+                >
+                  Prev
+                </a>
+                {[...Array(totalPages)].map((_, index) => (
+                  <a
+                    key={index}
+                    className={pageNo === index ? "selected" : ""}
+                    id="pagination-number-box"
+                    onClick={() => handlePageChange(index)}
+                  >
+                    {index + 1}
+                  </a>
+                ))}
+                <a
+                  onClick={() => handlePageChange(pageNo + 1)}
+                  aria-disabled={pageNo >= totalPages - 1}
+                >
+                  Next
+                </a>
+                <a
+                  onClick={() => handlePageChange(totalPages - 1)}
+                  aria-disabled={pageNo >= totalPages - 1}
+                >
+                  <i className="fa fa-angle-double-right" aria-hidden="true"></i>
+                </a>
               </div>
             </div>
           )}

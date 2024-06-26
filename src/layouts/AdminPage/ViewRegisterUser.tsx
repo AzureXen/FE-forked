@@ -8,6 +8,7 @@ import { useToast } from "../../context/ToastContext";
 
 export const ViewRegisterUser = () => {
   const [userList, setUserList] = useState<InformationRegisterUser[]>([]);
+  const [allUsers, setAllUsers] = useState<InformationRegisterUser[]>([]);
   const [pageNo, setPageNo] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(5);
   const [totalItems, setTotalItems] = useState<number>(0);
@@ -20,9 +21,7 @@ export const ViewRegisterUser = () => {
   const [statusFilter, setStatusFilter] = useState<number | null | undefined>(
     undefined
   );
-  const [selectedUsers, setSelectedUsers] = useState<InformationRegisterUser[]>(
-    []
-  );
+  const [selectedUsers, setSelectedUsers] = useState<InformationRegisterUser[]>([]);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const { showToast } = useToast();
 
@@ -30,14 +29,30 @@ export const ViewRegisterUser = () => {
     fetchUserList();
   }, [pageNo, pageSize]);
 
+  useEffect(() => {
+    if (searchTerm) {
+      const filtered = allUsers.filter((user) =>
+        user.companyName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setUserList(filtered);
+      setTotalItems(filtered.length);
+      setTotalPages(Math.ceil(filtered.length / pageSize));
+    } else {
+      setUserList(allUsers.slice(pageNo * pageSize, (pageNo + 1) * pageSize));
+      setTotalItems(allUsers.length);
+      setTotalPages(Math.ceil(allUsers.length / pageSize));
+    }
+  }, [searchTerm, allUsers, pageNo, pageSize]);
+
   const fetchUserList = async () => {
     setLoading(true);
     try {
-      const data = await getInformationResigeterUser(pageNo, pageSize);
+      const data = await getInformationResigeterUser(0, 1000); // Fetch a large number of records
       if (data) {
-        setUserList(data.userList);
+        setAllUsers(data.userList);
+        setUserList(data.userList.slice(pageNo * pageSize, (pageNo + 1) * pageSize));
         setTotalItems(data.totalItems);
-        setTotalPages(Math.ceil(data.totalPages));
+        setTotalPages(Math.ceil(data.totalItems / pageSize));
       }
     } catch (error) {
       console.error("Error fetching user list:", error);
@@ -105,12 +120,7 @@ export const ViewRegisterUser = () => {
       setSubmitting(false);
     }
   };
-  const filteredUserList = userList.filter(
-    (user) =>
-      (user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.fullName.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-  );
+
   return (
     <div className="application-container">
       <h1>User List</h1>
@@ -119,7 +129,7 @@ export const ViewRegisterUser = () => {
           <input
             type="text"
             className="input-search"
-            placeholder="Search by Full Name, Email, Company Name"
+            placeholder="Search by Company Name"
             value={searchTerm}
             onChange={handleSearchChange}
           />
@@ -140,7 +150,7 @@ export const ViewRegisterUser = () => {
           <option value={1}>Accept</option>
         </select>
       </div>
-      {loading || submitting ? ( // Display loading state when loading or submitting
+      {loading || submitting ? (
         <div className="loading-overlay">
           <p>
             <Loading />
@@ -148,7 +158,7 @@ export const ViewRegisterUser = () => {
         </div>
       ) : (
         <div className="table-responsive">
-          {filteredUserList.length > 0 ? (
+          {userList.length > 0 ? (
             <table className="table rounded" id="table">
               <thead className="header">
                 <tr>
@@ -160,7 +170,7 @@ export const ViewRegisterUser = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredUserList.map((user) => (
+                {userList.map((user) => (
                   <tr key={user.jobApplicationId}>
                     <td>
                       <input
@@ -174,11 +184,6 @@ export const ViewRegisterUser = () => {
                     <td>{user.companyName}</td>
                     <td>
                       <button onClick={() => openPopup(user)}>Update</button>
-                      {/* <UpdateJobApplicationPopup
-                                                isOpen={isPopupOpen}
-                                                onClose={closePopup}
-                                                jobApplication={selectedJobApplication}
-                                            /> */}
                     </td>
                   </tr>
                 ))}

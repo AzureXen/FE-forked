@@ -4,6 +4,10 @@ import { Job, JobApplication, JobApplicationResponse} from "../../model/JobAppli
 import { downloadCV } from "../../apis/ApiDownloadCV";
 import "../../css/managertable.css";
 import { UpdateJobApplicationPopup } from "../popup/UpdateJobApplicationPopup";
+import InformationRegisterUser from "../../model/InformationRegisterUser";
+import { registerInterns } from "../../apis/ApiCreateUser";
+import { useToast } from "../../context/ToastContext";
+import { Loading } from "../Loading/Loading";
 
 export const ViewApplication = () => {
   const [jobList, setJobList] = useState<Job[]>([]);
@@ -14,12 +18,15 @@ export const ViewApplication = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [statusFilter, setStatusFilter] = useState<number | null | undefined>(
-    undefined
-  );
-  const [selectedJobApplication, setSelectedJobApplication] =
-    useState<JobApplication | null>(null);
+  const [statusFilter, setStatusFilter] = useState<number | null | undefined>(undefined);
+  const [selectedJobApplication, setSelectedJobApplication] =useState<JobApplication | null>(null);
+  const [selectedUsers, setSelectedUsers] = useState<InformationRegisterUser[]>([]);
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const { showToast } = useToast();
+  const [user, setUser] = useState<{ company_id: number } | null>(null);
+  const [companyId, setCompanyId] = useState<string>("");
 
+  
   const openPopup = (application: JobApplication) => {
     setSelectedJobApplication(application);
     setIsPopupOpen(true);
@@ -29,22 +36,27 @@ export const ViewApplication = () => {
     setSelectedJobApplication(null);
   };
 
-  const [user, setUser] = useState<{ company_id: number } | null>(null);
-
+  
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      setCompanyId(parsedUser.company_id.toString());
     }
-  }, []);
+  }, [companyId]);
 
   useEffect(() => {
     if (user) {
+      fetchJobApplications();
+    }
+  }, [pageNo, pageSize, user]);
+
       const fetchJobApplications = async () => {
         setLoading(true);
         try {
-          console.log("Fetching job applications with params:", { pageNo, pageSize, companyId: user.company_id });
-          const data: JobApplicationResponse = await getJobApplication(pageNo, pageSize, user.company_id);
+          console.log("Fetching job applications with params:", { pageNo, pageSize, companyId: companyId });
+          const data: JobApplicationResponse = await getJobApplication(pageNo, pageSize, parseInt(companyId));
           console.log("Fetched data:", data);
           setJobList(data.jobList);
           setTotalItems(data.totalItems);
@@ -55,9 +67,7 @@ export const ViewApplication = () => {
           setLoading(false);
         }
       };
-      fetchJobApplications();
-    }
-  }, [pageNo, pageSize, user]);
+
 
 
   const handlePageChange = (newPageNo: number) => {
@@ -121,7 +131,33 @@ export const ViewApplication = () => {
       );
     }
   };
-
+  const handleUserSelect = (user: InformationRegisterUser) => {
+    setSelectedUsers((prevSelected) => {
+      if (prevSelected.find((u) => u.jobApplicationId === user.jobApplicationId)) {
+        return prevSelected.filter((u) => u.jobApplicationId !== user.jobApplicationId);
+      } else {
+        return [...prevSelected, user];
+      }
+    });
+  };
+  
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    setLoading(true);
+    try {
+      await registerInterns(selectedUsers);
+      showToast("Register successfully", "success");
+      fetchJobApplications();
+      setSelectedUsers([]);
+    } catch (error) {
+      console.error("Error registering users:", error);
+      showToast("error", "error");
+    } finally {
+      setLoading(false);
+      setSubmitting(false);
+    }
+  };
+  
   const filteredJobList = jobList
     .map((job) => ({
       ...job,
@@ -176,13 +212,14 @@ export const ViewApplication = () => {
         </select>
       </div>
       {loading ? (
-        <p>Loading...</p>
+        <p><Loading/></p>
       ) : (
         <div className="table-responsive">
           {filteredJobList.length > 0 ? (
             <table className="table rounded" id="table">
               <thead className="header">
                 <tr>
+                <th>Select</th>
                   <th>Email</th>
                   <th>Full Name</th>
                   <th>Status</th>
@@ -194,6 +231,13 @@ export const ViewApplication = () => {
                 {filteredJobList.map((job) =>
                   job.jobApplications.map((application) => (
                     <tr key={application.id}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={selectedUsers.some((user) => user.jobApplicationId === application.id)}
+                        onChange={() => handleUserSelect(new InformationRegisterUser(application.id, application.fullName, application.email, job.company.id, job.company.companyName, "ROLE_INTERN"))}
+                      />
+                    </td>
                       <td>{application.email}</td>
                       <td>{application.fullName}</td>
                       <td>{getStatusLabel(application.status)}</td>
@@ -261,7 +305,14 @@ export const ViewApplication = () => {
               <i className="fa fa-angle-double-right" aria-hidden="true"></i>
             </a>
           </div>
-  
+          <div className="submit-controls">
+          <button
+            onClick={handleSubmit}
+            disabled={selectedUsers.length === 0 || submitting}
+          >
+            {submitting ? "Registering..." : "Register Selected Users"}
+          </button>
+        </div>
         </div>
       )}
     </div>

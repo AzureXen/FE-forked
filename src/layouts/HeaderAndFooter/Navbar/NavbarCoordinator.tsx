@@ -23,7 +23,7 @@ export const NavbarCoordinator = () => {
                     Manage Course
                   </a>
                   <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown-inAdmin">
-                    <Link className="dropdown-item" to="/mentor" id="dropdown-inAdmin-item">
+                    <Link className="dropdown-item" to="/coordinator/course" id="dropdown-inAdmin-item">
                     Course
                     </Link>
                     <Link className="dropdown-item" to="/coordinator/course" id="dropdown-inAdmin-item">
@@ -58,6 +58,9 @@ export const NavbarCoordinator = () => {
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <Link className="nav-link" to="/coordinator/createSchedule">Create Interview Schedule</Link>
+                </li>
+                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                  <Link className="nav-link" to="/coordinator/report">Create Report</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <Link className="nav-link" to="/Workplace/Manager/Report">Helps</Link>

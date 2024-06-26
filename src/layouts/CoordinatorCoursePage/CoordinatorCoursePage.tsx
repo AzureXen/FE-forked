@@ -11,6 +11,7 @@ import { NavbarCoordinator } from "../HeaderAndFooter/Navbar/NavbarCoordinator";
 
 export const ViewCourseInsystemByCoordinator = () => {
     const [courses, setCourses] = useState<CourseInSystem[]>([]);
+    const [coursesList, setCoursesList] = useState<CourseInSystem[]>([]);
     const [pageNo, setPageNo] = useState<number>(0);
     const [pageSize, setPageSize] = useState<number>(5);
     const [totalItems, setTotalItems] = useState<number>(0);
@@ -43,16 +44,16 @@ export const ViewCourseInsystemByCoordinator = () => {
         setLoading(true);
         try {
             if (user) {
-                console.log(user.company_id);
+                console.log("company: " + user.company_id);
                 const data = await ApiViewAllCompany(
                     user.company_id,
-                    pageNo,
-                    pageSize
+                    0,
+                    100000
                 );
                 if (data) {
                     setCourses(data.courses);
-                    setTotalItems(data.totalItems);
-                    setTotalPages(Math.ceil(data.totalItems / pageSize));
+                    setTotalItems(data.courses.length);
+                    setTotalPages(Math.ceil(data.courses.length / pageSize));
                 }
             }
         } catch (error) {
@@ -62,15 +63,33 @@ export const ViewCourseInsystemByCoordinator = () => {
         }
     };
 
-    const handlePageChange = (newPageNo: number) => {
-        if (newPageNo >= 0 && newPageNo < totalPages) {
-            setPageNo(newPageNo);
+    useEffect(() => {
+        if (courses.length > 0) {
+            const filteredCourses = courses.filter((course) => {
+                const matchesSearchTerm =
+                    course.courseName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    course.courseId.toString().toLowerCase().includes(searchTerm.toLowerCase());
+
+                const matchesStatusFilter =
+                    statusFilter === undefined ||
+                    (statusFilter === 2 && course.status === null) ||
+                    course.status === statusFilter;
+
+                return matchesSearchTerm && matchesStatusFilter;
+            });
+
+            const paginatedCourses = filteredCourses.slice(pageNo * pageSize, (pageNo + 1) * pageSize);
+            setTotalItems(filteredCourses.length);
+            setTotalPages(Math.ceil(filteredCourses.length / pageSize));
+            setCoursesList(paginatedCourses);
         }
+    }, [searchTerm, pageNo, pageSize, courses, statusFilter]);
+
+    const handlePageChange = (newPageNo: number) => {
+        setPageNo(newPageNo);
     };
 
-    const handlePageSizeChange = (
-        event: React.ChangeEvent<HTMLSelectElement>
-    ) => {
+    const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setPageSize(parseInt(event.target.value, 10));
         setPageNo(0);
     };
@@ -110,16 +129,31 @@ export const ViewCourseInsystemByCoordinator = () => {
         }
     };
 
+    const getStatusLabel = (status: number | null) =>{
+        switch(status){
+          case 0:
+            return "Not start";
+          case 1:
+            return "On going";
+          case null:
+            return "Finished";
+          default:
+            return;
+        }
+    };
 
-    const filteredUserList = courses.filter((course) => {
-        return (
-            course.courseName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.courseId
-                .toString()
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase())
-        );
-    });
+    const changeColorByStatus = (status : number | null) =>{
+        switch(status){
+            case 0:
+              return "Not-start";
+            case 1:
+              return "On-going";
+            case null:
+              return "Finished";
+            default:
+              return;
+        }
+    };
 
     return (
         <div>
@@ -148,9 +182,9 @@ export const ViewCourseInsystemByCoordinator = () => {
                         id="filter"
                     >
                         <option value={""}>Filter</option>
-                        <option value={"2"}>Pending</option>
-                        <option value={0}>Reject</option>
-                        <option value={1}>Accept</option>
+                        <option value={"2"}>Finished</option>
+                        <option value={0}>Not start</option>
+                        <option value={1}>On going</option>
                     </select>
                 </div>
                 {loading ? (
@@ -161,13 +195,13 @@ export const ViewCourseInsystemByCoordinator = () => {
                     </div>
                 ) : (
                     <div className="table-responsive">
-                        {filteredUserList.length > 0 ? (
+                        {coursesList.length > 0 ? (
                             <table className="table rounded" id="table">
                                 <thead className="header">
                                     <tr>
                                         <th>Course ID</th>
                                         <th>Course Name</th>
-                                        <th>Company ID</th>
+                                        <th>Course Status</th>
                                         <th>Company name</th>
                                         <th>Mentor ID</th>
                                         <th>Mentor name</th>
@@ -177,11 +211,15 @@ export const ViewCourseInsystemByCoordinator = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredUserList.map((course) => (
+                                    {coursesList.map((course) => (
                                         <tr key={course.courseId}>
                                             <td>{course.courseId}</td>
                                             <td>{course.courseName}</td>
-                                            <td>{course.companyId}</td>
+                                            <td>
+                                                <p className={changeColorByStatus(course.status)+" rounded"}>
+                                                {getStatusLabel(course.status)}
+                                                </p>
+                                            </td>
                                             <td>{course.companyName}</td>
                                             <td>{course.mentorId}</td>
                                             <td>{course.mentorName}</td>
@@ -208,8 +246,8 @@ export const ViewCourseInsystemByCoordinator = () => {
                         <i className="fa fa-angle-double-left" aria-hidden="true"></i>
                     </a>
                     <a
-                        onClick={() => handlePageChange(pageNo - 1)}
-                        aria-disabled={pageNo === 0}
+                         onClick={() => handlePageChange(pageNo - 1)}
+                         aria-disabled={pageNo === 0}
                     >
                         Prev
                     </a>
@@ -250,4 +288,5 @@ export const ViewCourseInsystemByCoordinator = () => {
         </div>
     );
 };
+
 export default ViewCourseInsystemByCoordinator;

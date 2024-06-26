@@ -82,7 +82,7 @@ export const AddListInternToCourse: React.FC = () => {
 
   const handleSelectApplications = (applications: AddInternRequest[]) => {
     setSelectedApplications(applications);
-    setAcceptedApplications((prev) => [...prev, ...applications]);
+    setAcceptedApplications(applications);
   };
 
   return (
@@ -148,6 +148,7 @@ export const AddListInternToCourse: React.FC = () => {
               onClose={() => setIsPopupOpen(false)}
               companyId={companyId}
               onSelectIntern={handleSelectApplications}
+              selectedApplications={selectedApplications} 
             />
           )}
         </>

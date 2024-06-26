@@ -8,6 +8,7 @@ import { InsertActivitesPopup } from "../../popup/InsertActivitesPopup";
 
 export const ViewAllCourseMentor = () => {
   const [courses, setCourses] = useState<CourseMentorModel[]>([]);
+  const [coursesList, setCoursesList] = useState<CourseMentorModel[]>([]);
   const [pageNo, setPageNo] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(5);
   const [totalItems, setTotalItems] = useState<number>(0);
@@ -44,7 +45,7 @@ export const ViewAllCourseMentor = () => {
         const data = await ApiViewAllCourseMentor(
           user.user_id,
           pageNo,
-          pageSize
+          1000000
         );
         if (data) {
           setCourses(data.courses);
@@ -58,6 +59,29 @@ export const ViewAllCourseMentor = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (courses.length > 0) {
+        const filteredCourses = courses.filter((course) => {
+            const matchesSearchTerm =
+                course.courseName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                course.courseId.toString().toLowerCase().includes(searchTerm.toLowerCase());
+
+            const matchesStatusFilter =
+                statusFilter === undefined ||
+                (statusFilter === 2 && course.status === null) ||
+                course.status === statusFilter;
+
+            return matchesSearchTerm && matchesStatusFilter;
+        });
+
+        const paginatedCourses = filteredCourses.slice(pageNo * pageSize, (pageNo + 1) * pageSize);
+        setTotalItems(filteredCourses.length);
+        setTotalPages(Math.ceil(filteredCourses.length / pageSize));
+        setCoursesList(paginatedCourses);
+    }
+}, [searchTerm, pageNo, pageSize, courses, statusFilter]);
+
   const getStatusLabel = (status: number | null) =>{
     switch(status){
       case 0:
@@ -101,10 +125,10 @@ export const ViewAllCourseMentor = () => {
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     setStatusFilter(
-      value === "" ? undefined : value === "2" ? null : parseInt(value, 10)
+        value === "" ? undefined : value === "2" ? null : parseInt(value, 10)
     );
     setPageNo(0);
-  };
+};
 
   const handleDeleteUser = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
@@ -128,6 +152,19 @@ export const ViewAllCourseMentor = () => {
     );
   });
 
+  const changeColorByStatus = (status : number | null) =>{
+    switch(status){
+        case 0:
+          return "Not-start";
+        case 1:
+          return "On-going";
+        case null:
+          return "Finished";
+        default:
+          return;
+    }
+};
+
   return (
     <div className="application-container">
       <h1>Course List</h1>
@@ -147,15 +184,15 @@ export const ViewAllCourseMentor = () => {
           </div>
         </div>
         <select
-          value={statusFilter === null ? "2" : statusFilter}
-          onChange={handleStatusChange}
-          id="filter"
-        >
-          <option value={""}>Filter</option>
-          <option value={"2"}>Pending</option>
-          <option value={0}>Reject</option>
-          <option value={1}>Accept</option>
-        </select>
+                        value={statusFilter === null ? "2" : statusFilter}
+                        onChange={handleStatusChange}
+                        id="filter"
+                    >
+                        <option value={""}>Filter</option>
+                        <option value={"2"}>Finished</option>
+                        <option value={0}>Not start</option>
+                        <option value={1}>On going</option>
+                    </select>
       </div>
       {loading ? (
         <div className="loading-overlay">
@@ -165,7 +202,7 @@ export const ViewAllCourseMentor = () => {
         </div>
       ) : (
         <div className="table-responsive">
-          {filteredUserList.length > 0 ? (
+          {coursesList.length > 0 ? (
             <table className="table rounded" id="table">
               <thead className="header">
                 <tr>
@@ -178,7 +215,7 @@ export const ViewAllCourseMentor = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredUserList.map((course) => (
+                {coursesList.map((course) => (
                   <tr key={course.courseId}>
                     <td>{course.courseName}</td>
                     <td>
@@ -188,7 +225,9 @@ export const ViewAllCourseMentor = () => {
                       {new Date(course.endDate).toLocaleDateString("en-GB")}
                     </td>
                     <td>
-                      {getStatusLabel(course.status)}
+                    <p className={changeColorByStatus(course.status)+" rounded"}>
+                                                {getStatusLabel(course.status)}
+                                                </p>
                     </td>
                     <td>{course.mentorName}</td>
                     <td>
