@@ -1,6 +1,6 @@
 import OnGoingCourses from './OnGoingCourses';
-import '../../../css/InternDashboard/CourseCard.css';
-import '../../../css/InternDashboard/Dashboard.css';
+import '../../../css/Intern/CourseCard.css';
+import '../../../css/Intern/Dashboard.css';
 import { HeaderWorkplace } from "../../HeaderAndFooter/HeaderWorkplace";
 import { Footer } from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";

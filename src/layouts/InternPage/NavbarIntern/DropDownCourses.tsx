@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react';
 import Course from '../../../model/Intern/CourseIntern'
 import fetchCoursesForIntern from '../../../apis/InternApis/CourseIntern';
 import {Link} from "react-router-dom";
-import '../../../css/InternDashboard/NavbarIntern.css'
+import '../../../css/Intern/NavbarIntern.css'
 interface DropDownCoursesProps{
     internId : string;
 }

@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import {Link} from "react-router-dom";
-import '../../../css/InternDashboard/NavbarIntern.css'
+import '../../../css/Intern/NavbarIntern.css'
 import DropDownCourses from "./DropDownCourses";
 interface NavbarProps{
     internId : string;
@@ -28,6 +28,12 @@ const NavbarIntern :React.FC<NavbarProps> = ({internId, selectedPage})=>{
                     <DropDownCourses internId={internId}></DropDownCourses>
                 )}
             </div>
+            <Link
+                className={`NavbarInternItem ${
+                    selectedPage === "Feedback" ? "SelectedPage" : ""
+                }`}
+                to={`/intern/feedback`}
+            >Feedback</Link>
         </div>
     )
 }

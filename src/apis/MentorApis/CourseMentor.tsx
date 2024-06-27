@@ -1,5 +1,4 @@
 import axios from "axios";
-import "../../model/Mentor/CourseMentor"
 import CourseMentor from "../../model/Mentor/CourseMentor";
 const fetchCourseMentor = async (mentorId: string) => {
     try{

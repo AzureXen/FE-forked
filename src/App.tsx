@@ -42,6 +42,11 @@ import MentorFeedbackInternPage
   from "./layouts/MentorPage/FeedbackPages/MentorFeedbackInternPage/MentorFeedbackInternPage";
 import MentorFeedbackCoursePage
   from "./layouts/MentorPage/FeedbackPages/MentorFeedbackCoursePage/MentorFeedbackCoursePage";
+import FeedbackPage from "./layouts/InternPage/FeedbackPage/FeedbackPage";
+import CoordinatorFeedbackCoursePage
+  from "./layouts/CoordinatorPage/FeedbackPages/CoordinatorFeedbackCoursePage/CoordinatorFeedbackCoursePage";
+import CoordinatorFeedbackInternPage
+  from "./layouts/CoordinatorPage/FeedbackPages/CoordinatorFeedbackInternPage/CoordinatorFeedbackInternPage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -65,6 +70,7 @@ export const App = () => {
               <Route path="/Admin" element={<AdminPage />} />
               <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
+              <Route path="/intern/feedback" element={<FeedbackPage/>} />
               <Route path="/mentor" element={<MentorDashboard />} />
               <Route path="/mentor/:courseId" element={<MentorActivityPage/>}/>
               <Route path="/mentor/feedback" element={<MentorFeedbackCoursePage/>}/>
@@ -88,6 +94,8 @@ export const App = () => {
               <Route path="/coordinator/createSchedule" element={<CoordinatorCreateSchedulePage/>}/>
               <Route path="/coordinator/report" element={<CoordinatorViewBarChart/>}/>
               <Route path="/coordinator/createIntern" element={<CoordinatorAddInternToCoursePage/>}/>
+              <Route path="/coordinator/feedback" element={<CoordinatorFeedbackCoursePage/>}/>
+              <Route path="/coordinator/feedback/:courseId" element={<CoordinatorFeedbackInternPage/>}/>
             </Routes>
           </div>
         </div>
