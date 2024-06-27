@@ -7,8 +7,8 @@ const fetchInternOfCourse = async (mentorId:String, courseId:String) =>{
         const response = await axios.get(`http://localhost:8080/internbridge/mentor/course/allIntern/${courseId}&${mentorId}`)
         return response.data.internResponseList.map( (intern:any)=> new Intern(
             intern.internId,
-            intern.email,
             intern.internName,
+            intern.email,
         ) )
     }catch(error){
         console.log("GetInternOfCourse Error: ", error);

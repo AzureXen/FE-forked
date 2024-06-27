@@ -10,8 +10,8 @@ const fetchInternOfCourse = async (coordinatorId:String, courseId:String) =>{
         console.log("courseId: ", courseId)
         return response.data.internResponseList.map( (intern:any)=> new Intern(
             intern.internId,
-            intern.email,
             intern.internName,
+            intern.email,
         ) )
     }catch(error){
         console.log("GetInternOfCourse Error: ", error);

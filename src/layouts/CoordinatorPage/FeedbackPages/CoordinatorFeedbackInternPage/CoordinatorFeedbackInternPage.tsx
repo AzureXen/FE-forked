@@ -7,15 +7,14 @@ import {HeaderWorkplace} from "../../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../../HeaderAndFooter/Footer";
 import fetchInternOfCourse from "../../../../apis/CoordinatorApis/GetInternOfCourse"
 import {NavbarCoordinator} from "../../../HeaderAndFooter/Navbar/NavbarCoordinator";
+import {useToast} from "../../../../context/ToastContext";
+
 const CoordinatorFeedbackInternPage = () =>{
+    // USE TOAST
+    const { showToast } = useToast();
+
     // FEEDBACK COOLDOWN
     const [cooldown,setCooldown] = useState(false);
-    const [cooldownMessage, setCooldownMessage] = useState("");
-
-    // ---------- FEEDBACK ERRORS ----------//
-    const [feedbackContentError, setFeedbackContentError] = useState<string>("");
-    const [successMessage, setSuccessMessage] = useState<string>("");
-
     // --------- FEEDBACK DATA -------
     const [selectedInternId, setSelectedInternId] = useState(0);
     const [selectedInternName, setSelectedInternName] = useState<string>("");
@@ -71,8 +70,6 @@ const CoordinatorFeedbackInternPage = () =>{
         setFeedbackContent("");
         setSelectedInternId(0);
         setSelectedInternName("");
-        setFeedbackContentError("");
-        setSuccessMessage("");
     }
     const exitModal = ()=>{
         resetContent()
@@ -80,24 +77,23 @@ const CoordinatorFeedbackInternPage = () =>{
     }
     const sendFeedback = () => {
         if (cooldown) {
-            setCooldownMessage("Send feedback is on cooldown...(10 seconds after a successful send.)");
-            setTimeout(()=>{
-                setCooldownMessage("");
-            },5000)
+            showToast("Send feedback is on cooldown(10 seconds after a successful send.)", 'warn');
             return;
         }
 
         if(feedbackContent==="") {
-            setFeedbackContentError("Feedback Content must not be empty!");
+            showToast("Feedback Content must not be empty!", 'warn');
         }
         else{
             SendFeedbackToIntern(feedbackContent, checkedCoordinatorId, selectedInternId.toString())
                 .then();
-            setSuccessMessage("Feedback sent.");
+            showToast("Feedback sent.", 'success');
+
             setCooldown(true);
             setTimeout(()=>{
                 setCooldown(false);
             }, 10000)
+            exitModal();
         }
     }
 
@@ -139,13 +135,9 @@ const CoordinatorFeedbackInternPage = () =>{
                         value={feedbackContent}
                         onChange={(e) => {
                             setFeedbackContent(e.target.value);
-                            setFeedbackContentError("");
                         }}
                         placeholder = "Enter feedback content here."
                         />
-                        <p className="error-message">{feedbackContentError}</p>
-                        <p className="success-message">{successMessage}</p>
-                        <p className="cooldown-message">{cooldownMessage}</p>
                         <button onClick={sendFeedback}>Send feedback</button>
                     </div>
                 </div>
