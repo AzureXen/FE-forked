@@ -8,6 +8,7 @@ import { ApiViewAllCompany } from "../../apis/CoordinatorApis/ApiCoordinatorShow
 import { Footer } from "../HeaderAndFooter/Footer";
 import { HeaderWorkplace } from "../HeaderAndFooter/HeaderWorkplace";
 import { NavbarCoordinator } from "../HeaderAndFooter/Navbar/NavbarCoordinator";
+import useAuth from "../../context/useAuth";
 
 export const ViewCourseInsystemByCoordinator = () => {
     const [courses, setCourses] = useState<CourseInSystem[]>([]);
@@ -154,6 +155,7 @@ export const ViewCourseInsystemByCoordinator = () => {
               return;
         }
     };
+    useAuth(['ROLE_INTERNSHIP_COORDINATOR']);
 
     return (
         <div>

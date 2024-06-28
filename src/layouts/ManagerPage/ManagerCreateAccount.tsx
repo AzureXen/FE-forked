@@ -5,13 +5,13 @@ import { NavbarManager } from "../HeaderAndFooter/Navbar/NavbarManager";
 import { ViewApplication } from "./ViewApplication";
 import { UpdateJobApplicationPopup } from "../popup/UpdateJobApplicationPopup";
 import "../../css/managertable.css"; // Nhớ import CSS đã tạo
-import { PostJob } from './PostJob';
+import { ShowCourse } from './ShowCourse';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext';
+import { CreateEmployee } from './CreateEmployee';
 
-export const PostJobPage: React.FC = () => {
+export const ManagerCreateAccount: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
   const openPopup = () => setIsPopupOpen(true);
   const closePopup = () => setIsPopupOpen(false);
   const navigate = useNavigate();
@@ -32,6 +32,7 @@ export const PostJobPage: React.FC = () => {
     }
   }, []);
   
+
   return (
     <div className="d-flex flex-column">
       <HeaderWorkplace/>
@@ -39,7 +40,8 @@ export const PostJobPage: React.FC = () => {
         <NavbarManager/>
       </div>
       <div>
-        <PostJob/>
+        <CreateEmployee/>
+        {/* <ShowCourse/> */}
       </div>
       <Footer />
     </div>

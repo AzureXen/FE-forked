@@ -4,10 +4,12 @@ import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import OnGoingCourses from "../../InternPage/DashBoardPage/OnGoingCourses";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import { NavbarMentor } from "../../HeaderAndFooter/Navbar/NavbarMentor";
+import useAuth from "../../../context/useAuth";
 
 
 const MentorDashboard: React.FC = () => {
     const [user, setUser] = useState<{ user_id: number } | null>(null);
+    useAuth(['ROLE_MENTOR']);
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");

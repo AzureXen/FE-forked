@@ -6,9 +6,11 @@ import { NavbarCoordinator } from "../HeaderAndFooter/Navbar/NavbarCoordinator";
 import CreateCourseComponent from "./CreateCourse/CreateCourseComponent";
 import { CreateSchedule } from "./CreateScheduleCompany/CreateSchedule";
 import { BarChartReportForAllCourse } from "./BarChart/BarChartReportForAllCourse";
+import useAuth from "../../context/useAuth";
 
 export const CoordinatorViewBarChart: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  useAuth(['ROLE_INTERNSHIP_COORDINATOR']);
 
   const openPopup = () => setIsPopupOpen(true);
   const closePopup = () => setIsPopupOpen(false);

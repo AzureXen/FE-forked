@@ -105,8 +105,14 @@ export const ViewUserInsystem = () => {
         await DeleteUser(id);
         showToast("User deleted successfully", "success");
         fetchUserList();
-      } catch (error) {
-        showToast("Failed to delete user", "error");
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error('Error occurred:', error.message);
+          showToast(error.message, "error");
+        } else {
+          console.error('Unexpected error:', error);
+          showToast("An unexpected error occurred", "error");
+        }
       }
     }
   };

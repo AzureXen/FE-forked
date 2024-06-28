@@ -6,23 +6,13 @@ import { Footer } from '../../HeaderAndFooter/Footer';
 import { CourseMentorCard } from '../Component/CourseMentorCard';
 import { ViewAllCourseMentor } from '../Component/ViewAllCourseMentor';
 import { NavbarMentor } from '../../HeaderAndFooter/Navbar/NavbarMentor';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '../../../context/ToastContext';
+import useAuth from '../../../context/useAuth';
 
 export const MentorViewAllCoursePage: React.FC = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [user, setUser] = useState<{ user_id: number } | null>(null);
-  const [mentorId, setMentorId] = useState<number>(0);
+  useAuth(['ROLE_MENTOR']);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
-      setMentorId(parsedUser.user_id);
-    }
-  }, []);
-
-  const openPopup = () => setIsPopupOpen(true);
-  const closePopup = () => setIsPopupOpen(false);
 
   return (
     <div className="d-flex flex-column">

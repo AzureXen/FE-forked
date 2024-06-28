@@ -12,6 +12,9 @@ export const NavbarManager = () => {
                   <Link className="nav-link active" to="/Workplace/Manager">View Application</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                  <Link className="nav-link active" to="/Workplace/Manager/createAccount">Create Employee Account</Link>
+                </li>
+                <li className="nav-item" style={{ paddingRight: "2rem" }}>
                   <li
                   className="nav-item dropdown"
                 >
