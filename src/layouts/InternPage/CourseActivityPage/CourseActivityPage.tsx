@@ -2,7 +2,7 @@
 import { useParams} from "react-router-dom";
 import CourseActivities from "./CourseActivities";
 import CourseName from "./CourseName";
-import '../../../css/InternDashboard/ActivityCard.css'
+import '../../../css/Intern/ActivityCard.css'
 import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";

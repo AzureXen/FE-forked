@@ -1,20 +1,20 @@
 import {useEffect, useState} from "react";
 import Intern from "../../../../model/Intern/Intern"
-import fetchInternOfCourse from "../../../../apis/MentorApis/GetInternOfCourse";
 import {useParams} from "react-router-dom";
 import "../../../../css/Mentor/ViewAllInternsByTable.css"
 import SendFeedbackToIntern from "../../../../apis/MentorApis/SendFeedbackToIntern";
 import {HeaderWorkplace} from "../../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../../HeaderAndFooter/Footer";
-import {NavbarMentor} from "../../../HeaderAndFooter/Navbar/NavbarMentor";
-import { useToast } from "../../../../context/ToastContext"
-const MentorFeedbackInternPage = () =>{
+import fetchInternOfCourse from "../../../../apis/CoordinatorApis/GetInternOfCourse"
+import {NavbarCoordinator} from "../../../HeaderAndFooter/Navbar/NavbarCoordinator";
+import {useToast} from "../../../../context/ToastContext";
+
+const CoordinatorFeedbackInternPage = () =>{
     // USE TOAST
     const { showToast } = useToast();
 
     // FEEDBACK COOLDOWN
     const [cooldown,setCooldown] = useState(false);
-
     // --------- FEEDBACK DATA -------
     const [selectedInternId, setSelectedInternId] = useState(0);
     const [selectedInternName, setSelectedInternName] = useState<string>("");
@@ -42,19 +42,19 @@ const MentorFeedbackInternPage = () =>{
             setUser(JSON.parse(storedUser));
         }
     }, []);
-    const StringMentorId = user?.user_id.toString(); // Convert to string
-    const checkedMentorId = StringMentorId ?? ""; // prevent from being unidentified
+    const StringCoordinatorId = user?.user_id.toString(); // Convert to string
+    const checkedCoordinatorId = StringCoordinatorId ?? ""; // prevent from being unidentified
     //---------------------
 
     // Get intern list -----------
     const [internList, setInternList] = useState<Intern[]>([]);
     useEffect(()=>{
         const fetchData = async () => {
-            const data = await fetchInternOfCourse(checkedMentorId, checkedCourseId);
+            const data = await fetchInternOfCourse(checkedCoordinatorId, checkedCourseId);
             setInternList(data);
         }
-        if (checkedMentorId && checkedCourseId) fetchData();
-    },[checkedMentorId]);
+        if (checkedCoordinatorId && checkedCourseId) fetchData();
+    },[checkedCoordinatorId]);
 
     if (!user) {
         return <p>Loading...</p>;
@@ -85,9 +85,10 @@ const MentorFeedbackInternPage = () =>{
             showToast("Feedback Content must not be empty!", 'warn');
         }
         else{
-            SendFeedbackToIntern(feedbackContent, checkedMentorId, selectedInternId.toString())
+            SendFeedbackToIntern(feedbackContent, checkedCoordinatorId, selectedInternId.toString())
                 .then();
             showToast("Feedback sent.", 'success');
+
             setCooldown(true);
             setTimeout(()=>{
                 setCooldown(false);
@@ -99,7 +100,7 @@ const MentorFeedbackInternPage = () =>{
     return(
         <>
             <HeaderWorkplace/>
-            <NavbarMentor/>
+            <NavbarCoordinator/>
             <div>
                 <p style={{marginLeft:"3rem", marginTop:"1rem"
                     , fontSize:"2rem", color:"#3A5AC6", fontWeight:"bold"}}>Send Feedback to Intern</p>
@@ -146,4 +147,4 @@ const MentorFeedbackInternPage = () =>{
         </>
     )
 }
-export default MentorFeedbackInternPage;
+export default CoordinatorFeedbackInternPage;

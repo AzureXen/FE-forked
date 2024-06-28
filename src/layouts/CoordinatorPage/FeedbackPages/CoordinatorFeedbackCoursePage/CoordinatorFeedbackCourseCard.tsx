@@ -1,18 +1,16 @@
 import React from "react";
-import '../../../css/Intern/CourseCard.css'
+import '../../../../css/Intern/CourseCard.css'
 import {useNavigate} from "react-router-dom";
-import useAuth from "../../../context/useAuth";
 interface CourseCardProps {
-    mentorId : number;
+    coordinatorId : number;
     courseId : number;
     courseName: string;
-    mentorName: string;
+    coordinatorName: string;
 }
-
-const MentorCourseCard:React.FC<CourseCardProps> = ({mentorId, courseId, courseName, mentorName}) =>{
+const CoordinatorFeedbackCourseCard:React.FC<CourseCardProps> = ({coordinatorId, courseId, courseName, coordinatorName}) =>{
     const navigate = useNavigate();
     const handleClick = ()=>{
-        navigate(`/mentor/${courseId}`);
+        navigate(`/coordinator/feedback/${courseId}`);
     }
     return(
         <div onClick={handleClick} className="course-card">
@@ -21,4 +19,4 @@ const MentorCourseCard:React.FC<CourseCardProps> = ({mentorId, courseId, courseN
         </div>
     )
 }
-export default MentorCourseCard;
+export default CoordinatorFeedbackCourseCard;

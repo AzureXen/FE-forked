@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import '../../../css/InternDashboard/ActivityCard.css'
+import '../../../css/Intern/ActivityCard.css'
 import TaskSetDone from "../../../apis/InternApis/TaskSetDone";
 
 interface ActivityCard {

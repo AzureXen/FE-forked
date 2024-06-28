@@ -4,7 +4,8 @@
 }
 
 table {
-    width: 100%;
+    margin: 1rem 0 1rem 0;
+    width: 80%;
     border-collapse: collapse;
 }
 
@@ -14,16 +15,22 @@ th, td {
 }
 
 th {
-    background-color: #f2f2f2;
-    text-align: left;
+    background-color: #2557ae;
+}
+tr th{
+    color: white;
+}
+
+tr:nth-child(odd){
+    background-color: #86b5fd;
 }
 
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #95befb;
 }
 
 tr:hover {
-    background-color: #f1f1f1;
+    background-color: #a6cefd;
 }
 
 button {
@@ -67,4 +74,11 @@ button:hover {
 }
 .success-message{
     color: var(--SuccessMessageColor)
+}
+body{
+    background: radial-gradient(circle at center, #c3d6f5, #a3c7f2);
+}
+.table-container{
+    display:flex;
+    justify-content: center;
 }
