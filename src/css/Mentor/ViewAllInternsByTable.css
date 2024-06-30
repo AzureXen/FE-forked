@@ -76,7 +76,8 @@ button:hover {
     color: var(--SuccessMessageColor)
 }
 body{
-    background: radial-gradient(circle at center, #c3d6f5, #a3c7f2);
+    /*Note*/
+    background: radial-gradient(circle at center, #c3d6f5, #a3c7f2);  
 }
 .table-container{
     display:flex;

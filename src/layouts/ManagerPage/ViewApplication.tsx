@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getJobApplication } from "../../apis/ApiJobApplication";
-import { Job, JobApplication, JobApplicationResponse} from "../../model/JobApplication";
+import { Job, JobApplication, JobApplicationResponse } from "../../model/JobApplication";
 import { downloadCV } from "../../apis/ApiDownloadCV";
 import "../../css/managertable.css";
 import { UpdateJobApplicationPopup } from "../popup/UpdateJobApplicationPopup";
@@ -19,24 +19,23 @@ export const ViewApplication = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<number | null | undefined>(undefined);
-  const [selectedJobApplication, setSelectedJobApplication] =useState<JobApplication | null>(null);
+  const [selectedJobApplication, setSelectedJobApplication] = useState<JobApplication | null>(null);
   const [selectedUsers, setSelectedUsers] = useState<InformationRegisterUser[]>([]);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const { showToast } = useToast();
   const [user, setUser] = useState<{ company_id: number } | null>(null);
   const [companyId, setCompanyId] = useState<string>("");
 
-  
   const openPopup = (application: JobApplication) => {
     setSelectedJobApplication(application);
     setIsPopupOpen(true);
   };
+
   const closePopup = () => {
     setIsPopupOpen(false);
     setSelectedJobApplication(null);
   };
 
-  
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -52,23 +51,19 @@ export const ViewApplication = () => {
     }
   }, [pageNo, pageSize, user]);
 
-      const fetchJobApplications = async () => {
-        setLoading(true);
-        try {
-          console.log("Fetching job applications with params:", { pageNo, pageSize, companyId: companyId });
-          const data: JobApplicationResponse = await getJobApplication(pageNo, pageSize, parseInt(companyId));
-          console.log("Fetched data:", data);
-          setJobList(data.jobList);
-          setTotalItems(data.jobList.length);
-          setTotalPages(Math.ceil(data.jobList.length / pageSize));
-        } catch (error) {
-          console.error("Error fetching job applications:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-
+  const fetchJobApplications = async () => {
+    setLoading(true);
+    try {
+      const data: JobApplicationResponse = await getJobApplication(pageNo, pageSize, parseInt(companyId));
+      setJobList(data.jobList);
+      setTotalItems(data.totalItems);
+      setTotalPages(Math.ceil(data.totalItems / pageSize));
+    } catch (error) {
+      console.error("Error fetching job applications:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handlePageChange = (newPageNo: number) => {
     setPageNo(newPageNo);
@@ -77,19 +72,12 @@ export const ViewApplication = () => {
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(parseInt(event.target.value, 10));
     setPageNo(0);
-    setTotalPages(Math.ceil(totalItems / parseInt(event.target.value, 10)));
   };
 
-  const handleDownloadCV = async (
-    id: number,
-    fileName: string,
-    jobName: string
-  ) => {
+  const handleDownloadCV = async (id: number, fileName: string, jobName: string) => {
     try {
       const cvBlob = await downloadCV(id);
-      const url = window.URL.createObjectURL(
-        new Blob([cvBlob], { type: "application/pdf" })
-      );
+      const url = window.URL.createObjectURL(new Blob([cvBlob], { type: "application/pdf" }));
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", `CV_${fileName}_${jobName}.pdf`);
@@ -111,14 +99,13 @@ export const ViewApplication = () => {
     setStatusFilter(value === "" ? undefined : value === "2" ? null : parseInt(value, 10));
     setPageNo(0);
   };
+
   const handleUpdateStatus = (id: number, newStatus: number) => {
-    if (newStatus === 0) { 
+    if (newStatus === 0) {
       setJobList((prevJobList) =>
         prevJobList.map((job) => ({
           ...job,
-          jobApplications: job.jobApplications.filter(
-            (application) => application.id !== id
-          ),
+          jobApplications: job.jobApplications.filter((application) => application.id !== id),
         }))
       );
     } else {
@@ -132,6 +119,7 @@ export const ViewApplication = () => {
       );
     }
   };
+
   const handleUserSelect = (user: InformationRegisterUser) => {
     setSelectedUsers((prevSelected) => {
       if (prevSelected.find((u) => u.jobApplicationId === user.jobApplicationId)) {
@@ -141,7 +129,7 @@ export const ViewApplication = () => {
       }
     });
   };
-  
+
   const handleSubmit = async () => {
     setSubmitting(true);
     setLoading(true);
@@ -152,51 +140,50 @@ export const ViewApplication = () => {
       setSelectedUsers([]);
     } catch (error) {
       console.error("Error registering users:", error);
-      showToast("error", "error");
+      showToast("Error registering users", "error");
     } finally {
       setLoading(false);
       setSubmitting(false);
     }
   };
-  const currentJobApplications = jobList.slice(pageNo * pageSize, (pageNo + 1) * pageSize);
 
-  const filteredJobList = currentJobApplications
+  const filteredJobList = jobList
     .map((job) => ({
       ...job,
       jobApplications: job.jobApplications.filter(
         (application) =>
           (application.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            application.fullName
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase()) ||
+            application.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
             job.jobName.toLowerCase().includes(searchTerm.toLowerCase())) &&
           (statusFilter === undefined || application.status === statusFilter)
       ),
     }))
     .filter((job) => job.jobApplications.length > 0);
 
-    const getStatusLabel = (status: number | null) =>{
-      switch(status){
-        case 0:
-          return "Reject";
-        case 1:
-          return "Accept";
-        case null:
-          return "Pending";
-        default:
-          return;
-      }
+  const getStatusLabel = (status: number | null) => {
+    switch (status) {
+      case 0:
+        return "Reject";
+      case 1:
+        return "Accept";
+      case null:
+        return "Pending";
+      default:
+        return;
     }
-    const changeColorByStatus = (status : number | null) =>{
-      switch(status){
-          case 1:
-            return "Accept";
-          case null:
-            return "Pending";
-          default:
-            return;
-      }
   };
+
+  const changeColorByStatus = (status: number | null) => {
+    switch (status) {
+      case 1:
+        return "Accept";
+      case null:
+        return "Pending";
+      default:
+        return;
+    }
+  };
+
   return (
     <div className="application-container">
       <h1>Job Applications</h1>
@@ -223,14 +210,14 @@ export const ViewApplication = () => {
         </select>
       </div>
       {loading ? (
-        <p><Loading/></p>
+        <p><Loading /></p>
       ) : (
         <div className="table-responsive">
           {filteredJobList.length > 0 ? (
             <table className="table rounded" id="table">
               <thead className="header">
                 <tr>
-                <th>Select</th>
+                  <th>Select</th>
                   <th>Email</th>
                   <th>Full Name</th>
                   <th>Status</th>
@@ -242,35 +229,30 @@ export const ViewApplication = () => {
                 {filteredJobList.map((job) =>
                   job.jobApplications.map((application) => (
                     <tr key={application.id}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={selectedUsers.some((user) => user.jobApplicationId === application.id)}
-                        onChange={() => handleUserSelect(new InformationRegisterUser(application.id, application.fullName, application.email, job.company.id, job.company.companyName, "ROLE_INTERN"))}
-                      />
-                    </td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          checked={selectedUsers.some((user) => user.jobApplicationId === application.id)}
+                          onChange={() => handleUserSelect(new InformationRegisterUser(application.id, application.fullName, application.email, job.company.id, job.company.companyName, "ROLE_INTERN"))}
+                        />
+                      </td>
                       <td>{application.email}</td>
                       <td>{application.fullName}</td>
                       <td>
-                      <p className={changeColorByStatus(application.status)+" rounded"}>
-                                                {getStatusLabel(application.status)}
-                                                </p>
+                        <p className={changeColorByStatus(application.status) + " rounded"}>
+                          {getStatusLabel(application.status)}
+                        </p>
                       </td>
                       <td>{job.jobName}</td>
                       <td>
-                        <button className="button-delete"
-                          onClick={() =>
-                            handleDownloadCV(
-                              application.id,
-                              application.fullName,
-                              job.jobName
-                            )
-                          }
+                        <button
+                          className="button-delete"
+                          onClick={() => handleDownloadCV(application.id, application.fullName, job.jobName)}
                         >
                           Download CV
                         </button>
                         <button className="button-update" onClick={() => openPopup(application)}>
-                        Review CV
+                          Review CV
                         </button>
                         <UpdateJobApplicationPopup
                           isOpen={isPopupOpen}
@@ -291,10 +273,7 @@ export const ViewApplication = () => {
             <a onClick={() => handlePageChange(0)} aria-disabled={pageNo === 0}>
               <i className="fa fa-angle-double-left" aria-hidden="true"></i>
             </a>
-            <a
-              onClick={() => handlePageChange(pageNo - 1)}
-              aria-disabled={pageNo === 0}
-            >
+            <a onClick={() => handlePageChange(pageNo - 1)} aria-disabled={pageNo === 0}>
               Prev
             </a>
             {[...Array(totalPages)].map((_, index) => (
@@ -307,27 +286,18 @@ export const ViewApplication = () => {
                 {index + 1}
               </a>
             ))}
-            <a
-              onClick={() => handlePageChange(pageNo + 1)}
-              aria-disabled={pageNo >= totalPages - 1}
-            >
+            <a onClick={() => handlePageChange(pageNo + 1)} aria-disabled={pageNo >= totalPages - 1}>
               Next
             </a>
-            <a
-              onClick={() => handlePageChange(totalPages - 1)}
-              aria-disabled={pageNo >= totalPages - 1}
-            >
+            <a onClick={() => handlePageChange(totalPages - 1)} aria-disabled={pageNo >= totalPages - 1}>
               <i className="fa fa-angle-double-right" aria-hidden="true"></i>
             </a>
           </div>
           <div className="submit-controls">
-          <button
-            onClick={handleSubmit}
-            disabled={selectedUsers.length === 0 || submitting}
-          >
-            {submitting ? "Registering..." : "Register Selected Users"}
-          </button>
-        </div>
+            <button onClick={handleSubmit} disabled={selectedUsers.length === 0 || submitting}>
+              {submitting ? "Registering..." : "Register Selected Users"}
+            </button>
+          </div>
         </div>
       )}
     </div>

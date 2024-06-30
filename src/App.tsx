@@ -48,6 +48,8 @@ import CoordinatorFeedbackCoursePage
 import CoordinatorFeedbackInternPage
   from "./layouts/CoordinatorPage/FeedbackPages/CoordinatorFeedbackInternPage/CoordinatorFeedbackInternPage";
 import { ManagerCreateAccount } from "./layouts/ManagerPage/ManagerCreateAccount";
+import MyCalendar from "./layouts/ManagerPage/TimeTable/TimeTable";
+import { VerificationEmail } from "./layouts/VerificationEmail/VerificationEmail.";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -98,6 +100,8 @@ export const App = () => {
               <Route path="/coordinator/createIntern" element={<CoordinatorAddInternToCoursePage/>}/>
               <Route path="/coordinator/feedback" element={<CoordinatorFeedbackCoursePage/>}/>
               <Route path="/coordinator/feedback/:courseId" element={<CoordinatorFeedbackInternPage/>}/>
+              <Route path="/verifyEmail" element={<VerificationEmail />} />
+              <Route path="/a" element={<MyCalendar/>}/>
             </Routes>
           </div>
         </div>
