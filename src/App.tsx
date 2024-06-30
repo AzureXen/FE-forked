@@ -47,6 +47,7 @@ import CoordinatorFeedbackCoursePage
   from "./layouts/CoordinatorPage/FeedbackPages/CoordinatorFeedbackCoursePage/CoordinatorFeedbackCoursePage";
 import CoordinatorFeedbackInternPage
   from "./layouts/CoordinatorPage/FeedbackPages/CoordinatorFeedbackInternPage/CoordinatorFeedbackInternPage";
+import { ManagerCreateAccount } from "./layouts/ManagerPage/ManagerCreateAccount";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -67,6 +68,7 @@ export const App = () => {
               <Route path="/Workplace/Manager" element={<ManagerPage />} />
               <Route path="/Workplace/Manager/postJob" element={<PostJobPage />} />
               <Route path="/Workplace/Manager/viewJob" element={<ManagerViewJobByCompany />} />
+              <Route path="/Workplace/Manager/createAccount" element={<ManagerCreateAccount/>}/>
               <Route path="/Admin" element={<AdminPage />} />
               <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />

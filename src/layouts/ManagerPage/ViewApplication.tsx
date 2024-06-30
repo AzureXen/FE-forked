@@ -59,8 +59,8 @@ export const ViewApplication = () => {
           const data: JobApplicationResponse = await getJobApplication(pageNo, pageSize, parseInt(companyId));
           console.log("Fetched data:", data);
           setJobList(data.jobList);
-          setTotalItems(data.totalItems);
-          setTotalPages(data.totalPages);
+          setTotalItems(data.jobList.length);
+          setTotalPages(Math.ceil(data.jobList.length / pageSize));
         } catch (error) {
           console.error("Error fetching job applications:", error);
         } finally {
@@ -77,6 +77,7 @@ export const ViewApplication = () => {
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(parseInt(event.target.value, 10));
     setPageNo(0);
+    setTotalPages(Math.ceil(totalItems / parseInt(event.target.value, 10)));
   };
 
   const handleDownloadCV = async (
@@ -157,8 +158,9 @@ export const ViewApplication = () => {
       setSubmitting(false);
     }
   };
-  
-  const filteredJobList = jobList
+  const currentJobApplications = jobList.slice(pageNo * pageSize, (pageNo + 1) * pageSize);
+
+  const filteredJobList = currentJobApplications
     .map((job) => ({
       ...job,
       jobApplications: job.jobApplications.filter(
@@ -185,7 +187,16 @@ export const ViewApplication = () => {
           return;
       }
     }
-
+    const changeColorByStatus = (status : number | null) =>{
+      switch(status){
+          case 1:
+            return "Accept";
+          case null:
+            return "Pending";
+          default:
+            return;
+      }
+  };
   return (
     <div className="application-container">
       <h1>Job Applications</h1>
@@ -240,10 +251,14 @@ export const ViewApplication = () => {
                     </td>
                       <td>{application.email}</td>
                       <td>{application.fullName}</td>
-                      <td>{getStatusLabel(application.status)}</td>
+                      <td>
+                      <p className={changeColorByStatus(application.status)+" rounded"}>
+                                                {getStatusLabel(application.status)}
+                                                </p>
+                      </td>
                       <td>{job.jobName}</td>
                       <td>
-                        <button
+                        <button className="button-delete"
                           onClick={() =>
                             handleDownloadCV(
                               application.id,
@@ -254,8 +269,8 @@ export const ViewApplication = () => {
                         >
                           Download CV
                         </button>
-                        <button onClick={() => openPopup(application)}>
-                          Update
+                        <button className="button-update" onClick={() => openPopup(application)}>
+                        Review CV
                         </button>
                         <UpdateJobApplicationPopup
                           isOpen={isPopupOpen}

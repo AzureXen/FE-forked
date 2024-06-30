@@ -205,7 +205,7 @@
   }
 
 }
-.Not-start{
+.Not-start,.Pending{
   background-color: #f7b721 ;
   padding: 2%;
   text-align: center;
@@ -221,11 +221,48 @@
   font-weight: bold !important;
   width: 70%;
 }
-.On-going{
+.On-going,.Accept{
   background-color: #40f896 ;
   padding: 2%;
   text-align: center;
   color: black !important;
   font-weight: bold !important;
   width: 70%;
+}
+
+.button-update, .button-delete {
+  border-radius: 28px;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  margin: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.button-delete{
+  background-color: #fa2727 !important;
+  transition: all 0.5s ease;
+}
+.button-update{
+  background-color: #0091f9 !important;
+  transition: all 0.5s ease;
+  
+}
+.button-update:hover{
+  background-color: #165887 !important;
+  animation: cancelAnimation 0.5s forwards;
+}
+.button-delete:hover{
+  background-color: #891616 !important;
+  animation: deleteAnimation 0.5s forwards;
+}
+
+.button-update:focus,.button-delete:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }

@@ -1,12 +1,14 @@
 import React from "react";
 import '../../../css/Intern/CourseCard.css'
 import {useNavigate} from "react-router-dom";
+import useAuth from "../../../context/useAuth";
 interface CourseCardProps {
     mentorId : number;
     courseId : number;
     courseName: string;
     mentorName: string;
 }
+
 const MentorCourseCard:React.FC<CourseCardProps> = ({mentorId, courseId, courseName, mentorName}) =>{
     const navigate = useNavigate();
     const handleClick = ()=>{

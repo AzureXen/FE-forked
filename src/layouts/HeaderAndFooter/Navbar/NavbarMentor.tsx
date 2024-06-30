@@ -62,10 +62,17 @@ export const NavbarMentor = () => {
                 <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <Link className="nav-link" to="/mentor/report">View Report</Link>
                 </li>
+<<<<<<< HEAD
+                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                  <Link className="nav-link" to="/mentor/feedback">Feedback</Link>
+                </li>
+                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+=======
                 <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <Link className="nav-link" to="/mentor/feedback">Send Feedback</Link>
                 </li>
                 <li className="nav-item" style={{paddingRight: "2rem"}}>
+>>>>>>> 8d490598a83869ee93c32b7bbdecfb7db9e90f0a
                   <Link className="nav-link" to="/Workplace/Manager/Report">Helps</Link>
                 </li>
               </ul>

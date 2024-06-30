@@ -5,6 +5,7 @@ import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import CourseNameMentor from "./CourseNameMentor";
 import { NavbarMentor } from "../../HeaderAndFooter/Navbar/NavbarMentor";
+import useAuth from "../../../context/useAuth";
 
 
 const MentorActivityPage = () =>{
@@ -16,6 +17,8 @@ const MentorActivityPage = () =>{
             setUser(JSON.parse(storedUser));
         }
     }, []);
+    useAuth(['ROLE_MENTOR']);
+
     const StringMentorId = user?.user_id.toString(); // Convert to string
     const checkedMentorId = StringMentorId ?? ""; // prevent from being unidentified
 
