@@ -29,6 +29,9 @@ export const Header: React.FC = () => {
     setUser(null);
     showToast("Logout successful!", 'success');
   };
+  const handleViewProfile = ()=>{
+    navigate("/profile");
+  }
   return (
     <div>
       <header role="banner">
@@ -129,24 +132,30 @@ export const Header: React.FC = () => {
                     Hello, {user.fullName}
                   </a>
                   <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
+                    <li
+                        onClick={handleViewProfile}
+                        className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                        id="button-sign-out">
+                      View Profile
+                    </li>
                     <Link
-                  onClick={handleLogout}
-                  className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                  id="button-sign-out" to="/">
+                        onClick={handleLogout}
+                        className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                        id="button-sign-out" to="/">
                       Logout
-                  </Link>
+                    </Link>
                   </div>
                 </div>
               )}
-            </div>
+                </div>
               </ul>
 
               <ul className="navbar-nav ml-auto">
                 {!user && (
-                  <li className="nav-item cta-btn">
-                    <Link
-                      type="button"
-                      className="btn btn-mod btn-border btn-circle btn-large"
+                    <li className="nav-item cta-btn">
+                      <Link
+                          type="button"
+                          className="btn btn-mod btn-border btn-circle btn-large"
                       id="button-sign-in"
                       to="/login"
                     >

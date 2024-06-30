@@ -7,7 +7,7 @@ import {Footer} from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";
 const FeedbackPage = () =>{
     // check user---------------
-    const [user, setUser] = useState<{ user_id: number } | null>(null);
+    const [user, setUser] = useState<{ user_id: number, email:string } | null>(null);
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");

@@ -50,6 +50,7 @@ import CoordinatorFeedbackInternPage
 import { ManagerCreateAccount } from "./layouts/ManagerPage/ManagerCreateAccount";
 import MyCalendar from "./layouts/ManagerPage/TimeTable/TimeTable";
 import { VerificationEmail } from "./layouts/VerificationEmail/VerificationEmail.";
+import ViewProfilePage from "./layouts/HeaderAndFooter/ViewProfilePage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -102,6 +103,7 @@ export const App = () => {
               <Route path="/coordinator/feedback/:courseId" element={<CoordinatorFeedbackInternPage/>}/>
               <Route path="/verifyEmail" element={<VerificationEmail />} />
               <Route path="/a" element={<MyCalendar/>}/>
+              <Route path="/profile" element={<ViewProfilePage/>}/>
             </Routes>
           </div>
         </div>
