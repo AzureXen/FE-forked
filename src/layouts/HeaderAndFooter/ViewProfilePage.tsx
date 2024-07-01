@@ -4,7 +4,8 @@ import fetchInternDetail from "../../apis/InternApis/GetInternDetail";
 import "../../css/ProfilePage.css"
 import {HeaderWorkplace} from "./HeaderWorkplace";
 import {Footer} from "./Footer";
-
+import profileIcon from "../../images/profile-icon-design-free-vector.jpg"
+import fetchCompanyName from "../../apis/GetCompanyName";
 const ViewProfilePage = () =>{
     // check user---------------
     const [user, setUser]
@@ -23,14 +24,14 @@ const ViewProfilePage = () =>{
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("");
     const [fullName, setFullName] = useState("");
-    const [companyId, setCompanyId] = useState<number>()
+    const [companyId, setCompanyId] = useState<number>(0)
+    const [companyName, setCompanyName] = useState<string>("")
 
     // FOR INTERN: intern detail
     const [internDetail, setInternDetail] = useState<InternDetail>();
     const getInternDetail = async()=>{
         if(userId!==0){
             try{
-                console.log("starting fetching interndetail with id: ", userId);
                 const InternData = await fetchInternDetail(userId.toString());
                 setInternDetail(InternData);
             }
@@ -39,6 +40,16 @@ const ViewProfilePage = () =>{
             }
         }
 
+    }
+    const getCompanyName = async() =>{
+        if(companyId!==0){
+            try{
+                const companyData = await fetchCompanyName(companyId.toString());
+                setCompanyName(companyData);
+            }catch(error){
+                console.log("getCompanyName error: ", error);
+            }
+        }
     }
     useEffect(()=>{
         if(user){
@@ -50,6 +61,16 @@ const ViewProfilePage = () =>{
             setCompanyId(user?.company_id);
         }
     },[user])
+    // Get company name
+    useEffect(()=>{
+        try{
+            getCompanyName();
+        }catch(error){
+            console.log("GetCompanyName error:", error);
+        }
+    },[companyId])
+
+    //Get intern detail if role is INTERN
     useEffect(()=>{
         if(role==="ROLE_INTERN"){
             try{
@@ -80,11 +101,13 @@ const ViewProfilePage = () =>{
                         {/*Section 1: profile picture and username*/}
                         <div className="pfp-container">
                             {/*profile pic container*/}
-                            <div className="profile-pic"></div>
+                            <img src={profileIcon} className="profile-pic" alt="default-profile-icon"></img>
                             <p className="user-name">{username}</p>
                         </div>
                         {/*Section 2: user info*/}
                         <div className="user-info-container">
+                            <p className="field-name">Company: <p className="field-value">{companyName}</p></p>
+                            <br/>
                             <p className="field-name">Role: <p className="field-value">{role}</p></p>
                             <br/>
                             <p className="field-name">Full name: <p className="field-value">{fullName}</p></p>
@@ -116,11 +139,13 @@ const ViewProfilePage = () =>{
                         {/*Section 1: profile picture and username*/}
                         <div className="pfp-container">
                             {/*profile pic container*/}
-                            <div className="profile-pic"></div>
+                            <img src={profileIcon} className="profile-pic" alt="default-profile-icon"></img>
                             <p className="user-name">{username}</p>
                         </div>
                         {/*Section 2: user info*/}
                         <div className="user-info-container">
+                            <p className="field-name">Company: <p className="field-value">{companyName}</p></p>
+                            <br/>
                             <p className="field-name">Role: <p className="field-value">{role}</p></p>
                             <br/>
                             <p className="field-name">Full name: <p className="field-value">{fullName}</p></p>
