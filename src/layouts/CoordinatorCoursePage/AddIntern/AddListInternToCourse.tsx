@@ -123,7 +123,7 @@ export const AddListInternToCourse: React.FC = () => {
                     className="btn-lrg insert rounded"
                     onClick={() => setIsPopupOpen(true)}
                   >
-                    Add Intern ({acceptedApplications.length})
+                    Select Intern ({acceptedApplications.length})
                   </button>
                 </div>
                 <div className="col-xs-12">
@@ -132,7 +132,7 @@ export const AddListInternToCourse: React.FC = () => {
                     id="btn-apply"
                     className="btn-lrg submit-btn"
                   >
-                    Create
+                    Add
                     <span className="first"></span>
                     <span className="second"></span>
                     <span className="third"></span>

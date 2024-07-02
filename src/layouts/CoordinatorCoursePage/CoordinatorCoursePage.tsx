@@ -155,7 +155,7 @@ export const ViewCourseInsystemByCoordinator = () => {
               return;
         }
     };
-    useAuth(['ROLE_INTERNSHIP_COORDINATOR']);
+    useAuth(['ROLE_COORDINATOR']);
 
     return (
         <div>

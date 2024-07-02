@@ -7,6 +7,7 @@ import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";
 import {useEffect, useState} from "react";
+import useAuth from "../../../context/useAuth";
 const CourseActivityPage: React.FC = () => {
     const {courseId} = useParams();
 
@@ -22,7 +23,6 @@ const CourseActivityPage: React.FC = () => {
     const checkedInternId = StringInternId ?? "";
 
     const checkedcourseId = courseId ?? "";
-
     if (!user) {
         return <p>Loading...</p>;
     }

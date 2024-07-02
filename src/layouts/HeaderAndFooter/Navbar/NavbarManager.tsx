@@ -48,7 +48,6 @@ export const NavbarManager = () => {
             </div>
           </div>
         </nav>
-        <h1 id="h1-welcome">Welcome </h1>
       </div>
     </div>
     );

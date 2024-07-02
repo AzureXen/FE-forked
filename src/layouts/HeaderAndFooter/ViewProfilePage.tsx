@@ -133,7 +133,7 @@ const ViewProfilePage = () =>{
                 {/*Background*/}
                 <div style={{background: "radial-gradient(circle at center, #c3d6f5, #a3c7f2)"}}>
                     <h2 className="highlight1">USER PROFILE</h2>
-                    <hr style={{height: '4px', backgroundColor: 'aliceblue', border: 'none'}}/>
+                    <hr style={{height: '4px', backgroundColor: 'aliceblue', border: 'none', margin:"0"}}/>
                     <div className="info-background">
                         {/*Divide into two sections*/}
                         {/*Section 1: profile picture and username*/}
