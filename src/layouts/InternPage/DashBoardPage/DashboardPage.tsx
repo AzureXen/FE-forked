@@ -5,6 +5,7 @@ import { HeaderWorkplace } from "../../HeaderAndFooter/HeaderWorkplace";
 import { Footer } from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";
 import { useEffect, useState } from 'react';
+import useAuth from "../../../context/useAuth";
 
 export const DashboardPage: React.FC = () => {
     const [user, setUser] = useState<{ user_id: number } | null>(null);
@@ -16,7 +17,6 @@ export const DashboardPage: React.FC = () => {
         }
     }, []);
     const checkedInternId = user?.user_id.toString(); // Convert to string
-
     return (
         <>
             <div>

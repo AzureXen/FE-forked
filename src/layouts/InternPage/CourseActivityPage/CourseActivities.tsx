@@ -20,19 +20,28 @@ const CourseActivities : React.FC<CAProps> =({courseId,internId}) => {
         }
         fetchData();
     }, []);
+    console.log(activities);
+    if (activities.length>0){
+        return(
+            <div className="course-activity-cards-container">
+                {activities.map(activities=>(
+                    <ActivityCard
+                        key = {activities.course_id}
+                        activityId={activities.activity_id}
+                        activityDescription={activities.activity_content}
+                        startDate={activities.start_date}
+                        endDate={activities.end_date}
+                        status = {activities.status}
+                        intern_id={internId}
+                    />
+                ))}
+            </div>
+        )
+    }
     return(
-        <div className="course-activity-cards-container">
-            {activities.map(activities=>(
-                <ActivityCard
-                    key = {activities.course_id}
-                    activityId={activities.activity_id}
-                    activityDescription={activities.activity_content}
-                    startDate={activities.start_date}
-                    endDate={activities.end_date}
-                    status = {activities.status}
-                    intern_id={internId}
-                />
-            ))}
+        <div>
+            <p style={{fontSize:"1.5rem", marginLeft:"1.5rem", color:"black", fontWeight:"bold"}}>
+                Mentor will create activities soon!</p>
         </div>
     )
 }

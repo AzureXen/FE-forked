@@ -5,9 +5,10 @@ import "../../../css/Intern/FeedbackPage.css"
 import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";
+import useAuth from "../../../context/useAuth";
 const FeedbackPage = () =>{
     // check user---------------
-    const [user, setUser] = useState<{ user_id: number } | null>(null);
+    const [user, setUser] = useState<{ user_id: number, email:string } | null>(null);
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -31,6 +32,33 @@ const FeedbackPage = () =>{
     }catch(error){
         console.log("FeedbackPage: found an error while fetching feedback: ",error);
     }
+    //  PAGINATION
+    const maxMessages = 10;
+    const [pageAmount, setPageAmount] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const handlePaginationClick = (event:string) => {
+        if (event==="toLeft"){
+            if((currentPage-1)>0){
+                setCurrentPage(currentPage - 1);
+            }
+        }
+        else if (event==="toRight"){
+            if((currentPage+1)<pageAmount+1){
+                setCurrentPage(currentPage + 1);
+            }
+        }
+        else if (event==="leftMost"){
+            setCurrentPage(1);
+        }
+        else if(event==="rightMost"){
+            setCurrentPage(pageAmount);
+        }
+    }
+    useEffect(
+        ()=>{
+            setPageAmount(Math.ceil(feedbackList.length/maxMessages));
+        }
+    ,[feedbackList])
     if (!user) {
         return <p>Loading...</p>;
     }
@@ -42,27 +70,41 @@ const FeedbackPage = () =>{
             <div>
                 <NavbarIntern internId={checkedInternId} selectedPage="Feedback"/>
             </div>
-            <div style={{margin:"1rem 1rem 1rem 3rem"}}>
-                <p className="highlight1">All feedbacks: </p>
-            </div>
+
             <div className="feedback-background">
-                <div className="feedback-container">
-                    <table>
-                        <thead>
-                        <tr className="table-header">
-                            <th>Sender</th>
-                            <th>Feedback content</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {feedbackList.map((feedback, index) => (
-                            <tr key={index}>
-                                <td>{feedback.senderName}</td>
-                                <td>{feedback.content}</td>
+                <div style={{margin: "1rem 1rem 1rem 3rem"}}>
+                    <p className="highlight1">All feedbacks: </p>
+                </div>
+                <div style={{display:"flex", justifyContent:"center"}}>
+                    <div className="feedback-container">
+                        <table>
+                            <thead>
+                            <tr className="table-header">
+                                <th>Sender</th>
+                                <th>Feedback content</th>
                             </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            {feedbackList.slice(maxMessages * currentPage - maxMessages, maxMessages * currentPage).map((feedback, index) => (
+                                <tr key={index}>
+                                    <td>{feedback.senderName}</td>
+                                    <td>{feedback.content}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                        <div className="pagination-items">
+                            <button onClick={() => handlePaginationClick("leftMost")}
+                                    className="pagination-button">&lt;&lt;</button>
+                            <button onClick={() => handlePaginationClick("toLeft")}
+                                    className="pagination-button">&lt;</button>
+                            <p className="pagination-page">{currentPage}/{pageAmount}</p>
+                            <button onClick={() => handlePaginationClick("toRight")}
+                                    className="pagination-button">&gt;</button>
+                            <button onClick={() => handlePaginationClick("rightMost")}
+                                    className="pagination-button">&gt;&gt;</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

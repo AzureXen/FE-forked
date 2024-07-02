@@ -20,7 +20,6 @@ tr td:first-child{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .feedback-background{
-    display:flex;
     justify-content: center;
     padding: 1rem 0 1rem 0;
     background: radial-gradient(circle at center, #c3d6f5, #a3c7f2);
@@ -54,4 +53,22 @@ tr td:first-child{
 }
 table,tr,td,th{
     border: 2px solid var(--text-color);
+}
+
+.pagination-items{
+    width:100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-button{
+    margin-left:1rem;
+    margin-right: 1rem;
+    background-color: #0d1a3e;
+    font-weight: bolder;
+}
+.pagination-page{
+    display:inline-block;
+    color: black;
+    font-weight: bold;
 }

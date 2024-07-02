@@ -9,9 +9,10 @@ import useAuth from "../../context/useAuth";
 
 export const CoordinatorAddInternToCoursePage: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  useAuth(['ROLE_INTERNSHIP_COORDINATOR']);
+    useAuth(['ROLE_COORDINATOR']);
 
-  const openPopup = () => setIsPopupOpen(true);
+
+    const openPopup = () => setIsPopupOpen(true);
   const closePopup = () => setIsPopupOpen(false);
 
   return (

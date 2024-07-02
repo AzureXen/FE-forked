@@ -50,6 +50,7 @@ import CoordinatorFeedbackInternPage
 import { ManagerCreateAccount } from "./layouts/ManagerPage/ManagerCreateAccount";
 import MyCalendar from "./layouts/ManagerPage/TimeTable/TimeTable";
 import { VerificationEmail } from "./layouts/VerificationEmail/VerificationEmail.";
+import ViewProfilePage from "./layouts/HeaderAndFooter/ViewProfilePage";
 import { HelpPage } from "./layouts/HelpPage/HelpPage";
 import { AdminViewRequest } from "./layouts/AdminPage/RequestAdmin/AdminViewRequest";
 export const App = () => {
@@ -106,6 +107,7 @@ export const App = () => {
               <Route path="/verifyEmail" element={<VerificationEmail />} />
               <Route path="/help" element={<HelpPage />} />
               <Route path="/a" element={<MyCalendar/>}/>
+              <Route path="/profile" element={<ViewProfilePage/>}/>
             </Routes>
           </div>
         </div>

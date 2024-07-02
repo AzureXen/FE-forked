@@ -11,9 +11,10 @@ export const CoordinatorCreateCoursePage: React.FC = () => {
 
   const openPopup = () => setIsPopupOpen(true);
   const closePopup = () => setIsPopupOpen(false);
-  useAuth(['ROLE_INTERNSHIP_COORDINATOR']);
+    useAuth(['ROLE_COORDINATOR']);
 
-  return (
+
+    return (
     <>
       <HeaderWorkplace />
       <div>

@@ -21,20 +21,30 @@ const MentorActivities:React.FC<MentorActivitiesProps> = ({mentorId,courseId})=>
     }
     ,[])
     console.log(activities);
-    return(
-        <div className="course-activity-cards-container">
-            {activities.map(activities => (
-                <MentorActivityCard
-                    key={activities.taskId}
-                    taskId={activities.taskId.toString()}
-                    taskContent={activities.taskContent}
-                    startDate={activities.startDate}
-                    endDate={activities.endDate}
-                    courseId={courseId}
-                />
-            ))}
-        </div>
-    )
+    if(activities.length>0){
+        return(
+            <div className="course-activity-cards-container">
+                {activities.map(activities => (
+                    <MentorActivityCard
+                        key={activities.taskId}
+                        taskId={activities.taskId.toString()}
+                        taskContent={activities.taskContent}
+                        startDate={activities.startDate}
+                        endDate={activities.endDate}
+                        courseId={courseId}
+                    />
+                ))}
+            </div>
+        )
+    }
+    else{
+        return (
+            <div>
+                <p style={{fontSize: "1.5rem", marginLeft: "1.5rem", color: "black", fontWeight: "bold"}}>
+                    You haven't added any activities!</p>
+            </div>
+        )
+    }
 }
 
 export default MentorActivities

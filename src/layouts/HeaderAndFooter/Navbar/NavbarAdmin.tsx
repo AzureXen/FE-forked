@@ -65,7 +65,6 @@ export const NavbarAdmin = () => {
             </div>
           </div>
         </nav>
-        <h1 id="h1-welcome">Welcome </h1>
       </div>
     </div>
     );

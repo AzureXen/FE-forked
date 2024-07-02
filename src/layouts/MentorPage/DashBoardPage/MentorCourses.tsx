@@ -24,21 +24,29 @@ const MentorCourses: React.FC<MentorCoursesProps> = ({mentorId}) => {
     const showMoreCourses = () => {
         setVisibleCount(prevCount => prevCount + 5); // Increment the count by 5 each time
     };
-    return(
+    if (courses.length>0){
+        return(
+            <div>
+                {courses.slice(0, visibleCount).map(courseMentor => (
+                    <MentorCourseCard
+                        key={courseMentor.course_id}
+                        mentorId={courseMentor.mentor_id}
+                        courseId={courseMentor.course_id}
+                        courseName={courseMentor.course_name}
+                        mentorName={courseMentor.mentorName}
+                    />
+                ))}
+                {visibleCount < courses.length && (
+                    <p style={{color:"blue", cursor:"pointer",
+                        fontWeight:"bold", marginLeft:"1rem", fontSize:"large"}} onClick={showMoreCourses}>Show More</p>
+                )}
+            </div>
+        )
+    }
+    else return (
         <div>
-            {courses.slice(0, visibleCount).map(courseMentor => (
-                <MentorCourseCard
-                    key={courseMentor.course_id}
-                    mentorId={courseMentor.mentor_id}
-                    courseId={courseMentor.course_id}
-                    courseName={courseMentor.course_name}
-                    mentorName={courseMentor.mentorName}
-                />
-            ))}
-            {visibleCount < courses.length && (
-                <p style={{color:"blue", cursor:"pointer",
-                    fontWeight:"bold", marginLeft:"1rem", fontSize:"large"}} onClick={showMoreCourses}>Show More</p>
-            )}
+            <p style={{fontSize: "1.5rem", marginLeft: "2rem", color: "black", fontWeight: "bold"}}>
+                No available courses.</p>
         </div>
     )
 }

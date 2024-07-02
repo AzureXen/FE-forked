@@ -30,7 +30,9 @@ export const HeaderWorkplace: React.FC = () => {
     setUser(null);
     showToast("Logout successful!", 'success');
   };
-
+  const handleViewProfile = ()=>{
+    navigate("/profile");
+  }
   return (
     <div>
       <header role="banner" id="headerSmallerHeight">
@@ -108,9 +110,16 @@ export const HeaderWorkplace: React.FC = () => {
                       </a>
                       <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
                         <li
-                          onClick={handleLogout}
-                          className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                          id="button-sign-out">
+                            style={{marginBottom:"1em"}}
+                            onClick={handleViewProfile}
+                            className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                            id="button-sign-out">
+                          View Profile
+                        </li>
+                        <li
+                            onClick={handleLogout}
+                            className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                            id="button-sign-out">
                           Logout
                         </li>
                       </div>
@@ -121,10 +130,10 @@ export const HeaderWorkplace: React.FC = () => {
 
               <ul className="navbar-nav ml-auto">
                 {!user && (
-                  <li className="nav-item cta-btn">
-                    <Link
-                      type="button"
-                      className="btn btn-mod btn-border btn-circle btn-large"
+                    <li className="nav-item cta-btn">
+                      <Link
+                          type="button"
+                          className="btn btn-mod btn-border btn-circle btn-large"
                       id="button-sign-in"
                       to="/login"
                     >
