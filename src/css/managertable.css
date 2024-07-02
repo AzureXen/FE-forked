@@ -213,8 +213,24 @@
   font-weight: bold !important;
   width: 70%;
 }
-.Finished{
+.Finished,.Absent{
   background-color: #f51010 ;
+  padding: 2%;
+  text-align: center;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  width: 70%;
+}
+.Pending-Interview{
+  background-color: #ff6411 ;
+  padding: 2%;
+  text-align: center;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  width: 70%;
+}
+.Passed{
+  background-color:   #39ff14;
   padding: 2%;
   text-align: center;
   color: #ffffff !important;
@@ -265,4 +281,21 @@
 .button-update:focus,.button-delete:focus {
   outline: none !important;
   box-shadow: none !important;
+}
+.tableJob {
+  width: 100%;
+  border-collapse: collapse;
+}
+.tableJob th, .tableJob td {
+  padding: 8px;
+}
+.tableJob tbody td {
+  border: 1px solid #ddd;
+}
+
+.tableJob tbody tr:hover {
+  background-color: #cdcccc !important; 
+}
+.tableJob tr {
+  background-color: transparent !important;
 }

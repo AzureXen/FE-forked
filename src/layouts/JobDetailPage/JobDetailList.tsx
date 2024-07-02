@@ -7,6 +7,7 @@ import "../../css/JobDetail.css";
 import logoSample from "../../images/logoSample-.png";
 import { applyJob } from "../../apis/ApiApplyJob";
 import { useToast } from "../../context/ToastContext";
+import { Loading } from "../Loading/Loading";
 
 export const JobDetailList: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -23,6 +24,7 @@ export const JobDetailList: React.FC = () => {
       try {
         if (id) {
           const data: Job = await getJobDetail(parseInt(id));
+          console.log(data);
           setJob(data);
         }
       } catch (error) {
@@ -47,13 +49,15 @@ export const JobDetailList: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!cv || !id) return;
-
+    setLoading(true);
     try {
       const response = await applyJob(parseInt(id), email, fullName, cv);
       showToast("success","success");
     } catch (error) {
       console.error("Error submitting job application:", error);
       alert("Failed to submit job application.");
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -99,60 +103,64 @@ export const JobDetailList: React.FC = () => {
       <div className="container rounded mb-5" id="job-block">
         <div className="row input-container">
           <h1 id="h1-apply-now"> Apply Now</h1>
+        {loading ? (
+          <Loading/>
+        ):(
           <form onSubmit={handleSubmit}>
-            <div className="col-xs-12">
-              <div className="styled-input wide">
-                <input
-                  type="text"
-                  id="input"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required
-                />
-                <label>Name</label>
-              </div>
+          <div className="col-xs-12">
+            <div className="styled-input wide">
+              <input
+                type="text"
+                id="input"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
+              <label>Name</label>
             </div>
-            <div className="col-md-6 col-sm-12">
-              <div className="styled-input">
-                <input
-                  type="text"
-                  id="input"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <label>Email</label>
-              </div>
+          </div>
+          <div className="col-md-6 col-sm-12">
+            <div className="styled-input">
+              <input
+                type="text"
+                id="input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <label>Email</label>
             </div>
-            <div className="col-md-6 col-sm-12">
-              <input type="hidden" value={job.id} onChange={(e) => e.target.value}/>
-              <div className="styled-input" style={{ float: "right" }}>
-                <input
-                  className=""
-                  type="file"
-                  id="input-cv"
-                  onChange={handleFileChange}
-                  accept=".pdf"
-                  required
-                />
-              </div>
+          </div>
+          <div className="col-md-6 col-sm-12">
+            <input type="hidden" value={job.id} onChange={(e) => e.target.value}/>
+            <div className="styled-input" style={{ float: "right" }}>
+              <input
+                className=""
+                type="file"
+                id="input-cv"
+                onChange={handleFileChange}
+                accept=".pdf"
+                required
+              />
             </div>
-            <div className="col-xs-12">
-              <div className="styled-input wide">
-                <textarea></textarea>
-                <label>Message</label>
-              </div>
+          </div>
+          <div className="col-xs-12">
+            <div className="styled-input wide">
+              <textarea></textarea>
+              <label>Message</label>
             </div>
-            <div className="col-xs-12">
-              <button type="submit" id="btn-apply" className="btn-lrg submit-btn">
-                  Apply
-                  <span className="first"></span>
-                  <span className="second"></span>
-                  <span className="third"></span>
-                  <span className="fourth"></span>
-                </button>
-            </div>
-          </form>
+          </div>
+          <div className="col-xs-12">
+            <button type="submit" id="btn-apply" className="btn-lrg submit-btn">
+                Apply
+                <span className="first"></span>
+                <span className="second"></span>
+                <span className="third"></span>
+                <span className="fourth"></span>
+              </button>
+          </div>
+        </form>
+        )}
         </div>
       </div>
     </div>

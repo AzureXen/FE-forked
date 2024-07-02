@@ -10,6 +10,7 @@ export interface JobApplication {
   email: string;
   fullName: string;
   status: number;
+  job: Job;
 }
 
 export interface Job {
