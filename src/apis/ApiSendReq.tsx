@@ -1,5 +1,5 @@
 import axios from "axios";
-import { HelpRequest } from "../model/HelpRequest";
+import { HelpRequest } from "../model/Home/HelpRequest";
 
 export const ApiSendReq = async (helpRequest: HelpRequest) => {
     try {

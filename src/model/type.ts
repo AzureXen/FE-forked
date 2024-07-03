@@ -9,5 +9,5 @@ export interface Company {
     id: number;
     jobName: string;
     jobDescription: string;
-    company: Company;  // Thêm đối tượng Company vào Job
+    company: Company; 
   }

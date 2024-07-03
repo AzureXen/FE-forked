@@ -10,7 +10,8 @@ import { useToast } from "../../context/ToastContext";
 import { Loading } from "../Loading/Loading";
 
 export const ViewApplication = () => {
-  const [jobList, setJobList] = useState<Job[]>([]);
+  const [allJobList, setAllJobList] = useState<Job[]>([]);
+  const [currentJobList, setCurrentJobList] = useState<JobApplication[]>([]);
   const [pageNo, setPageNo] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(5);
   const [totalItems, setTotalItems] = useState<number>(0);
@@ -28,6 +29,7 @@ export const ViewApplication = () => {
 
   const openPopup = (application: JobApplication) => {
     setSelectedJobApplication(application);
+    console.log("View application stauts:" +application.status);
     setIsPopupOpen(true);
   };
 
@@ -43,19 +45,27 @@ export const ViewApplication = () => {
       setUser(parsedUser);
       setCompanyId(parsedUser.company_id.toString());
     }
-  }, [companyId]);
+  }, []);
 
   useEffect(() => {
     if (user) {
       fetchJobApplications();
     }
-  }, [pageNo, pageSize, user]);
+  }, [user]);
 
   const fetchJobApplications = async () => {
     setLoading(true);
     try {
-      const data: JobApplicationResponse = await getJobApplication(pageNo, pageSize, parseInt(companyId));
-      setJobList(data.jobList);
+      const data: JobApplicationResponse = await getJobApplication(0, 10000, parseInt(companyId));
+      // Assign job reference to each job application
+      const jobListWithJobRef = data.jobList.map((job) => ({
+        ...job,
+        jobApplications: job.jobApplications.map((application) => ({
+          ...application,
+          job: job
+        }))
+      }));
+      setAllJobList(jobListWithJobRef);
       setTotalItems(data.totalItems);
       setTotalPages(Math.ceil(data.totalItems / pageSize));
     } catch (error) {
@@ -66,7 +76,9 @@ export const ViewApplication = () => {
   };
 
   const handlePageChange = (newPageNo: number) => {
-    setPageNo(newPageNo);
+    if (newPageNo >= 0 && newPageNo < totalPages) {
+      setPageNo(newPageNo);
+    }
   };
 
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -100,16 +112,38 @@ export const ViewApplication = () => {
     setPageNo(0);
   };
 
+  useEffect(() => {
+    if (allJobList.length > 0) {
+      const filteredJobList = allJobList
+        .map((job) => ({
+          ...job,
+          jobApplications: job.jobApplications.filter(
+            (application) =>
+              (application.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                application.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                job.jobName.toLowerCase().includes(searchTerm.toLowerCase())) &&
+              (statusFilter === undefined || application.status === statusFilter)
+          ),
+        }))
+        .filter((job) => job.jobApplications.length > 0)
+        .flatMap((job) => job.jobApplications);
+
+      setTotalItems(filteredJobList.length);
+      setTotalPages(Math.ceil(filteredJobList.length / pageSize));
+      setCurrentJobList(filteredJobList.slice(pageNo * pageSize, (pageNo + 1) * pageSize));
+    }
+  }, [searchTerm, pageNo, pageSize, allJobList, statusFilter]);
+
   const handleUpdateStatus = (id: number, newStatus: number) => {
     if (newStatus === 0) {
-      setJobList((prevJobList) =>
+      setAllJobList((prevJobList) =>
         prevJobList.map((job) => ({
           ...job,
           jobApplications: job.jobApplications.filter((application) => application.id !== id),
         }))
       );
     } else {
-      setJobList((prevJobList) =>
+      setAllJobList((prevJobList) =>
         prevJobList.map((job) => ({
           ...job,
           jobApplications: job.jobApplications.map((application) =>
@@ -147,25 +181,18 @@ export const ViewApplication = () => {
     }
   };
 
-  const filteredJobList = jobList
-    .map((job) => ({
-      ...job,
-      jobApplications: job.jobApplications.filter(
-        (application) =>
-          (application.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            application.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.jobName.toLowerCase().includes(searchTerm.toLowerCase())) &&
-          (statusFilter === undefined || application.status === statusFilter)
-      ),
-    }))
-    .filter((job) => job.jobApplications.length > 0);
-
   const getStatusLabel = (status: number | null) => {
     switch (status) {
       case 0:
         return "Reject";
       case 1:
         return "Accept";
+      case 2:
+          return "Pending Interview";
+      case 3:
+          return "Absent";
+      case 4:
+          return "Passed";
       case null:
         return "Pending";
       default:
@@ -177,6 +204,12 @@ export const ViewApplication = () => {
     switch (status) {
       case 1:
         return "Accept";
+      case 2:
+          return "Pending-Interview";
+      case 3:
+          return "Absent";
+      case 4:
+          return "Passed";
       case null:
         return "Pending";
       default:
@@ -205,7 +238,6 @@ export const ViewApplication = () => {
         <select value={statusFilter === null ? "2" : statusFilter} onChange={handleStatusChange} id="filter">
           <option value={""}>Filter</option>
           <option value={"2"}>Pending</option>
-          <option value={0}>Reject</option>
           <option value={1}>Accept</option>
         </select>
       </div>
@@ -213,7 +245,7 @@ export const ViewApplication = () => {
         <p><Loading /></p>
       ) : (
         <div className="table-responsive">
-          {filteredJobList.length > 0 ? (
+          {currentJobList.length > 0 ? (
             <table className="table rounded" id="table">
               <thead className="header">
                 <tr>
@@ -226,44 +258,53 @@ export const ViewApplication = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredJobList.map((job) =>
-                  job.jobApplications.map((application) => (
-                    <tr key={application.id}>
-                      <td>
-                        <input
-                          type="checkbox"
-                          checked={selectedUsers.some((user) => user.jobApplicationId === application.id)}
-                          onChange={() => handleUserSelect(new InformationRegisterUser(application.id, application.fullName, application.email, job.company.id, job.company.companyName, "ROLE_INTERN"))}
-                        />
-                      </td>
-                      <td>{application.email}</td>
-                      <td>{application.fullName}</td>
-                      <td>
-                        <p className={changeColorByStatus(application.status) + " rounded"}>
-                          {getStatusLabel(application.status)}
-                        </p>
-                      </td>
-                      <td>{job.jobName}</td>
-                      <td>
-                        <button
-                          className="button-delete"
-                          onClick={() => handleDownloadCV(application.id, application.fullName, job.jobName)}
-                        >
-                          Download CV
-                        </button>
-                        <button className="button-update" onClick={() => openPopup(application)}>
-                          Review CV
-                        </button>
-                        <UpdateJobApplicationPopup
-                          isOpen={isPopupOpen}
-                          onClose={closePopup}
-                          jobApplication={selectedJobApplication}
-                          onUpdateStatus={handleUpdateStatus}
-                        />
-                      </td>
-                    </tr>
-                  ))
-                )}
+                {currentJobList.map((application) => (
+                  <tr key={application.id}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={selectedUsers.some((user) => user.jobApplicationId === application.id)}
+                        onChange={() =>
+                          handleUserSelect(
+                            new InformationRegisterUser(
+                              application.id,
+                              application.fullName,
+                              application.email,
+                              application.job.company.id,
+                              application.job.company.companyName,
+                              "ROLE_INTERN"
+                            )
+                          )
+                        }
+                      />
+                    </td>
+                    <td>{application.email}</td>
+                    <td>{application.fullName}</td>
+                    <td>
+                      <p className={changeColorByStatus(application.status) + " rounded"}>
+                        {getStatusLabel(application.status)}
+                      </p>
+                    </td>
+                    <td>{application.job.jobName}</td>
+                    <td>
+                      <button
+                        className="button-delete"
+                        onClick={() => handleDownloadCV(application.id, application.fullName, application.job.jobName)}
+                      >
+                        Download CV
+                      </button>
+                      <button className="button-update" onClick={() => openPopup(application)}>
+                        Review CV
+                      </button>
+                      <UpdateJobApplicationPopup
+                        isOpen={isPopupOpen}
+                        onClose={closePopup}
+                        jobApplication={selectedJobApplication}
+                        onUpdateStatus={handleUpdateStatus}
+                      />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           ) : (

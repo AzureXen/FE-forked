@@ -51,6 +51,8 @@ import { ManagerCreateAccount } from "./layouts/ManagerPage/ManagerCreateAccount
 import MyCalendar from "./layouts/ManagerPage/TimeTable/TimeTable";
 import { VerificationEmail } from "./layouts/VerificationEmail/VerificationEmail.";
 import ViewProfilePage from "./layouts/HeaderAndFooter/ViewProfilePage";
+import { HelpPage } from "./layouts/HelpPage/HelpPage";
+import { AdminViewRequest } from "./layouts/AdminPage/RequestAdmin/AdminViewRequest";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -87,6 +89,7 @@ export const App = () => {
               <Route path="/verifyPassword" element={<VerificationForgotPage />} />
               <Route path="/Admin/CreateCompany" element={<AdminCreateCompanyPage />} />
               <Route path="/Admin/ViewUser" element={<AdminViewUserInSystem />} />
+              <Route path="/Admin/viewRequest" element={<AdminViewRequest />} />
               <Route path="Admin/CreateUser" element={<AdminCreateUser />} />
               <Route path="/Admin/ViewAllCompany" element={<AdminViewAllCompanyPage/>}/>
               <Route path="/mentor/ViewCourse" element={<MentorViewAllCoursePage/>}/>
@@ -102,6 +105,7 @@ export const App = () => {
               <Route path="/coordinator/feedback" element={<CoordinatorFeedbackCoursePage/>}/>
               <Route path="/coordinator/feedback/:courseId" element={<CoordinatorFeedbackInternPage/>}/>
               <Route path="/verifyEmail" element={<VerificationEmail />} />
+              <Route path="/help" element={<HelpPage />} />
               <Route path="/a" element={<MyCalendar/>}/>
               <Route path="/profile" element={<ViewProfilePage/>}/>
             </Routes>

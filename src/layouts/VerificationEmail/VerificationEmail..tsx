@@ -25,7 +25,7 @@ export const VerificationEmail: React.FC = () => {
                     navigate("*");
                 }
             } catch (error) {
-                showToast("Error changing password", 'error');
+                showToast("There's something to verify email", 'error');
                 navigate("/");
             } finally {
                 setLoading(false);
@@ -38,7 +38,7 @@ export const VerificationEmail: React.FC = () => {
         <div>
             {loading ? (
                 <div className="position-absolute top-50 start-0 translate-middle-y" id="loading">
-                    <Loading />
+                    <Loading/>
                 </div>
             ) : (
                 

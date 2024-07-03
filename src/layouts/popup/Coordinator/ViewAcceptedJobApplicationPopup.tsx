@@ -14,7 +14,9 @@ interface ViewAcceptedJobApplicationPopupProps {
   onSelectApplications: (applications: AddScheduleRequest[]) => void;
 }
 
-export const ViewAcceptedJobApplicationPopup: React.FC<ViewAcceptedJobApplicationPopupProps> = ({ isOpen, onClose, companyId,onSelectApplications}) => {
+export const ViewAcceptedJobApplicationPopup: React.FC<
+  ViewAcceptedJobApplicationPopupProps
+> = ({ isOpen, onClose, companyId, onSelectApplications }) => {
   const [animationClass, setAnimationClass] = useState("popup-entering");
   const [isClosing, setIsClosing] = useState(false);
   const { showToast } = useToast();
@@ -24,15 +26,18 @@ export const ViewAcceptedJobApplicationPopup: React.FC<ViewAcceptedJobApplicatio
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [pageNo, setPageNo] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(5);
+  const [pageSize, setPageSize] = useState<number>(4);
   const [jobList, setJobList] = useState<Job[]>([]);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [statusFilter, setStatusFilter] = useState<number | null | undefined>(undefined);
+  const [statusFilter, setStatusFilter] = useState<number | null | undefined>(
+    undefined
+  );
   const [selectedUsers, setSelectedUsers] = useState<Job[]>([]);
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [selectedJobApplication, setSelectedJobApplication] =useState<Job | null>(null);
+  const [selectedJobApplication, setSelectedJobApplication] =
+    useState<Job | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
@@ -55,14 +60,14 @@ export const ViewAcceptedJobApplicationPopup: React.FC<ViewAcceptedJobApplicatio
     const fetchJobApplicationList = async () => {
       setLoading(true);
       try {
-        console.log("falkfnewlkfn"+companyId);
+        console.log("falkfnewlkfn" + companyId);
         if (companyId) {
           const data = await ApiShowAllJobApplicationAccepted(
             companyId,
             pageNo,
             pageSize
           );
-          
+
           if (data) {
             setJobList(data.jobApplications);
             setTotalItems(data.totalItems);
@@ -111,16 +116,14 @@ export const ViewAcceptedJobApplicationPopup: React.FC<ViewAcceptedJobApplicatio
   };
   const filteredUserList = jobList.filter(
     (job) =>
-      (job.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.email.toLowerCase().includes(searchTerm.toLowerCase()))
+      job.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      job.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleCheckboxChange = (job: Job) => {
     setSelectedUsers((prevSelectedUsers) => {
       if (prevSelectedUsers.includes(job)) {
-        return prevSelectedUsers.filter(
-          (selectedUser) => selectedUser !== job
-        );
+        return prevSelectedUsers.filter((selectedUser) => selectedUser !== job);
       } else {
         return [...prevSelectedUsers, job];
       }
@@ -154,11 +157,13 @@ export const ViewAcceptedJobApplicationPopup: React.FC<ViewAcceptedJobApplicatio
 
   return (
     <div className={`blur-background ${animationClass}`}>
-      <div className="container d-flex align-items-center justify-content-center h-100">
+      <div className="container d-flex align-items-center justify-content-center">
         <div className="application-container">
-          <button className="close-button" onClick={onClose}>Close</button>
+          <button className="close-button" onClick={onClose}>
+            Close
+          </button>
           <h1>Application List</h1>
-          <div className="filter-controls mb-5">
+          <div className="filter-controls">
             <div className="input-group d-flex flex-row justify-content-center">
               <input
                 type="text"
@@ -177,7 +182,7 @@ export const ViewAcceptedJobApplicationPopup: React.FC<ViewAcceptedJobApplicatio
           {loading || submitting ? (
             <div className="loading-overlay">
               <p>
-                <Loading/>
+                <Loading />
               </p>
             </div>
           ) : (
@@ -186,11 +191,15 @@ export const ViewAcceptedJobApplicationPopup: React.FC<ViewAcceptedJobApplicatio
                 <table className="table rounded" id="table">
                   <thead className="header">
                     <tr>
-                      <th> <input
+                      <th>
+                        {" "}
+                        <input
                           type="checkbox"
                           checked={selectAll}
                           onChange={handleSelectAllChange}
-                        />  Select</th>
+                        />{" "}
+                        Select
+                      </th>
                       <th>Full Name</th>
                       <th>Email</th>
                       <th>Company Name</th>
@@ -251,23 +260,25 @@ export const ViewAcceptedJobApplicationPopup: React.FC<ViewAcceptedJobApplicatio
               <i className="fa fa-angle-double-right" aria-hidden="true"></i>
             </a>
           </div>
-          <div className="page-size-controls">
-            <label>
-              Page Size:
-              <select value={pageSize} onChange={handlePageSizeChange}>
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-              </select>
-            </label>
-          </div>
-          <div className="submit-controls mt-4">
-            <button
-              className="add-application"
-              onClick={handleSubmit}
-              disabled={selectedUsers.length === 0 || submitting}
-            >
-              {submitting ? "Registering..." : "Add Selected Application"}
-            </button>
+          <div className="container d-flex justify-content-around">
+            <div className="page-size-controls col-md-4">
+              <label>
+                Page Size:
+                <select value={pageSize} onChange={handlePageSizeChange}>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                </select>
+              </label>
+            </div>
+            <div className="submit-controls col-md-8">
+              <button
+                className="add-application"
+                onClick={handleSubmit}
+                disabled={selectedUsers.length === 0 || submitting}
+              >
+                {submitting ? "Registering..." : "Add Selected Application"}
+              </button>
+            </div>
           </div>
         </div>
       </div>

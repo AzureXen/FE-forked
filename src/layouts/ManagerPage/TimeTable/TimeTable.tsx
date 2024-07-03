@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import CustomToolbar from './CustomToolbar'; // Import the custom toolbar
 import "../../../css/Manager/ManagerTimeTable.css";
+import EventComponent from './EventComponent';
 
 const localizer = momentLocalizer(moment);
 
@@ -11,6 +12,7 @@ interface Event {
   title: string;
   start: Date;
   end: Date;
+  description?: string;
 }
 
 const MyCalendar: React.FC = () => {
@@ -22,23 +24,27 @@ const MyCalendar: React.FC = () => {
     const eventsData = [
       {
         title: 'Meeting with John',
-        start: '2024-07-01T10:00:00',
-        end: '2024-07-01T12:00:00',
+        start: '2024-07-01T10:00:00Z',
+        end: '2024-07-01T12:00:00Z',
+        description: 'Discuss the project requirements and timeline.'
       },
       {
         title: 'Lunch Break',
-        start: '2024-07-01T13:00:00',
-        end: '2024-07-01T14:00:00',
+        start: '2024-07-01T13:00:00Z',
+        end: '2024-07-01T14:00:00Z',
+        description: 'Take a break and have lunch.'
       },
       {
         title: 'Conference',
-        start: '2024-07-02T09:00:00',
-        end: '2024-07-02T17:00:00',
+        start: '2024-07-02T09:00:00Z',
+        end: '2024-07-02T16:00:00Z',
+        description: 'Attend the annual conference.'
       },
       {
         title: 'Dentist Appointment',
-        start: '2024-07-03T11:00:00',
-        end: '2024-07-03T12:00:00',
+        start: '2024-07-03T11:00:00Z',
+        end: '2024-07-03T12:00:00Z',
+        description: 'Routine dental check-up.'
       },
     ];
 
@@ -46,6 +52,7 @@ const MyCalendar: React.FC = () => {
       title: event.title,
       start: new Date(event.start),
       end: new Date(event.end),
+      description: event.description,
     }));
     setEvents(formattedEvents);
   }, []);
@@ -63,7 +70,7 @@ const MyCalendar: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <Calendar
         localizer={localizer}
         events={events}
@@ -77,6 +84,7 @@ const MyCalendar: React.FC = () => {
         views={[Views.MONTH, Views.WEEK, Views.DAY, Views.AGENDA]}
         components={{
           toolbar: CustomToolbar, // Use the custom toolbar
+          event: EventComponent, // Use the custom event component
         }}
       />
     </div>

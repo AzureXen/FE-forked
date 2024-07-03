@@ -138,7 +138,7 @@ export const ViewJobByCompany = () => {
       ) : (
         <div className="table-responsive mt-5">
           {filteredJobList.length > 0 ? (
-            <table className="table rounded" id="table">
+            <table className="table rounded tableJob" id="table">
               <thead className="header">
                 <tr>
                   <th>Job Name</th>

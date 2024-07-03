@@ -145,7 +145,7 @@ export const ViewAddInternPopup: React.FC<ViewAddInternPopupProps> = ({ isOpen, 
                 <div className="application-container">
                     <button className="close-button" onClick={onClose}>Close</button>
                     <h1 className="h1-add-intern">Add Intern</h1>
-                    <div className="filter-controls mb-2">
+                    <div className="filter-controls">
                         <div className="input-group d-flex flex-row justify-content-center">
                             <input
                                 type="text"

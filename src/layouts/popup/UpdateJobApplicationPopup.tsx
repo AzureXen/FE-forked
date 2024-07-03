@@ -25,6 +25,7 @@ export const UpdateJobApplicationPopup: React.FC<UpdateJobApplicationPopupProps>
         setAnimationClass('popup-entered');
       }, 100);
       if (jobApplication) {
+        console.log("Job "+jobApplication.status);
         setStatus(jobApplication.status);
       }
     } else {
@@ -39,30 +40,20 @@ export const UpdateJobApplicationPopup: React.FC<UpdateJobApplicationPopupProps>
     event.preventDefault();
     try {
       if (jobApplication) {
-        await ApiUpdateStatus(status, jobApplication.id);
-        switch(status){
-            case 0:
-              showToast('Application rejected!', 'success');
-              onUpdateStatus(jobApplication.id, status);
-              onClose();
-              break;
-            case 1:
-              showToast('Application accepted!', 'success');
-              onUpdateStatus(jobApplication.id, status);
-              onClose();
-              break;
-            case 2:
-              showToast('You can not set Pending!', 'error');
-              break;
-              
-            default:
-              onClose();
-              break;
-        }
+        const data = await ApiUpdateStatus(status, jobApplication.id);
+        showToast(data, "success");
+        onUpdateStatus(jobApplication.id, status);
       }
-    } catch (error) {
-      showToast('You can not set Pending!', 'error');
-
+      onClose();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('Error occurred:', error.message);
+        showToast(error.message, "error");
+      } else {
+        console.error('Unexpected error:', error);
+        showToast("An unexpected error occurred", "error");
+      }
+      onClose();
     }
   };
 
@@ -100,9 +91,12 @@ export const UpdateJobApplicationPopup: React.FC<UpdateJobApplicationPopupProps>
               <div className="col-md-6 col-sm-12">
                 <div className="styled-input" style={{ float: "right" }}>
                   <select value={status}  onChange={(e) => setStatus(Number(e.target.value))} required id="input">
-                  <option value={"2"}>Pending</option>
+                  <option value={10}>Pending</option>
                     <option value={0}>Reject</option>
                     <option value={1}>Accept</option>
+                    <option value={2}>Pending InterView</option>
+                    <option value={3}>Absent</option>
+                    <option value={4}>Passed</option>
                   </select>
                 </div>
               </div>
