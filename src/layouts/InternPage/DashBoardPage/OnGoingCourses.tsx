@@ -26,7 +26,7 @@ const OnGoingCourses : React.FC<OnGoingCourseProps>= ({internId} ) => {
     const showMoreCourses = () => {
         setVisibleCount(prevCount => prevCount + 5); // Increment the count by 5 each time
     };
-    if(courseIntern.length<0){
+    if(courseIntern.length>0){
         return (
             <div>
                 {courseIntern.slice(0, visibleCount).map(courseIntern => (

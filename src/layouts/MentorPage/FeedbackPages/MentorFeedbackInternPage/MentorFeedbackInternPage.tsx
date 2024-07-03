@@ -1,14 +1,19 @@
 import {useEffect, useState} from "react";
 import Intern from "../../../../model/Intern/Intern"
 import fetchInternOfCourse from "../../../../apis/MentorApis/GetInternOfCourse";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import "../../../../css/Mentor/ViewAllInternsByTable.css"
 import SendFeedbackToIntern from "../../../../apis/MentorApis/SendFeedbackToIntern";
 import {HeaderWorkplace} from "../../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../../HeaderAndFooter/Footer";
 import {NavbarMentor} from "../../../HeaderAndFooter/Navbar/NavbarMentor";
 import { useToast } from "../../../../context/ToastContext"
+import MentorCourseVerify from "../../../../apis/MentorApis/MentorCourseVerify";
 const MentorFeedbackInternPage = () =>{
+    //----verify if mentor is in that course
+    const navigate = useNavigate();
+    const [isInCourse, setIsInCourse] = useState<boolean>(true);
+    const [verifiedCourse, setVerifiedCourse] = useState<boolean>(false);
     // USE TOAST
     const { showToast } = useToast();
 
@@ -53,8 +58,34 @@ const MentorFeedbackInternPage = () =>{
             const data = await fetchInternOfCourse(checkedMentorId, checkedCourseId);
             setInternList(data);
         }
-        if (checkedMentorId && checkedCourseId) fetchData();
-    },[checkedMentorId]);
+        if (checkedMentorId && checkedCourseId && verifiedCourse) fetchData();
+    },[checkedMentorId,verifiedCourse]);
+
+    // VERIFY IF MENTOR IS IN COURSE FUNCTIONS
+    const verifyInternCourse = async ()=>{
+        try{
+            const courseVerifyData = await MentorCourseVerify(checkedMentorId,checkedCourseId);
+            if(courseVerifyData.toString()==="false"){
+                setIsInCourse(false);
+            }
+            setVerifiedCourse(true);
+        }catch(error){
+            console.error("CourseActivityPage error: ",error);
+        }
+    }
+    useEffect(()=>{
+        if(checkedCourseId&&checkedMentorId){
+            console.log("checking if Mentor is in that course...");
+            verifyInternCourse();
+        }
+    },[checkedCourseId,checkedMentorId])
+
+    useEffect(()=>{
+        if(!isInCourse){
+            showToast("You are not/no longer in this course!","error");
+            navigate("/mentor/feedback");
+        }
+    },[isInCourse])
 
     if (!user) {
         return <p>Loading...</p>;
@@ -75,6 +106,9 @@ const MentorFeedbackInternPage = () =>{
         resetContent()
         closeFeedbackModal();
     }
+
+
+
     const sendFeedback = () => {
         if (cooldown) {
             showToast("Send feedback is on cooldown(10 seconds after a successful send.)", 'warn');
@@ -95,6 +129,8 @@ const MentorFeedbackInternPage = () =>{
             exitModal();
         }
     }
+
+
 
     return(
         <>

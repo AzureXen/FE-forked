@@ -21,7 +21,7 @@ const MentorActivities:React.FC<MentorActivitiesProps> = ({mentorId,courseId})=>
     }
     ,[])
     console.log(activities);
-    if(activities.length>0){
+    if(activities&&activities.length>0){
         return(
             <div className="course-activity-cards-container">
                 {activities.map(activities => (
