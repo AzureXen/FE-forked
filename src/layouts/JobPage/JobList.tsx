@@ -3,7 +3,7 @@ import { getJobs, Job, SearchJobsResponse } from "../../apis/getJobs";
 import "../../css/jobList.css";
 import logoSample from "../../images/logoSample-.png";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 interface JobListProps {
   search: string;
 }
@@ -16,6 +16,13 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, Math.round);
+  const [roundedCount, setRoundedCount] = useState<number>(0);
+  useEffect(() => {
+    const unsubscribe = rounded.onChange((v) => setRoundedCount(v));
+    return () => unsubscribe();
+  }, [rounded]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -31,6 +38,7 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
         );
         setJobs(data.jobs);
         setTotalItems(data.totalItems);
+        animate(count, data.totalItems, { duration: 1 });
       } catch (error) {
         console.error("Error fetching jobs:", error);
       } finally {
@@ -41,7 +49,6 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
     fetchJobs();
   }, [location.search, pageNo, pageSize]);
 
-  // Reset pageSize to 5 when search term changes
   useEffect(() => {
     setPageSize(5);
   }, [search]);
@@ -53,10 +60,15 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
   return (
     <div>
       <h1 className="text-start py-3" id="h1-aboutUs">
-        {totalItems} jobs in Vietnam
+        {roundedCount} jobs in Vietnam
       </h1>
       <ul>
         {jobs.map((job) => (
+          <motion.div
+          initial={{ opacity: 0, x: -200 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          >
           <div key={job.id} id="job" onClick={() => handleJobClick(job.id)}>
             <div className="container-fluid rounded mt-5 mb-5" id="job-block">
               <div className="row">
@@ -86,6 +98,8 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
               </div>
             </div>
           </div>
+          </motion.div>
+
         ))}
       </ul>
       <div>

@@ -53,6 +53,12 @@ import { VerificationEmail } from "./layouts/VerificationEmail/VerificationEmail
 import ViewProfilePage from "./layouts/HeaderAndFooter/ViewProfilePage";
 import { HelpPage } from "./layouts/HelpPage/HelpPage";
 import { AdminViewRequest } from "./layouts/AdminPage/RequestAdmin/AdminViewRequest";
+import { CertificateJob } from "./layouts/ManagerPage/CertificateJob/CertificateJob";
+import { ViewIntern } from "./layouts/ManagerPage/CertificateJob/ViewIntern";
+import { ViewInternPage } from "./layouts/ManagerPage/ViewInternPage";
+import { ViewEmployeePage } from "./layouts/ManagerPage/ViewEmployeePage";
+import MyPieChart from "./layouts/ManagerPage/Chart/PieChartManager";
+import { AdminViewRequestPage } from "./layouts/AdminPage/RequestAdmin/AdminViewRequestPage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -74,6 +80,9 @@ export const App = () => {
               <Route path="/Workplace/Manager/postJob" element={<PostJobPage />} />
               <Route path="/Workplace/Manager/viewJob" element={<ManagerViewJobByCompany />} />
               <Route path="/Workplace/Manager/createAccount" element={<ManagerCreateAccount/>}/>
+              <Route path="/Workplace/Manager/viewIntern" element={<ViewInternPage/>}/>
+              <Route path="/Workplace/Manager/schedule" element={<MyCalendar/>}/>
+              <Route path="/Workplace/Manager/viewEmployee" element={<ViewEmployeePage/>}/>
               <Route path="/Admin" element={<AdminPage />} />
               <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
@@ -89,7 +98,7 @@ export const App = () => {
               <Route path="/verifyPassword" element={<VerificationForgotPage />} />
               <Route path="/Admin/CreateCompany" element={<AdminCreateCompanyPage />} />
               <Route path="/Admin/ViewUser" element={<AdminViewUserInSystem />} />
-              <Route path="/Admin/viewRequest" element={<AdminViewRequest />} />
+              <Route path="/Admin/viewRequest" element={<AdminViewRequestPage/>} />
               <Route path="Admin/CreateUser" element={<AdminCreateUser />} />
               <Route path="/Admin/ViewAllCompany" element={<AdminViewAllCompanyPage/>}/>
               <Route path="/mentor/ViewCourse" element={<MentorViewAllCoursePage/>}/>
@@ -106,8 +115,8 @@ export const App = () => {
               <Route path="/coordinator/feedback/:courseId" element={<CoordinatorFeedbackInternPage/>}/>
               <Route path="/verifyEmail" element={<VerificationEmail />} />
               <Route path="/help" element={<HelpPage />} />
-              <Route path="/a" element={<MyCalendar/>}/>
               <Route path="/profile" element={<ViewProfilePage/>}/>
+              <Route path="/test" element={<MyPieChart/>}/>
             </Routes>
           </div>
         </div>

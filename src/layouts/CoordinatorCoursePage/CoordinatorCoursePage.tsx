@@ -155,7 +155,7 @@ export const ViewCourseInsystemByCoordinator = () => {
               return;
         }
     };
-    useAuth(['ROLE_COORDINATOR']);
+    useAuth(['ROLE_INTERNSHIP_COORDINATOR']);
 
     return (
         <div>
@@ -198,7 +198,7 @@ export const ViewCourseInsystemByCoordinator = () => {
                 ) : (
                     <div className="table-responsive">
                         {coursesList.length > 0 ? (
-                            <table className="table rounded" id="table">
+                            <table className="table rounded table-hover" id="table">
                                 <thead className="header">
                                     <tr>
                                         <th>Course ID</th>
@@ -213,8 +213,8 @@ export const ViewCourseInsystemByCoordinator = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {coursesList.map((course) => (
-                                        <tr key={course.courseId}>
+                                    {coursesList.map((course,index) => (
+                                        <tr key={course.courseId} className={index % 2 === 0 ? "table-primary" : ""}>
                                             <td>{course.courseId}</td>
                                             <td>{course.courseName}</td>
                                             <td>

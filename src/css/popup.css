@@ -8,7 +8,7 @@
     backdrop-filter: blur(2px); /* Hiệu ứng làm mờ */
     z-index: 1050; /* Đảm bảo popup nằm trên cùng */
     opacity: 0;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
   }
   .popup-entering {
     opacity: 0;

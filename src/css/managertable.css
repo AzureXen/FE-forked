@@ -13,11 +13,13 @@
     margin-bottom: 1.5rem;
     text-align: center;
     color: #0D1A3E;
+    transition: all .5s ease !important;
   }
   
   .application-container p {
     color: #666;
     font-weight: 300;
+    transition: all .5s ease !important;
   }
   
   .application-container table {
@@ -32,16 +34,19 @@
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
+    transition: all .5s ease !important;
   }
   
   .application-container th {
     background-color: #f5f5f5;
     color: #555;
     font-weight: 500;
+    transition: all .5s ease !important;
   }
   
   .application-container tr:nth-child(even) {
     background-color: #f9f9f9;
+    transition: all .5s ease !important;
   }
   
   .application-container button {
@@ -105,9 +110,6 @@
     background-color: #2936a7d2;
     padding: 4px 16px; 
   }
-  .table tbody tr:hover{
-    background-color: #bfbfc19f;
-  }
   .pagination-style-one a.selected{
     background-color: #1a2695;
     color: white;
@@ -118,18 +120,21 @@
 }
 .header th{
   /* background-color: #007bff; */
-  border-style: none;
-  background-color: #000000;
-  font-size: 1.3rem;
-  color: white;
-  font-weight: bolder;
+  border-style: none !important;
+  background-color: #000000 !important;
+  font-size: 1.3rem !important;
+  color: white !important;
+  font-weight: bolder !important;
 }
 #table{
-  border-spacing: 0;
-  border-collapse: separate;
-  overflow: hidden;
-  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
-  transition: all 0.5 ease;
+  border-spacing: 0 !important;
+  border-collapse: separate !important;
+  overflow: hidden !important;
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.5 ease !important;
+}
+#table tbody tr td{
+  color: #000000 !important;
 }
 #search-input{
   border-radius: 10px;
@@ -174,7 +179,10 @@
   width: 70%;
   padding-left: 50px; /* Increase padding to move text away from the icon */
 }
-
+#icon .input-group-text {
+  border: none;
+  background: none;
+}
 .input-search:hover ~ .input-group-prepend {
   left: 15.5%; 
 }
@@ -246,7 +254,7 @@
   width: 70%;
 }
 
-.button-update, .button-delete {
+.button-update, .button-delete,.button-send-certificate,.button-close,.button-link {
   border-radius: 28px;
   padding: 10px 20px;
   color: white;
@@ -259,43 +267,64 @@
   overflow: hidden;
   transition: all 0.5s ease;
 }
+.button-link{
+  background-color: #fab027 !important;
+  transition: all 0.5s ease;
+}
+.button-link:hover{
+  background-color: #ba8523 !important;
+  animation: deleteAnimation 0.5s forwards;
+}
 
-.button-delete{
+.button-delete,.button-close{
   background-color: #fa2727 !important;
   transition: all 0.5s ease;
 }
-.button-update{
+.button-update, .button-send-certificate{
   background-color: #0091f9 !important;
   transition: all 0.5s ease;
   
 }
-.button-update:hover{
+.button-update:hover,.button-send-certificate:hover{
   background-color: #165887 !important;
   animation: cancelAnimation 0.5s forwards;
 }
-.button-delete:hover{
+.button-delete:hover,.button-close:hover{
   background-color: #891616 !important;
   animation: deleteAnimation 0.5s forwards;
 }
 
-.button-update:focus,.button-delete:focus {
+.button-update:focus,.button-delete:focus,.button-send-certificate:focus ,.button-close:focus,.button-link:focus{
   outline: none !important;
   box-shadow: none !important;
 }
 .tableJob {
-  width: 100%;
-  border-collapse: collapse;
+  width: 100% !important;
+  border-collapse: collapse !important;
 }
 .tableJob th, .tableJob td {
-  padding: 8px;
+  padding: 8px !important;
 }
 .tableJob tbody td {
-  border: 1px solid #ddd;
+  border: 1px solid #ddd !important;
 }
 
-.tableJob tbody tr:hover {
-  background-color: #cdcccc !important; 
-}
 .tableJob tr {
   background-color: transparent !important;
+}
+.jobDes p{
+  font-weight: bold !important;
+}
+.jobDes{
+  font-weight: bold;
+}
+.width-view{
+  width: 0%;
+}
+.detail p{
+  color: #000000 !important;
+  font-weight: 320;
+}
+.smaller{
+  width: 90% !important;
 }

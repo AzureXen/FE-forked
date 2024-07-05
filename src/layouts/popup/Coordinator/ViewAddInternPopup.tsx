@@ -170,7 +170,7 @@ export const ViewAddInternPopup: React.FC<ViewAddInternPopupProps> = ({ isOpen, 
                     ) : (
                         <div className="table-responsive">
                             {internList.length > 0 ? (
-                                <table className="table rounded" id="table">
+                                <table className="table rounded table-hover" id="table">
                                     <thead className="header">
                                         <tr>
                                             <th>
@@ -185,8 +185,8 @@ export const ViewAddInternPopup: React.FC<ViewAddInternPopupProps> = ({ isOpen, 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {internList.map((intern) => (
-                                            <tr key={intern.id}>
+                                        {internList.map((intern,index) => (
+                                            <tr key={intern.id} className={index % 2 === 0 ? "table-primary" : ""}>
                                                 <td>
                                                     <input
                                                         type="checkbox"

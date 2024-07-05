@@ -39,7 +39,7 @@ export const ManagerPage: React.FC = () => {
       <div>
         <NavbarManager/>
       </div>
-      <div>
+      <div className='mt-5'>
         <ViewApplication/>
         {/* <ShowCourse/> */}
       </div>

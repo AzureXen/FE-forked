@@ -57,6 +57,7 @@ export const ViewApplication = () => {
     setLoading(true);
     try {
       const data: JobApplicationResponse = await getJobApplication(0, 10000, parseInt(companyId));
+      console.log(data);
       // Assign job reference to each job application
       const jobListWithJobRef = data.jobList.map((job) => ({
         ...job,
@@ -108,7 +109,9 @@ export const ViewApplication = () => {
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    setStatusFilter(value === "" ? undefined : value === "2" ? null : parseInt(value, 10));
+    console.log("filter: "+value);
+    setStatusFilter(value === "" ? undefined : value === "Pend" ? null : parseInt(value, 10));
+    console.log("status: "+statusFilter);
     setPageNo(0);
   };
 
@@ -127,7 +130,7 @@ export const ViewApplication = () => {
         }))
         .filter((job) => job.jobApplications.length > 0)
         .flatMap((job) => job.jobApplications);
-
+        console.log(filteredJobList);
       setTotalItems(filteredJobList.length);
       setTotalPages(Math.ceil(filteredJobList.length / pageSize));
       setCurrentJobList(filteredJobList.slice(pageNo * pageSize, (pageNo + 1) * pageSize));
@@ -237,8 +240,11 @@ export const ViewApplication = () => {
         </div>
         <select value={statusFilter === null ? "2" : statusFilter} onChange={handleStatusChange} id="filter">
           <option value={""}>Filter</option>
-          <option value={"2"}>Pending</option>
+          <option value={"Pend"}>Pending</option>
           <option value={1}>Accept</option>
+          <option value={2}>Pending Interview</option>
+          <option value={3}>Absent</option>
+          <option value={4}>Passed</option>
         </select>
       </div>
       {loading ? (
@@ -246,7 +252,7 @@ export const ViewApplication = () => {
       ) : (
         <div className="table-responsive">
           {currentJobList.length > 0 ? (
-            <table className="table rounded" id="table">
+            <table className="table rounded table-hover" id="table">
               <thead className="header">
                 <tr>
                   <th>Select</th>
@@ -258,8 +264,8 @@ export const ViewApplication = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentJobList.map((application) => (
-                  <tr key={application.id}>
+                {currentJobList.map((application,index ) => (
+                  <tr key={application.id} className={index % 2 ===0 ?"table-primary": ""}>
                     <td>
                       <input
                         type="checkbox"

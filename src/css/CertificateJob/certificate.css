@@ -1,0 +1,122 @@
+.certificate-container {
+    width: 1123px; /* A4 width in pixels at 96 DPI */
+    height: 794px; /* A4 height in pixels at 96 DPI */
+    padding: 40px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    position: relative;
+    font-family: 'Arial, sans-serif';
+    box-sizing: border-box;
+    background-image: url('../../images/certificate.avif'); /* The path to your uploaded image */
+    background-size: cover;
+    margin: 0 auto; 
+    transition: all .5s ease !important;
+  }
+  .position-out{
+    position: absolute;
+    right: 1000%;
+  }
+  
+  .certificate-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    transition: all .5s ease !important;
+  }
+  
+  .certificate-logo {
+    width: 100px;
+    display: flex;
+    
+    margin-right: 20px;
+    margin-bottom: 5%;
+    margin-top: 2%;
+    transition: all .5s ease !important;
+  }
+  
+  .certificate-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: black;
+    margin: 0;
+  }
+  
+  .certificate-certifies,
+  .certificate-completion,
+  .certificate-subtext,
+  .certificate-verification {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .certificate-certifies {
+    font-size: 20px;
+    margin: 20px 0;
+  }
+  
+  .certificate-recipient {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .certificate-completion {
+    font-size: 20px;
+    margin: 10px 0;
+  }
+  
+  .certificate-company {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+  
+  .certificate-subtext {
+    font-size: 18px;
+    margin: 20px 0;
+  }
+  
+  .certificate-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 40px;
+    margin-right: 20% !important;
+  }
+  
+  .certificate-signature {
+    text-align: right;
+  }
+  
+  .signature-image {
+    width: 150px;
+  }
+  
+  .certificate-signer {
+    font-size: 18px;
+    font-style: italic;
+    margin: 10px 0;
+  }
+  
+  .certificate-role {
+    font-size: 16px;
+  }
+  
+  .certificate-verification {
+    font-size: 16px;
+    margin-top: 30px;
+  }
+  
+  .certificate-verification a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  .button-link{
+    background-color: #fab027 !important;
+    transition: all 0.5s ease;
+  }
+  .button-link:hover{
+    background-color: #ba8523 !important;
+    animation: deleteAnimation 0.5s forwards;
+  }

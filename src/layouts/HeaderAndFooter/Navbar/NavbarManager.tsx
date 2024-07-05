@@ -42,8 +42,33 @@ export const NavbarManager = () => {
                   <Link className="nav-link" to="/Workplace/Manager/Report">View Report</Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link" to="/Workplace/Manager/Report">Helps</Link>
+                  <Link className="nav-link" to="/Workplace/Manager/schedule">View Schedule</Link>
                 </li>
+                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                  <li
+                  className="nav-item dropdown"
+                >
+                  <a
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    id="dropdown04"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Manage Employees
+                  </a>
+                  <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown-inAdmin">
+                    <Link className="dropdown-item" to="/Workplace/Manager/viewEmployee" id="dropdown-inAdmin-item">
+                    Manage all employees
+                    </Link>
+                    <Link className="dropdown-item" to="/Workplace/Manager/viewIntern" id="dropdown-inAdmin-item">
+                    View Intern & Certificate
+                    </Link>
+                  </div>
+                </li>
+                </li>
+                
               </ul>
             </div>
           </div>

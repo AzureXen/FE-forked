@@ -22,8 +22,9 @@ export const ViewJobByCompany = () => {
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [selectedJobInSystem, setSelectedJobInSystem] =
     useState<JobByCompanyResponse | null>(null);
-    const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState<boolean>(false);
-    const [jobToDelete, setJobToDelete] = useState<number | null>(null);
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState<boolean>(false);
+  const [jobToDelete, setJobToDelete] = useState<number | null>(null);
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -53,9 +54,11 @@ export const ViewJobByCompany = () => {
       setLoading(false);
     }
   };
+
   const formatParagraphs = (text: string) => {
     return text.split("\\n").map((str, index) => <p key={index}>{str}</p>);
   };
+
   const handlePageChange = (newPageNo: number) => {
     setPageNo(newPageNo);
   };
@@ -85,9 +88,11 @@ export const ViewJobByCompany = () => {
   const filteredJobList = jobList.filter((job) =>
     job.jobName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
   const refreshJobList = () => {
     fetchJobList();
   };
+
   const openConfirmDialog = (jobId: number) => {
     setJobToDelete(jobId);
     setIsConfirmDialogOpen(true);
@@ -97,6 +102,7 @@ export const ViewJobByCompany = () => {
     setIsConfirmDialogOpen(false);
     setJobToDelete(null);
   };
+
   const handleConfirmDelete = async () => {
     if (jobToDelete !== null) {
       try {
@@ -110,6 +116,7 @@ export const ViewJobByCompany = () => {
       }
     }
   };
+
   return (
     <div className="application-container">
       <h1>Job List</h1>
@@ -138,7 +145,7 @@ export const ViewJobByCompany = () => {
       ) : (
         <div className="table-responsive mt-5">
           {filteredJobList.length > 0 ? (
-            <table className="table rounded tableJob" id="table">
+            <table className="table rounded tableJob table-hover" id="table">
               <thead className="header">
                 <tr>
                   <th>Job Name</th>
@@ -149,20 +156,22 @@ export const ViewJobByCompany = () => {
               <tbody>
                 {filteredJobList.map((job) => (
                   <tr key={job.id}>
-                    <td>{job.jobName}</td>
-                    <td>{formatParagraphs(job.jobDescription)}</td>
-                    <button onClick={() => openPopup(job)} className="mt-5">
-                      Update
-                    </button>
-                    <button onClick={() => openConfirmDialog(job.id)} className="mt-5">
+                    <td className="jobDes">{job.jobName}</td>
+                    <td className="jobDes">{formatParagraphs(job.jobDescription)}</td>
+                    <td>
+                      <button onClick={() => openPopup(job)} className="mt-5 button-update">
+                        Update
+                      </button>
+                      <button onClick={() => openConfirmDialog(job.id)} className="mt-5 button-delete">
                         Delete
                       </button>
-                    <UpdateJobInCompanyPopup
-                      isOpen={isPopupOpen}
-                      onClose={closePopup}
-                      jobInComay={selectedJobInSystem}
-                      onJobUpdated={refreshJobList}
-                    />
+                      <UpdateJobInCompanyPopup
+                        isOpen={isPopupOpen}
+                        onClose={closePopup}
+                        jobInComay={selectedJobInSystem}
+                        onJobUpdated={refreshJobList}
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>

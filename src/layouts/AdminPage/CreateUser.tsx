@@ -1,20 +1,11 @@
-import React, { ChangeEvent, FormEvent } from "react";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getJobDetail } from "../../apis/ApiJobById";
-import "../../css/JobDetail.css";
-import logoSample from "../../images/logoSample-.png";
-import { applyJob } from "../../apis/ApiApplyJob";
-import { useToast } from "../../context/ToastContext";
-import { Job } from "../../apis/ApiJob";
-import { Field } from "../../model/Field";
-import { postJob } from "../../apis/PostJobApi";
-import { CreateCompany } from "../../apis/ApiCreateCompany";
-import { Loading } from "../Loading/Loading";
-import { CompanyResponse } from "../../model/CompanyResponse";
-import { ApiGetAllCompany } from "../../apis/ApiGetAllCompany";
+import React, { FormEvent, useEffect, useState } from "react";
 import { registerUser } from "../../apis/ApiCreateOneUser";
+import { ApiGetAllCompany } from "../../apis/ApiGetAllCompany";
+import { useToast } from "../../context/ToastContext";
+import "../../css/JobDetail.css";
+import { CompanyResponse } from "../../model/CompanyResponse";
 import InformationRegisterUser from "../../model/InformationRegisterUser";
+import { Loading } from "../Loading/Loading";
 
 export const CreateUser: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -74,7 +65,7 @@ export const CreateUser: React.FC = () => {
         </div>
       ) : (
         <>
-          <div className="container rounded mb-5" id="job-block">
+          <div className="container rounded mb-5  mt-5 d-flex justify-content-center align-items-center" id="job-block">
             <div className="row input-container">
               <h1 id="h1-apply-now">Create User Now</h1>
               <form onSubmit={handleSubmit}>

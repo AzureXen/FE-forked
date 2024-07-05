@@ -104,9 +104,10 @@ const MentorFeedbackInternPage = () =>{
                 <p style={{marginLeft:"3rem", marginTop:"1rem"
                     , fontSize:"2rem", color:"#3A5AC6", fontWeight:"bold"}}>Send Feedback to Intern</p>
             </div>
-        <div className="table-container">
-            <table>
-                <thead>
+        <div className="application-container">
+            <div className="table-responsive">
+            <table className="table rounded table-hover" id="table">
+                <thead className="header">
                     <tr>
                         <th>Intern Id</th>
                         <th>Intern Name</th>
@@ -114,8 +115,8 @@ const MentorFeedbackInternPage = () =>{
                     </tr>
                 </thead>
                 <tbody>
-                {internList.map((intern) => (
-                    <tr key={intern.user_id}>
+                {internList.map((intern,index) => (
+                    <tr key={intern.user_id} className={index % 2 === 0 ? "table-primary" : ""}>
                         <td onClick={() =>selectIntern(intern.user_id, intern.name)}>{intern.user_id}</td>
                         <td onClick={() =>selectIntern(intern.user_id, intern.name)}>{intern.name}</td>
                         <td onClick={() =>selectIntern(intern.user_id, intern.name)}>{intern.email}</td>
@@ -123,6 +124,7 @@ const MentorFeedbackInternPage = () =>{
                 ))}
                 </tbody>
             </table>
+            </div>
             {feedbackModal && (
                 <div className="feedback-modal" onClick={exitModal}>
                     <div className="feedback-box" onClick={(e) => e.stopPropagation()}>

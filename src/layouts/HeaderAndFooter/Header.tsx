@@ -5,6 +5,7 @@ import "../../css/search.css";
 import { useEffect, useState } from "react";
 import AuthService from "../../service/AuthService";
 import { useToast } from "../../context/ToastContext";
+import { motion } from "framer-motion";
 
 
 
@@ -32,6 +33,8 @@ export const Header: React.FC = () => {
   const handleViewProfile = ()=>{
     navigate("/profile");
   }
+  const text1 = "Reach Your Dreams,".split(" ");
+  const text2 = "Apply Today!".split(" ");
   return (
     <div>
       <header role="banner">
@@ -114,7 +117,7 @@ export const Header: React.FC = () => {
                   </Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="/help">
                     Helps
                   </a>
                 </li>
@@ -172,8 +175,30 @@ export const Header: React.FC = () => {
         </nav>
         <div className="container-fluid d-flex justify-content-center">
           <div className="title-header">
-            <h1>Reach Your Dreams,</h1>
-            <h1> Apply Today!</h1>
+          <h1 className="Tilte-h1">
+              {text1.map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.25, delay: i * 0.1 }}
+                >
+                  {word}{" "}
+                </motion.span>
+              ))}
+            </h1>
+            <h1 className="Tilte-h1">
+              {text2.map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.25, delay: (text1.length + i) * 0.1 }}
+                >
+                  {word}{" "}
+                </motion.span>
+              ))}
+            </h1>
             <div>
               {/* <SearchButton></SearchButton> */}
             </div>

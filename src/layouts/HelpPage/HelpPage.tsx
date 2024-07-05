@@ -46,6 +46,11 @@ export const HelpPage: React.FC = () => {
                     companyDescription
                 )
             );
+            setCompanyDescription("");
+            setCompanyName("");
+            setDescription("");
+            setEmail("");
+            showToast("Send Successfully!","success");
         } catch (error: unknown) {
             if (error instanceof Error) {
                 console.error("Error occurred:", error.message);
@@ -68,10 +73,10 @@ export const HelpPage: React.FC = () => {
             ) : (
                 <>
                     <HeaderSmaller />
-                    <div className="container rounded mb-5" id="job-block">
-                        <div className="row input-container">
+                    <div className="container rounded mb-5 d-flex justify-content-center align-items-center" id="job-block">
+                        <div className="row input-container align-items-center">
                             <h1 id="h1-apply-now">Helps</h1>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} >
                                 <div className="col-xs-12">
                                     <div className="styled-input wide">
                                         <select

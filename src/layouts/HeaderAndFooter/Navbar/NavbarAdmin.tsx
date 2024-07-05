@@ -59,7 +59,7 @@ export const NavbarAdmin = () => {
                   </div>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link" to="/Workplace/Manager/Report">Helps</Link>
+                  <Link className="nav-link active" to="/Admin/viewRequest">View Request</Link>
                 </li>
               </ul>
             </div>

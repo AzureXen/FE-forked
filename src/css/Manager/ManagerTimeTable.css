@@ -4,7 +4,19 @@
   border: 1px solid #ddd;
   border-radius: 8px;
 }
-
+.container-app-time{
+  margin: 2.5% auto 2.5% auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  width: 85%;
+  box-shadow: 0 0px 50px rgba(0, 0, 0, 0.3);
+  transition: all .5s ease !important;
+}
+.time-h1{
+  font-size: 3rem;
+  text-align: center;
+}
 .rbc-toolbar {
   background-color: #ffffff;
   padding: 10px;
@@ -20,14 +32,33 @@
   cursor: pointer;
   margin-left: 2% !important;
 }
-
-.rbc-toolbar button:hover {
-  background-color: #0056b3;
+.rbc-toolbar .rbc-toolbar-label {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 20px;
 }
 
+.rbc-toolbar button:hover {
+  background-color: #1b89ff;
+}
 .rbc-event {
-  background-color: #007bff;
-  color: white;
-  border-radius: 4px;
-  padding: 5px;
+  background-color: #007bff !important;
+  color: white !important;
+  border: none;
+}
+
+.rbc-event-content {
+  padding: 2px 4px;
+}
+.rbc-event-content p{
+  color: #000000;
+  font-weight: 500;
+}
+
+.rbc-event:hover {
+  background-color: #0056b3 !important;
+}
+
+.rbc-event-content ::after {
+  content: '';
 }

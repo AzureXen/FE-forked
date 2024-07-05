@@ -93,7 +93,7 @@ export const HeaderWorkplace: React.FC = () => {
                   <a className="nav-link" href="#">About us</a>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link" href="#">Helps</a>
+                  <a className="nav-link" href="/help">Helps</a>
                 </li>
                 <div>
                   {user && (
@@ -147,7 +147,7 @@ export const HeaderWorkplace: React.FC = () => {
         </nav>
         <div className="container-fluid d-flex justify-content-center">
           <div className="title-header">
-            <h1>Workplace</h1>
+            <h1 className="Tilte-h1">Workplace</h1>
           </div>
         </div>
       </header>

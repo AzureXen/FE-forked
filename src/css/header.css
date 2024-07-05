@@ -44,16 +44,16 @@ h6,
 .h6 {
 	/* Reach Your Dreams, Apply Today! */
 
-	font-family: "Josefin Sans";
+	font-family: "Josefin Sans" !important;
 }
 h1 {
 	font-style: normal;
-	font-weight: 700;
+	font-weight: 700 !important;
 	/* or 246px */
-	letter-spacing: -0.08em;
+	letter-spacing: -0.08em !important;
 	font-size: 6rem;
 	color: #ffffff;
-	padding: 25px;
+	padding: 25px !important;
 }
 a {
 	transition: 0.3s all ease;
@@ -341,6 +341,7 @@ header {
 	background-color: black;
 	padding: 20px;
  }
- #img-header-2{
-
- }
+.Tilte-h1{
+	font-size: 9rem;
+	color: white;
+}

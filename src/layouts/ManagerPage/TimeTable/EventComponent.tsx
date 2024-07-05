@@ -14,7 +14,7 @@ interface EventComponentProps {
 const EventComponent: React.FC<EventComponentProps> = ({ event }) => (
   <span>
     <strong>{event.title}</strong>
-    <p>{event.description}</p>
+    {event.description && <p dangerouslySetInnerHTML={{ __html: event.description }}></p>}
   </span>
 );
 

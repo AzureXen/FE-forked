@@ -8,7 +8,7 @@ import AuthService from "../../service/AuthService";
 import header2 from "../../images/header3.png";
 import { JobList } from "../JobPage/JobList";
 import { useToast } from "../../context/ToastContext";
-
+import { motion } from "framer-motion";
 export const HeaderSmaller: React.FC = () => {
   const [user, setUser] = useState<{ fullName: string } | null>(null);
   const [search, setSearch] = useState<string>('');
@@ -34,6 +34,7 @@ export const HeaderSmaller: React.FC = () => {
   const handleViewProfile = ()=>{
     navigate("/profile");
   }
+  const text1 = "Find Your Job Now".split(" ");
   return (
     <div>
       <header role="banner" id="headerSmallerHeight">
@@ -94,7 +95,7 @@ export const HeaderSmaller: React.FC = () => {
                   <a className="nav-link" href="#">About us</a>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link" href="#">Helps</a>
+                  <a className="nav-link" href="/help">Helps</a>
                 </li>
                 <div>
                   {user && (
@@ -148,7 +149,18 @@ export const HeaderSmaller: React.FC = () => {
         </nav>
         <div className="container-fluid d-flex justify-content-center">
           <div className="title-header">
-            <h1>Find Your Job Now</h1>
+            <h1 className="Tilte-h1">
+              {text1.map((word, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.25, delay: i * 0.1 }}
+                >
+                  {word}{" "}
+                </motion.span>
+              ))}
+            </h1>
             <div>
               <SearchButton search={search} setSearch={setSearch} />
             </div>

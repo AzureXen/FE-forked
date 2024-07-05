@@ -102,7 +102,7 @@ export const CreateSchedule: React.FC = () => {
         </div>
       ) : (
         <>
-          <div className="container rounded mb-5" id="job-block">
+          <div className="container rounded mb-5 mt-5 d-flex justify-content-center align-items-center" id="job-block">
             <div className="row input-container">
               <h1 id="h1-apply-now">Create Schedule</h1>
               <form onSubmit={handleSubmit}>

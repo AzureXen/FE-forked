@@ -192,7 +192,7 @@ export const ViewAllActivitesByTable = () => {
       ) : (
         <div className="table-responsive">
           {filteredList.length > 0 ? (
-            <table className="table rounded" id="table">
+            <table className="table rounded table-hover" id="table">
               <thead className="header">
                 <tr>
                   <th>Course Name</th>
@@ -202,8 +202,8 @@ export const ViewAllActivitesByTable = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredList.map((course) => (
-                  <tr key={course.courseId}>
+                {filteredList.map((course,index) => (
+                  <tr key={course.courseId} className={index % 2 === 0 ? "table-primary" : ""}>
                     <td>{course.courseName}</td>
                     <td>{course.mentorName}</td>
                     <td>

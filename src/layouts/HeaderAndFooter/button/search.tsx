@@ -1,7 +1,7 @@
 // src/components/SearchButton.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { motion } from "framer-motion";
 interface SearchButtonProps {
     search: string;
     setSearch: (search: string) => void;
@@ -16,7 +16,12 @@ export const SearchButton: React.FC<SearchButtonProps> = ({ search, setSearch })
     };
 
     return (
-        <div className="s128">
+        <motion.div
+        initial={{ opacity: 0, x: -200 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+               <div className="s128">
             <form onSubmit={handleSearch}>
                 <div className="inner-form">
                     <div className="row">
@@ -44,5 +49,6 @@ export const SearchButton: React.FC<SearchButtonProps> = ({ search, setSearch })
                 </div>
             </form>
         </div>
+        </motion.div>
     );
 };

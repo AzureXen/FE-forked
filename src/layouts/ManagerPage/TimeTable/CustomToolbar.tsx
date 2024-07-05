@@ -1,7 +1,8 @@
 import React from 'react';
 import { ToolbarProps, View } from 'react-big-calendar';
+import moment from 'moment';
 
-const CustomToolbar: React.FC<ToolbarProps> = ({ localizer: { messages }, label, onNavigate, onView }) => {
+const CustomToolbar: React.FC<ToolbarProps> = ({ localizer: { messages }, label, date, onNavigate, onView }) => {
   const goToBack = () => {
     onNavigate('PREV');
   };
@@ -17,7 +18,6 @@ const CustomToolbar: React.FC<ToolbarProps> = ({ localizer: { messages }, label,
   const goToView = (view: View) => {
     onView(view);
   };
-
   return (
     <div className="rbc-toolbar">
       <div className="rbc-btn-group">
@@ -25,7 +25,9 @@ const CustomToolbar: React.FC<ToolbarProps> = ({ localizer: { messages }, label,
         <button type="button" onClick={goToToday}>Today</button>
         <button type="button" onClick={goToNext}>Next</button>
       </div>
-      <span className="rbc-toolbar-label">{label}</span>
+      <div className="rbc-toolbar-center">
+        <span className="rbc-toolbar-label">{label}</span>
+      </div>
       <div className="rbc-btn-group">
         <button type="button" onClick={() => goToView('month')}>Month</button>
         <button type="button" onClick={() => goToView('week')}>Week</button>

@@ -203,7 +203,7 @@ export const ViewAllCourseMentor = () => {
       ) : (
         <div className="table-responsive">
           {coursesList.length > 0 ? (
-            <table className="table rounded" id="table">
+            <table className="table rounded table-hover" id="table">
               <thead className="header">
                 <tr>
                   <th>Course Name</th>
@@ -215,8 +215,8 @@ export const ViewAllCourseMentor = () => {
                 </tr>
               </thead>
               <tbody>
-                {coursesList.map((course) => (
-                  <tr key={course.courseId}>
+                {coursesList.map((course,index) => (
+                  <tr key={course.courseId} className={index % 2 === 0 ? "table-primary" : ""}>
                     <td>{course.courseName}</td>
                     <td>
                       {new Date(course.startDate).toLocaleDateString("en-GB")}

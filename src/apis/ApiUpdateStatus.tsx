@@ -2,9 +2,9 @@ import React from 'react'
 import { JobApplication } from '../model/JobApplication'
 import axios from 'axios'
 
-export const ApiUpdateStatus = async (status: number, id: number) => {
+export const ApiUpdateStatus = async (status: number, id: number, userId: number) => {
     try {
-        const response = await axios.put(`http://localhost:8080/internbridge/manager/jobApplication/id=${id}&status=${status}`)
+        const response = await axios.put(`http://localhost:8080/internbridge/manager/jobApplication/id=${id}&status=${status}&userId=${userId}`)
         return response.data;
     }catch (error) {
         if (axios.isAxiosError(error)) {
