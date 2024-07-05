@@ -24,9 +24,9 @@ const CourseActivities : React.FC<CAProps> =({courseId,internId}) => {
     if (activities.length>0){
         return(
             <div className="course-activity-cards-container">
-                {activities.map(activities=>(
+                {activities.map((activities, index)=>(
                     <ActivityCard
-                        key = {activities.course_id}
+                        key = {index}
                         activityId={activities.activity_id}
                         activityDescription={activities.activity_content}
                         startDate={activities.start_date}

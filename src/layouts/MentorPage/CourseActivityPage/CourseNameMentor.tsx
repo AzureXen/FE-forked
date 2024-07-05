@@ -13,8 +13,12 @@ const CourseNameMentor:React.FC<CourseId> = ({courseId, mentorId}) => {
         const fetchData = async ()=>{
             try{
                 const data = await fetchCourseNameMentor(courseId, mentorId);
+                console.log("CourseNameMentor: ")
                 console.log(data);
-                setCourseName(data);
+                if(data===null){
+                    setCourseName("")
+                }
+                else setCourseName(data);
             }catch(error){
                 console.log("Error fetching course name", error);
             }
