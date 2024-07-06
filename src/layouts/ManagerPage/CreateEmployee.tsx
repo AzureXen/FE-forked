@@ -1,15 +1,7 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getJobDetail } from "../../apis/ApiJobById";
 import "../../css/JobDetail.css";
-import logoSample from "../../images/logoSample-.png";
-import { applyJob } from "../../apis/ApiApplyJob";
 import { useToast } from "../../context/ToastContext";
-import { Job } from "../../apis/ApiJob";
-import { Field } from "../../model/Field";
-import { postJob } from "../../apis/PostJobApi";
-import { CreateCompany } from "../../apis/ApiCreateCompany";
 import { Loading } from "../Loading/Loading";
 import { CompanyResponse } from "../../model/CompanyResponse";
 import { ApiGetAllCompany } from "../../apis/ApiGetAllCompany";

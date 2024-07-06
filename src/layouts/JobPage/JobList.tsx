@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { getJobs, Job, SearchJobsResponse } from "../../apis/getJobs";
+import { getJobs,Job,SearchJobsResponse } from "../../apis/getJobs";
 import "../../css/jobList.css";
 import logoSample from "../../images/logoSample-.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { Field } from "../../model/Field";
+import {getField } from "../../apis/ApiJob";
 interface JobListProps {
   search: string;
 }
@@ -17,8 +19,11 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const count = useMotionValue(0);
+  const [fields, setFields] = useState<Field[]>([]);
   const rounded = useTransform(count, Math.round);
   const [roundedCount, setRoundedCount] = useState<number>(0);
+  const [fieldId, setFieldId] = useState<string>("");
+
   useEffect(() => {
     const unsubscribe = rounded.onChange((v) => setRoundedCount(v));
     return () => unsubscribe();
@@ -27,14 +32,15 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const searchTerm = params.get("search") || " ";
-
+    const field = params.get("fieldId") || "";
     const fetchJobs = async () => {
       setLoading(true);
       try {
         const data: SearchJobsResponse = await getJobs(
           searchTerm,
           pageNo,
-          pageSize
+          pageSize,
+          parseInt(field)
         );
         setJobs(data.jobs);
         setTotalItems(data.totalItems);
@@ -56,12 +62,46 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
   const handleJobClick = (id: number) =>{
     navigate(`/jobs/${id}`)
   }
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getField();
+        setFields(data);
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
+    fetchData();
+  }, []);
+  const handleFieldChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedFieldId = e.target.value;
+    setFieldId(selectedFieldId);
+    const params = new URLSearchParams(location.search);
+    params.set("fieldId", encodeURIComponent(selectedFieldId));
+    navigate({
+      pathname: location.pathname,
+      search: params.toString(),
+    });
+  };
   return (
-    <div>
+    <div className="application-container-job">
       <h1 className="text-start py-3" id="h1-aboutUs">
         {roundedCount} jobs in Vietnam
       </h1>
+      <select 
+      required
+      value={fieldId}
+      onChange={handleFieldChange}
+      id="filter">
+              <option value="">
+                    Select Field
+                  </option>
+                  {fields.map((field) => (
+                    <option key={field.id} value={field.id}>
+                      {field.fieldName}
+                    </option>
+                  ))}
+        </select>
       <ul>
         {jobs.map((job) => (
           <motion.div
@@ -82,7 +122,8 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
                     {job.jobName}
                   </p>
                   <p id="p-location">{job.company.location}</p>
-                  <p>Company: {job.company.companyName}</p>
+                  <p><strong>Company: </strong>{job.company.companyName}</p>
+                  <p><strong>Field: </strong>{job.field.fieldName}</p>
                   </div>
                   <div className="col-md-3">
                   <button id="btn-apply" onClick={() => handleJobClick(job.id)}>

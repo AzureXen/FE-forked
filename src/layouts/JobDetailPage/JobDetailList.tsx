@@ -38,12 +38,19 @@ export const JobDetailList: React.FC = () => {
   }, [id]);
 
   const formatParagraphs = (text: string) => {
-    return text.split("\\n").map((str, index) => <p key={index}>{str}</p>);
+    return text.split("\\n").map((str, index) => (
+      <p key={index.toString()}>{str}</p>
+    ));
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setCv(e.target.files[0]);
+    const file = e.target.files?.[0];
+    if (file && file.type !== "application/pdf") {
+      showToast("File must be a PDF", "error");
+      setCv(null);
+      (document.getElementById("input-cv") as HTMLInputElement).value = "";
+    } else if (file) {
+      setCv(file);
     }
   };
   const handleSubmit = async (e: FormEvent) => {
@@ -53,6 +60,9 @@ export const JobDetailList: React.FC = () => {
     try {
       const response = await applyJob(parseInt(id), email, fullName, cv);
       showToast("success","success");
+      setFullName("");
+      setEmail("");
+      setCv(null);
     } catch (error) {
       console.error("Error submitting job application:", error);
       alert("Failed to submit job application.");
@@ -139,7 +149,6 @@ export const JobDetailList: React.FC = () => {
                 type="file"
                 id="input-cv"
                 onChange={handleFileChange}
-                accept=".pdf"
                 required
               />
             </div>

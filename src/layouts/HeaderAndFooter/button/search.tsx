@@ -12,6 +12,7 @@ export const SearchButton: React.FC<SearchButtonProps> = ({ search, setSearch })
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
+    const encodedSearch = encodeURIComponent(search);
         navigate(`/jobs?search=${encodeURIComponent(search)}`);
     };
 

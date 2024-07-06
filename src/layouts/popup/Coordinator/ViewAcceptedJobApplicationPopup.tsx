@@ -20,11 +20,7 @@ export const ViewAcceptedJobApplicationPopup: React.FC<
   const [animationClass, setAnimationClass] = useState("popup-entering");
   const [isClosing, setIsClosing] = useState(false);
   const { showToast } = useToast();
-  const [taskContent, setTaskContent] = useState<string>("");
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
   const [pageNo, setPageNo] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(4);
   const [jobList, setJobList] = useState<Job[]>([]);
@@ -154,11 +150,50 @@ export const ViewAcceptedJobApplicationPopup: React.FC<
     setSelectAll(!selectAll);
   };
   if (isClosing) return null;
+  const getStatusLabel = (status: number | null) => {
+    switch (status) {
+      case 0:
+        return "Reject";
+      case 1:
+        return "Accept";
+      case 2:
+          return "Pending Interview";
+      case 3:
+          return "Absent";
+      case 4:
+          return "Passed";
+      case 5:
+          return "Pending Rescheduling"
+      case null:
+        return "Pending";
+      default:
+        return;
+    }
+  };
 
+  const changeColorByStatus = (status: number | null) => {
+    switch (status) {
+      case 1:
+        return "Accept";
+      case 2:
+          return "Pending-Interview";
+      case 3:
+          return "Absent";
+      case 4:
+          return "Passed";
+      case 5:
+          return "Pending-rescheduling"
+      case null:
+        return "Pending";
+      default:
+        return;
+    }
+  };
   return (
     <div className={`blur-background ${animationClass}`}>
       <div className="container d-flex align-items-center justify-content-center">
-        <div className="application-container">
+      <div className="application-list-container">
+      <div className="application-container">
           <button className="close-button" onClick={onClose}>
             Close
           </button>
@@ -203,6 +238,7 @@ export const ViewAcceptedJobApplicationPopup: React.FC<
                       <th>Full Name</th>
                       <th>Email</th>
                       <th>Company Name</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -218,6 +254,11 @@ export const ViewAcceptedJobApplicationPopup: React.FC<
                         <td>{job.fullName}</td>
                         <td>{job.email}</td>
                         <td>{job.companyName}</td>
+                        <td>
+                        <p className={changeColorByStatus(job.status) + " rounded"}>
+                        {getStatusLabel(job.status)}
+                      </p>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -261,16 +302,8 @@ export const ViewAcceptedJobApplicationPopup: React.FC<
             </a>
           </div>
           <div className="container d-flex justify-content-around">
-            <div className="page-size-controls col-md-4">
-              <label>
-                Page Size:
-                <select value={pageSize} onChange={handlePageSizeChange}>
-                  <option value={3}>3</option>
-                  <option value={4}>4</option>
-                </select>
-              </label>
-            </div>
-            <div className="submit-controls col-md-8">
+       
+            <div className="submit-controls col-md-12">
               <button
                 className="add-application"
                 onClick={handleSubmit}
@@ -281,6 +314,7 @@ export const ViewAcceptedJobApplicationPopup: React.FC<
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

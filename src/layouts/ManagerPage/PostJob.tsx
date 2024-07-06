@@ -6,7 +6,7 @@ import "../../css/JobDetail.css";
 import logoSample from "../../images/logoSample-.png";
 import { applyJob } from "../../apis/ApiApplyJob";
 import { useToast } from "../../context/ToastContext";
-import { Job } from "../../apis/ApiJob";
+import { getField } from "../../apis/ApiJob";
 import { Field } from "../../model/Field";
 import { postJob } from "../../apis/PostJobApi";
 
@@ -29,7 +29,7 @@ export const PostJob: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await Job();
+        const data = await getField();
         setFields(data);
       } catch (error) {
         console.log("Error:", error);

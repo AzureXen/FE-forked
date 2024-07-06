@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Job } from "../../apis/ApiJob";
+import {getField } from "../../apis/ApiJob";
 import "../../css/category.css";
 import { Footer } from "./Footer";
 import { Fade } from "react-awesome-reveal";
@@ -14,7 +14,7 @@ const JobCategory = () => {
   const [scrollDirection, setScrollDirection] = useState("down");
 
   useEffect(() => {
-    Job().then((data) => setListJob(data));
+    getField().then((data) => setListJob(data));
   }, []);
 
   useEffect(() => {

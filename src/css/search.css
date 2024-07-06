@@ -28,12 +28,12 @@
   
   .s128 form {
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0;
   }
   
   .s128 form .inner-form .row {
-    margin-bottom: 80px;
+    margin: 0px auto 80px auto;
   }
   
   .s128 form .inner-form .row .input-field {

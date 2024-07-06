@@ -196,6 +196,8 @@ export const ViewApplication = () => {
           return "Absent";
       case 4:
           return "Passed";
+      case 5:
+          return "Pending Rescheduling"
       case null:
         return "Pending";
       default:
@@ -213,6 +215,8 @@ export const ViewApplication = () => {
           return "Absent";
       case 4:
           return "Passed";
+      case 5:
+          return "Pending-rescheduling"
       case null:
         return "Pending";
       default:
@@ -245,6 +249,7 @@ export const ViewApplication = () => {
           <option value={2}>Pending Interview</option>
           <option value={3}>Absent</option>
           <option value={4}>Passed</option>
+          <option value={5}>Pending Rescheduling</option>
         </select>
       </div>
       {loading ? (

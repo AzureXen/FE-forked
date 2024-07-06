@@ -5,6 +5,8 @@ import { ApiSendReq } from "../../apis/ApiSendReq";
 import { HelpRequest } from "../../model/HelpRequest";
 import { HeaderSmaller } from "../HeaderAndFooter/HeaderSmaller";
 import { Footer } from "../HeaderAndFooter/Footer";
+import aboutUsImage from "../../images/aboutUs.png";
+import { motion } from "framer-motion";
 
 export const HelpPage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -73,7 +75,17 @@ export const HelpPage: React.FC = () => {
             ) : (
                 <>
                     <HeaderSmaller />
-                    <div className="container rounded mb-5 d-flex justify-content-center align-items-center" id="job-block">
+                    <div >
+                    <h1 className="text-center py-3" id="h1-aboutUs">
+                         Send Us Your Request
+                    </h1>
+                    <div className="d-flex flex-wrap justify-content-between mt-5 mb-5">
+                    <img id="img-about-us" src={aboutUsImage} alt="aboutus" />
+                    <motion.div
+                         initial={{ opacity: 0, x: -200 }}
+                         animate={{ opacity: 1, x: 0 }}
+                         transition={{ duration: 0.5 }}
+                    className="container rounded mb-5 d-flex justify-content-center align-items-center" id="job-block">
                         <div className="row input-container align-items-center">
                             <h1 id="h1-apply-now">Helps</h1>
                             <form onSubmit={handleSubmit} >
@@ -86,10 +98,11 @@ export const HelpPage: React.FC = () => {
                                             onChange={(e) => setSelectedOption(e.target.value)}
                                         >
                                             <option value="" disabled selected>
-                                                Select Course
+                                                Select Request
                                             </option>
                                             <option value="Create Company">Create Company</option>
-                                            <option value="Other">Other</option>
+                                            {user && <option value="Other">Other</option>}
+
                                         </select>
                                     </div>
                                 </div>
@@ -163,6 +176,9 @@ export const HelpPage: React.FC = () => {
                                 </div>
                             </form>
                         </div>
+                    </motion.div>
+
+                    </div>
                     </div>
                     <Footer />
                 </>

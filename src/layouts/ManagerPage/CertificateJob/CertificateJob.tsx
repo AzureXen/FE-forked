@@ -1,27 +1,36 @@
 import React, { useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import axios from "axios";
-import "../../../css/CertificateJob/certificate.css";
-import logo from "../../../images/logoSample-.png";
-import signature from "../../../images/Signature.png";
 import { ApiSendCertificate } from "../../../apis/ManagerApis/ApiSendCertificate";
 import { useToast } from "../../../context/ToastContext";
 import { Loading } from "../../Loading/Loading";
 import UserInSysTem from "../../../model/UserInSysTem";
-import { Fade } from "react-awesome-reveal";
 import { CSSTransition } from "react-transition-group";
+import "../../../css/CertificateJob/certificate.css";
+import logo from "../../../images/logoSample-.png";
+import signature from "../../../images/Signature.png";
 interface CertificateGeneratorProps {
-    user: UserInSysTem; // Define proper user type based on your data structure
-    onComplete: () => void;
-    managerName: string;
-  }
+  user: UserInSysTem; // Define proper user type based on your data structure
+  onComplete: () => void;
+  managerName: string;
+  resetPdfUrl: () => void;
+  updatePdfUrl: (url: string) => void;
+}
 
-export const CertificateJob: React.FC<CertificateGeneratorProps> = ({user, onComplete,managerName}) => {
+export const CertificateJob: React.FC<CertificateGeneratorProps> = ({
+  user,
+  onComplete,
+  managerName,
+  resetPdfUrl,
+  updatePdfUrl,
+}) => {
   const certificateRef = useRef<HTMLDivElement | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { showToast } = useToast();
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [signatureUrl, setSignatureUrl] = useState<string | null>(null);
+
   const generatePdf = async () => {
     if (!certificateRef.current) return;
 
@@ -37,25 +46,36 @@ export const CertificateJob: React.FC<CertificateGeneratorProps> = ({user, onCom
     const pdfBlob = pdf.output("blob");
     try {
       setLoading(true);
-      if(user){
-        const data = await ApiSendCertificate(pdfBlob,user.email);
-      showToast(data, "success");
+      if (user) {
+        const data = await ApiSendCertificate(pdfBlob, user.email);
+        showToast(data, "success");
       }
     } catch (error) {
+      // Handle error
     } finally {
       setLoading(false);
     }
     const pdfUrl = URL.createObjectURL(pdfBlob);
     setPdfUrl(pdfUrl);
+    updatePdfUrl(pdfUrl); // Update PDF URL in parent component state
+  };
+
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setLogoUrl(URL.createObjectURL(event.target.files[0]));
+    }
+  };
+
+  const handleSignatureUpload = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.files && event.target.files[0]) {
+      setSignatureUrl(URL.createObjectURL(event.target.files[0]));
+    }
   };
 
   return (
-    <CSSTransition
-      in={!!user}
-      timeout={300}
-      classNames="fade"
-      unmountOnExit
-    >
+    <CSSTransition in={!!user} timeout={300} classNames="fade" unmountOnExit>
       <div className={`container-fluid`}>
         {loading ? (
           <div>
@@ -65,7 +85,11 @@ export const CertificateJob: React.FC<CertificateGeneratorProps> = ({user, onCom
           <div>
             <div ref={certificateRef} className="certificate-container">
               <div className="certificate-header">
-                <img src={logo} alt="Logo" className="certificate-logo" />
+                {logoUrl ? (
+                  <img src={logoUrl} alt="Logo" className="certificate-logo" />
+                ) : (
+                  <img src={logo} alt="Logo" className="certificate-logo" />
+                )}
                 <h1 className="certificate-title">
                   CERTIFICATE OF INTERNSHIP COMPLETION
                 </h1>
@@ -81,11 +105,19 @@ export const CertificateJob: React.FC<CertificateGeneratorProps> = ({user, onCom
               </p>
               <div className="certificate-footer">
                 <div className="certificate-signature">
-                  <img
-                    src={signature}
-                    alt="Signature"
-                    className="signature-image"
-                  />
+                  {signatureUrl ? (
+                    <img
+                      src={signatureUrl}
+                      alt="Signature"
+                      className="signature-image"
+                    />
+                  ) : (
+                    <img
+                      src={signature}
+                      alt="Signature"
+                      className="signature-image"
+                    />
+                  )}
                   <p className="certificate-signer">{managerName}</p>
                   <p className="certificate-role">{user.companyName}</p>
                 </div>
@@ -96,13 +128,40 @@ export const CertificateJob: React.FC<CertificateGeneratorProps> = ({user, onCom
               </p>
             </div>
             <div className="d-flex justify-content-center align-items-center">
-            <button className="button-send-certificate" onClick={generatePdf}>Send Certificate</button>
-            <button className="button-close" onClick={onComplete}>Close</button>
-            {pdfUrl && (
-              <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-                <button className="button-link">Click to link to Certificate</button>
-              </a>
-            )}
+              <button className="button-send-certificate" onClick={generatePdf}>
+                Send Certificate
+              </button>
+              <button
+                className="button-close"
+                onClick={() => {
+                  resetPdfUrl();
+                  onComplete();
+                }}
+              >
+                Close
+              </button>
+              <div>
+                <label htmlFor="logo-upload" className="button-logo">
+                  Upload Logo
+                </label>
+                <input
+                  id="logo-upload"
+                  type="file"
+                  onChange={handleLogoUpload}
+                  style={{ display: "none" }}
+                />
+              </div>
+              <div>
+                <label htmlFor="signature-upload" className="button-signature">
+                  Upload Signature
+                </label>
+                <input
+                  id="signature-upload"
+                  type="file"
+                  onChange={handleSignatureUpload}
+                  style={{ display: "none" }}
+                />
+              </div>
             </div>
           </div>
         )}

@@ -24,36 +24,64 @@ export const ViewJobByCompany = () => {
     useState<JobByCompanyResponse | null>(null);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState<boolean>(false);
   const [jobToDelete, setJobToDelete] = useState<number | null>(null);
-
+  const [allJob, setAllJob] = useState<JobByCompanyResponse[]>([]);
+  const [filteredJobNewList, setFilteredJobNewList] = useState<JobByCompanyResponse[]>([]);
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
     }
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (user?.company_id) {
       fetchJobList();
     }
-  }, [user, pageNo, pageSize]);
+  }, [user]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [searchTerm, allJob]);
+
+  useEffect(() => {
+    setTotalItems(filteredJobNewList.length);
+    setTotalPages(Math.ceil(filteredJobNewList.length / pageSize));
+  }, [filteredJobNewList, pageSize]);
 
   const fetchJobList = async () => {
     setLoading(true);
     try {
-      if (user) {
-        const { jobs, totalItems, totalPages } =
-          await getAllJobByCompanyResponse(user.company_id, pageNo, pageSize);
-        setJobList(jobs);
-        setTotalItems(totalItems);
-        setTotalPages(totalPages);
+      if(user){
+        const data=await getAllJobByCompanyResponse(2, 0, 100000);
+        setAllJob(data.jobs);
+        console.log(jobList)
       }
     } catch (error) {
-      console.error("Error fetching job list:", error);
+      console.error("Error fetching schedule list:", error);
     } finally {
       setLoading(false);
     }
   };
+
+  const applyFilters = () => {
+    let filtered = allJob;
+
+    if (searchTerm) {
+      filtered = filtered.filter((job) =>
+        job.jobName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    setFilteredJobNewList(filtered);
+  };
+
+  const paginateJob = () => {
+    const start = pageNo * pageSize;
+    const end = start + pageSize;
+    return filteredJobNewList.slice(start, end);
+  };
+
 
   const formatParagraphs = (text: string) => {
     return text.split("\\n").map((str, index) => <p key={index}>{str}</p>);
@@ -84,10 +112,6 @@ export const ViewJobByCompany = () => {
     setIsPopupOpen(false);
     setSelectedJobInSystem(null);
   };
-
-  const filteredJobList = jobList.filter((job) =>
-    job.jobName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   const refreshJobList = () => {
     fetchJobList();
@@ -144,7 +168,7 @@ export const ViewJobByCompany = () => {
         </div>
       ) : (
         <div className="table-responsive mt-5">
-          {filteredJobList.length > 0 ? (
+          {filteredJobNewList.length > 0 ? (
             <table className="table rounded tableJob table-hover" id="table">
               <thead className="header">
                 <tr>
@@ -154,7 +178,7 @@ export const ViewJobByCompany = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredJobList.map((job) => (
+                {paginateJob().map((job) => (
                   <tr key={job.id}>
                     <td className="jobDes">{job.jobName}</td>
                     <td className="jobDes">{formatParagraphs(job.jobDescription)}</td>
@@ -213,15 +237,6 @@ export const ViewJobByCompany = () => {
         >
           <i className="fa fa-angle-double-right" aria-hidden="true"></i>
         </a>
-      </div>
-      <div className="page-size-controls">
-        <label>
-          Page Size:
-          <select value={pageSize} onChange={handlePageSizeChange}>
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-          </select>
-        </label>
       </div>
       <ConfirmDialog
         message="This action is irreversible. Do you want to proceed?"

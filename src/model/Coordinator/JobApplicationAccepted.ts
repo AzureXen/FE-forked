@@ -4,6 +4,7 @@ export interface Job {
     email: string;
     companyId: number;
     companyName: string;
+    status: number
   }
   
   export interface JobApplicationAcceptedRequest {

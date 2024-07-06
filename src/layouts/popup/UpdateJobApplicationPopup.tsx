@@ -42,7 +42,9 @@ export const UpdateJobApplicationPopup: React.FC<
       }, 100);
       if (jobApplication) {
         console.log("Job " + jobApplication.status);
-        setStatus(jobApplication.status);
+        if(jobApplication.status==null){
+          setStatus(10);
+        }
       }
     } else {
       setAnimationClass("popup-exiting");
@@ -123,6 +125,7 @@ export const UpdateJobApplicationPopup: React.FC<
                     <option value={2}>Pending InterView</option>
                     <option value={3}>Absent</option>
                     <option value={4}>Passed</option>
+                    <option value={5}>Pending Rescheduling</option>
                   </select>
                 </div>
               </div>

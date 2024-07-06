@@ -15,15 +15,16 @@ const useAuth = (allowedRoles: string[]) => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
       if (!allowedRoles.includes(parsedUser.role)) {
-        navigate('/');
         showToast("You aren't permitted to access", 'warn');
+        navigate('/');
+      } else {
+        setUser(parsedUser);
       }
     } else {
       navigate('/login');
     }
-  }, [allowedRoles, navigate, showToast]);
+  }, []); // Removed dependencies
 
   return user;
 };

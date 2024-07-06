@@ -38,6 +38,7 @@ export const ViewIntern = () => {
     company_id: number;
     fullName: string;
   } | null>(null);
+  const [userPdfUrls, setUserPdfUrls] = useState<{ [key: number]: string | undefined }>({});
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -47,14 +48,6 @@ export const ViewIntern = () => {
       setUserId(parsedUser.user_id);
       setCompanyId(parsedUser.company_id);
       setFullNameOnGoingUser(parsedUser.fullName);
-      console.log(
-        "User ID: " +
-          parsedUser.user_id +
-          " Company ID: " +
-          parsedUser.company_id +
-          "Name: " +
-          parsedUser.fullName
-      ); // Debugging log
     }
   }, []);
 
@@ -76,17 +69,10 @@ export const ViewIntern = () => {
     setLoading(true);
     try {
       if (userId != null && companyId != null) {
-        console.log(
-          "Fetching users with User ID: " +
-            userId +
-            " and Company ID: " +
-            companyId
-        );
         const data = await ApiViewIntern(0, 1000000, userId, companyId);
         if (data) {
           setAllUsers(data.userInfoResponses);
         }
-        console.log(allUsers);
       }
     } catch (error) {
       console.error("Error fetching user list:", error);
@@ -172,10 +158,17 @@ export const ViewIntern = () => {
     setSelectedUser(user);
   };
 
+  const handlePdfUrlUpdate = (userId: number, pdfUrl: string | undefined) => {
+    setUserPdfUrls((prevUrls) => ({
+      ...prevUrls,
+      [userId]: pdfUrl,
+    }));
+  };
+
   return (
-    <div className={`mt-4 ${selectedUser ? 'container-fluid':'container-fluid smaller'}`}>
+    <div className={`mt-4 ${selectedUser ? 'container-fluid' : 'container-fluid smaller'}`}>
       <div className="row">
-      <motion.div
+        <motion.div
           className={`application-container ${selectedUser ? 'col-md-6' : 'col-md-12'}`}
           initial={{ opacity: 0, x: -200 }}
           animate={{ opacity: 1, x: 0 }}
@@ -231,13 +224,20 @@ export const ViewIntern = () => {
                             Edit
                           </button>
                           <UpdateUserInSystemPopup
-                        isOpen={isPopupOpen}
-                        onClose={closePopup}
-                        userInSysTem={selectedUserInSystem}
-                      />
+                            isOpen={isPopupOpen}
+                            onClose={closePopup}
+                            userInSysTem={selectedUserInSystem}
+                          />
                           <button className="button-send-certificate" onClick={() => handleSendCertificate(user)}>
                             View Certificate
                           </button>
+                          {userPdfUrls[user.id] && (
+                            <a href={userPdfUrls[user.id]} target="_blank" rel="noopener noreferrer">
+                              <button className="button-link">
+                                Click to link to Certificate
+                              </button>
+                            </a>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -292,15 +292,17 @@ export const ViewIntern = () => {
           </div>
         </motion.div>
         <div className={`${selectedUser ? 'col-md-6' : 'position-out'}`}>
-        <Fade>
-        {selectedUser && (
-            <CertificateJob
-              user={selectedUser}
-              onComplete={() => setSelectedUser(null)}
-              managerName={fullNameOnGoingUser}
-            />
-          )}
-        </Fade>
+          <Fade>
+            {selectedUser && (
+              <CertificateJob
+                user={selectedUser}
+                onComplete={() => setSelectedUser(null)}
+                managerName={fullNameOnGoingUser}
+                resetPdfUrl={() => handlePdfUrlUpdate(selectedUser.id, undefined)}
+                updatePdfUrl={(url: string) => handlePdfUrlUpdate(selectedUser.id, url)}
+              />
+            )}
+          </Fade>
         </div>
       </div>
     </div>

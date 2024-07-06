@@ -57,8 +57,10 @@ import { CertificateJob } from "./layouts/ManagerPage/CertificateJob/Certificate
 import { ViewIntern } from "./layouts/ManagerPage/CertificateJob/ViewIntern";
 import { ViewInternPage } from "./layouts/ManagerPage/ViewInternPage";
 import { ViewEmployeePage } from "./layouts/ManagerPage/ViewEmployeePage";
-import MyPieChart from "./layouts/ManagerPage/Chart/PieChartManager";
 import { AdminViewRequestPage } from "./layouts/AdminPage/RequestAdmin/AdminViewRequestPage";
+import { MyPieChart } from "./layouts/ManagerPage/Chart/PieChartManager";
+import { ReportManager } from "./layouts/ManagerPage/Chart/ReportManager";
+import { CoordinatorViewSchedulePage } from "./layouts/CoordinatorCoursePage/CoordinatorViewSchedulePage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -83,6 +85,7 @@ export const App = () => {
               <Route path="/Workplace/Manager/viewIntern" element={<ViewInternPage/>}/>
               <Route path="/Workplace/Manager/schedule" element={<MyCalendar/>}/>
               <Route path="/Workplace/Manager/viewEmployee" element={<ViewEmployeePage/>}/>
+              <Route path="/Workplace/Manager/Report" element={<ReportManager/>}/>
               <Route path="/Admin" element={<AdminPage />} />
               <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
@@ -110,13 +113,13 @@ export const App = () => {
               <Route path="/coordinator/course" element={<ViewCourseInsystemByCoordinator />} />
               <Route path="/coordinator/createSchedule" element={<CoordinatorCreateSchedulePage/>}/>
               <Route path="/coordinator/report" element={<CoordinatorViewBarChart/>}/>
+               <Route path="/coordinator/ShowSchedule" element={<CoordinatorViewSchedulePage/>} />
               <Route path="/coordinator/createIntern" element={<CoordinatorAddInternToCoursePage/>}/>
               <Route path="/coordinator/feedback" element={<CoordinatorFeedbackCoursePage/>}/>
               <Route path="/coordinator/feedback/:courseId" element={<CoordinatorFeedbackInternPage/>}/>
               <Route path="/verifyEmail" element={<VerificationEmail />} />
               <Route path="/help" element={<HelpPage />} />
               <Route path="/profile" element={<ViewProfilePage/>}/>
-              <Route path="/test" element={<MyPieChart/>}/>
             </Routes>
           </div>
         </div>
