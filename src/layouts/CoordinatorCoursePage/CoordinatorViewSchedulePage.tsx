@@ -10,16 +10,16 @@ import { ViewSchedule } from "./ViewSchedule/ViewSchedule";
 
 export const CoordinatorViewSchedulePage: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
+
 
   return (
     <>
       <HeaderWorkplace />
       <div>
-        <NavbarCoordinator/>
+        <NavbarCoordinator />
       </div>
       <div>
-        <ViewSchedule/>
+        <ViewSchedule />
       </div>
       <Footer />
     </>
