@@ -8,6 +8,7 @@ import InformationRegisterUser from "../../model/InformationRegisterUser";
 import { registerInterns } from "../../apis/ApiCreateUser";
 import { useToast } from "../../context/ToastContext";
 import { Loading } from "../Loading/Loading";
+import { motion} from "framer-motion";
 
 export const ViewApplication = () => {
   const [allJobList, setAllJobList] = useState<Job[]>([]);
@@ -225,7 +226,11 @@ export const ViewApplication = () => {
   };
 
   return (
-    <div className="application-container">
+    <motion.div
+    initial={{ opacity: 0, x: -200 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+    className="application-container">
       <h1>Job Applications</h1>
       <div className="filter-controls">
         <div className="input-group d-flex flex-row justify-content-center">
@@ -242,7 +247,7 @@ export const ViewApplication = () => {
             </span>
           </div>
         </div>
-        <select value={statusFilter === null ? "2" : statusFilter} onChange={handleStatusChange} id="filter">
+        <select value={statusFilter === undefined ? "" : statusFilter === null ? "Pend" : statusFilter} onChange={handleStatusChange} id="filter">
           <option value={""}>Filter</option>
           <option value={"Pend"}>Pending</option>
           <option value={1}>Accept</option>
@@ -352,6 +357,6 @@ export const ViewApplication = () => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };

@@ -1,7 +1,7 @@
 // src/apis/courseApi.ts
 import axios from "axios";
 
-export const ApiViewAllCompany = async (companyId: number, pageNo: number, pageSize: number) => {
+export const ApiCoordinatorShowCourse = async (companyId: number, pageNo: number, pageSize: number) => {
     try {
         const response = await axios.get(`http://localhost:8080/internbridge/coordinator/course/companyId=${companyId}?pageNo=${pageNo}&pageSize=${pageSize}`);
         return response.data;

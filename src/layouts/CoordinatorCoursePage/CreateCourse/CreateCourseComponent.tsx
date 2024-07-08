@@ -5,6 +5,7 @@ import { Loading } from '../../Loading/Loading';
 import { Footer } from '../../HeaderAndFooter/Footer';
 import { HeaderWorkplace } from '../../HeaderAndFooter/HeaderWorkplace';
 import { useToast } from '../../../context/ToastContext';
+import { motion} from "framer-motion";
 
 const CreateCourseComponent: React.FC = () => {
     const [mentorId, setMentorId] = useState<number>(0);
@@ -95,7 +96,11 @@ const CreateCourseComponent: React.FC = () => {
 
     return (
         
-        <div className="job-detail">
+        <motion.div
+        initial={{ opacity: 0, x: -200 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+        className="job-detail">
             {isLoading ? (
                 <div>
                     <Loading />
@@ -181,7 +186,7 @@ const CreateCourseComponent: React.FC = () => {
                     </div>
                 </>
             )}
-        </div>
+        </motion.div>
     );
 };
 

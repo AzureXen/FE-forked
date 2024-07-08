@@ -4,11 +4,12 @@ import { Loading } from "../Loading/Loading";
 import { useToast } from "../../context/ToastContext";
 import CourseInSystem from "../../model/CourseInSystem";
 import deleteCourse from "../../apis/CoordinatorApis/ApiDeleteCourse";
-import { ApiViewAllCompany } from "../../apis/CoordinatorApis/ApiCoordinatorShowCourse";
+import { ApiCoordinatorShowCourse } from "../../apis/CoordinatorApis/ApiCoordinatorShowCourse";
 import { Footer } from "../HeaderAndFooter/Footer";
 import { HeaderWorkplace } from "../HeaderAndFooter/HeaderWorkplace";
 import { NavbarCoordinator } from "../HeaderAndFooter/Navbar/NavbarCoordinator";
 import useAuth from "../../context/useAuth";
+import { motion} from "framer-motion";
 
 export const ViewCourseInsystemByCoordinator = () => {
     const [courses, setCourses] = useState<CourseInSystem[]>([]);
@@ -46,7 +47,7 @@ export const ViewCourseInsystemByCoordinator = () => {
         try {
             if (user) {
                 console.log("company: " + user.company_id);
-                const data = await ApiViewAllCompany(
+                const data = await ApiCoordinatorShowCourse(
                     user.company_id,
                     0,
                     100000
@@ -161,7 +162,11 @@ export const ViewCourseInsystemByCoordinator = () => {
         <div>
             <HeaderWorkplace />
             <NavbarCoordinator/>
-            <div className="application-container">
+            <motion.div
+                initial={{ opacity: 0, x: -200 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+            className="application-container mt-5 mb-5">
                 <h1>Course List</h1>
                 <div className="filter-controls">
                     <div className="input-group d-flex flex-row justify-content-center">
@@ -285,7 +290,7 @@ export const ViewCourseInsystemByCoordinator = () => {
                         </select>
                     </label>
                 </div>
-            </div>
+            </motion.div>
             <Footer />
         </div>
     );

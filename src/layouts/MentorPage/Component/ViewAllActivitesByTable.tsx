@@ -209,7 +209,7 @@ export const ViewAllActivitesByTable = () => {
                     <td>
                      <div className="container row">
                      {course.taskList.map((task) => (
-                        <div className="col-md-4" key={task.id}>
+                        <div className="" key={task.id}>
                           <div className="ag-courses_item col-md-3" onClick={() => handleTaskAction(task)}>
                             <div className="ag-courses-item_link">
                               <div className="ag-courses-item_bg"></div>

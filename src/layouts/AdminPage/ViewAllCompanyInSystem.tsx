@@ -82,8 +82,6 @@ export const ViewAllCompanyInSystem = () => {
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
-    //   await registerInterns(selectedUsers);
-    //   setSelectedUsers([]);
       fetchUserList();
     } catch (error) {
       console.error("Error registering users:", error);
@@ -102,7 +100,7 @@ export const ViewAllCompanyInSystem = () => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
         await DeleteCompany(id);
-        showToast("User deleted successfully", "success");
+        showToast("Company deleted successfully", "success");
         fetchUserList();
       } catch (error) {
         showToast("Failed to delete user", "error");
@@ -111,7 +109,7 @@ export const ViewAllCompanyInSystem = () => {
   };
   return (
     <div className="application-container">
-      <h1>User List</h1>
+      <h1>Company List</h1>
       <div className="filter-controls">
         <div className="input-group d-flex flex-row justify-content-center">
           <input
@@ -127,16 +125,6 @@ export const ViewAllCompanyInSystem = () => {
             </span>
           </div>
         </div>
-        <select
-          value={statusFilter === null ? "2" : statusFilter}
-          onChange={handleStatusChange}
-          id="filter"
-        >
-          <option value={""}>Filter</option>
-          <option value={"2"}>Pending</option>
-          <option value={0}>Reject</option>
-          <option value={1}>Accept</option>
-        </select>
       </div>
       {loading || submitting ? ( // Display loading state when loading or submitting
         <div className="loading-overlay">
@@ -151,7 +139,7 @@ export const ViewAllCompanyInSystem = () => {
               <thead className="header">
                 <tr>
                   <th>Company Name</th>
-                  <th>Discription</th>
+                  <th>Description</th>
                   <th>Location</th>
                   <th>Actions</th>
                 </tr>
@@ -163,13 +151,7 @@ export const ViewAllCompanyInSystem = () => {
                     <td>{company.companyDescription}</td>
                     <td>{company.location}</td>
                     <td>
-                      <button onClick={() => openPopup(company)}>Update</button>
                       <button onClick={() => handleDeleteUser(company.id)}>Delete</button>
-                      {/* <UpdateJobApplicationPopup
-                                                isOpen={isPopupOpen}
-                                                onClose={closePopup}
-                                                jobApplication={selectedJobApplication}
-                                            /> */}
                     </td>
                   </tr>
                 ))}

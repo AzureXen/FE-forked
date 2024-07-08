@@ -9,6 +9,7 @@ import { useToast } from "../../context/ToastContext";
 import { getField } from "../../apis/ApiJob";
 import { Field } from "../../model/Field";
 import { postJob } from "../../apis/PostJobApi";
+import { motion} from "framer-motion";
 
 export const PostJob: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -57,7 +58,11 @@ export const PostJob: React.FC = () => {
   };
 
   return (
-    <div className="job-detail">
+    <motion.div
+    initial={{ opacity: 0, x: -200 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 1.0 }}
+    className="job-detail">
       <div className="container rounded mb-5 mt-5 d-flex justify-content-center align-items-center" id="job-block">
         <div className="row input-container">
           <h1 id="h1-apply-now">Post Recruitment Now</h1>
@@ -120,6 +125,6 @@ export const PostJob: React.FC = () => {
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

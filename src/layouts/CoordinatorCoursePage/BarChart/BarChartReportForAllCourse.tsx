@@ -16,6 +16,7 @@ import InternResult from "../../../model/Mentor/InternResult";
 import { ApiViewResultInMentor } from "../../../apis/MentorApis/ApiViewResultInMentor";
 import "../../../css/Mentor/BarChart.css";
 import { ApiViewResultCoordinator } from "../../../apis/CoordinatorApis/ApiViewResultCoordinator";
+import { motion} from "framer-motion";
 
 export const BarChartReportForAllCourse: React.FC = () => {
   const [courseId, setCourseId] = useState<string>("");
@@ -72,15 +73,19 @@ export const BarChartReportForAllCourse: React.FC = () => {
 
   return (
     <>
-      <div className="container rounded mb-5" id="job-block">
+      <motion.div
+         initial={{ opacity: 0, x: -200 }}
+         animate={{ opacity: 1, x: 0 }}
+         transition={{ duration: 1.0 }}
+      className="container rounded mb-5 d-flex justify-content-center align-items-center mt-5" id="job-block">
         <div className="row input-container">
-          <h1 id="h1-apply-now">View Report Now</h1>
+          <h1 id="h1-apply-now">Statistical Chart</h1>
 
           {loading ? (
             <Loading />
           ) : (
             <div className="col-xs-12">
-              <h2 id="h2">Access By Result</h2>
+              <h2 id="h2">Assess By Result</h2>
               <ResponsiveContainer width="100%" height={400}>
                 <BarChart
                   className="BarChart"
@@ -97,7 +102,7 @@ export const BarChartReportForAllCourse: React.FC = () => {
                 </BarChart>
               </ResponsiveContainer>
               <div>
-                <h2 id="h2">Access By Completed Task</h2>
+                <h2 id="h2">Assess By Completed Task</h2>
                 <ResponsiveContainer width="100%" height={400}>
                   <BarChart
                     className="BarChart"
@@ -155,7 +160,7 @@ export const BarChartReportForAllCourse: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

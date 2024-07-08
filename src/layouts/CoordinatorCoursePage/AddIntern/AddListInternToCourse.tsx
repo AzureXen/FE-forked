@@ -11,6 +11,7 @@ import { ViewAddInternPopup } from "../../popup/Coordinator/ViewAddInternPopup";
 import AddInternRequest from "../../../model/Coordinator/AddInternRequest";
 import { ApiAddInternToCourse } from "../../../apis/CoordinatorApis/ApiAddInternToCourse";
 import { ApiGetAllCourseInSystem } from "../../../apis/CoordinatorApis/ApiGetAllCourseInSystem";
+import { motion} from "framer-motion";
 
 export const AddListInternToCourse: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -93,7 +94,11 @@ export const AddListInternToCourse: React.FC = () => {
         </div>
       ) : (
         <>
-          <div className="container rounded mb-5 mt-5 d-flex justify-content-center align-items-center" id="job-block">
+          <motion.div
+            initial={{ opacity: 0, x: -200 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.0 }}
+          className="container rounded mb-5 mt-5 d-flex justify-content-center align-items-center" id="job-block">
             <div className="row input-container">
               <h1 id="h1-apply-now">Add Intern to Course</h1>
               <form onSubmit={handleSubmit}>
@@ -141,7 +146,7 @@ export const AddListInternToCourse: React.FC = () => {
                 </div>
               </form>
             </div>
-          </div>
+          </motion.div>
           {isPopupOpen && (
             <ViewAddInternPopup
               isOpen={isPopupOpen}

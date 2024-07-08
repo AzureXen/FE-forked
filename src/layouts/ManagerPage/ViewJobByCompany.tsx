@@ -8,6 +8,7 @@ import { UpdateJobApplicationPopup } from "../popup/UpdateJobApplicationPopup";
 import { UpdateJobInCompanyPopup } from "../popup/UpdateJobInCompanyPopup";
 import { ApiDeleteJobInCompany } from "../../apis/ManagerApis/ApiDeleteJobInCompany";
 import { ConfirmDialog } from "../popup/ConfirmationPopup";
+import { motion} from "framer-motion";
 
 export const ViewJobByCompany = () => {
   const [jobList, setJobList] = useState<JobByCompanyResponse[]>([]);
@@ -53,7 +54,7 @@ export const ViewJobByCompany = () => {
     setLoading(true);
     try {
       if(user){
-        const data=await getAllJobByCompanyResponse(2, 0, 100000);
+        const data=await getAllJobByCompanyResponse(user.company_id, 0, 100000);
         setAllJob(data.jobs);
         console.log(jobList)
       }
@@ -142,7 +143,11 @@ export const ViewJobByCompany = () => {
   };
 
   return (
-    <div className="application-container">
+    <motion.div
+    initial={{ opacity: 0, x: -200 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.5 }}
+    className="application-container mt-5 mb-5">
       <h1>Job List</h1>
       <div className="filter-controls">
         <div className="input-group d-flex flex-row justify-content-center mb-5">
@@ -244,6 +249,6 @@ export const ViewJobByCompany = () => {
         onCancel={closeConfirmDialog}
         isOpen={isConfirmDialogOpen}
       />
-    </div>
+    </motion.div>
   );
 };

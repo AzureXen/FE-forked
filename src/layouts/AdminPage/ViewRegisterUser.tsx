@@ -139,16 +139,6 @@ export const ViewRegisterUser = () => {
             </span>
           </div>
         </div>
-        <select
-          value={statusFilter === null ? "2" : statusFilter}
-          onChange={handleStatusChange}
-          id="filter"
-        >
-          <option value={""}>Filter</option>
-          <option value={"2"}>Pending</option>
-          <option value={0}>Reject</option>
-          <option value={1}>Accept</option>
-        </select>
       </div>
       {loading || submitting ? (
         <div className="loading-overlay">
@@ -166,7 +156,6 @@ export const ViewRegisterUser = () => {
                   <th>Full Name</th>
                   <th>Email</th>
                   <th>Company Name</th>
-                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -182,9 +171,6 @@ export const ViewRegisterUser = () => {
                     <td>{user.fullName}</td>
                     <td>{user.email}</td>
                     <td>{user.companyName}</td>
-                    <td>
-                      <button onClick={() => openPopup(user)}>Update</button>
-                    </td>
                   </tr>
                 ))}
               </tbody>

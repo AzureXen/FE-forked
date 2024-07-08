@@ -14,7 +14,6 @@ interface ViewAddInternPopupProps {
     onSelectIntern: (intern: AddInternRequest[]) => void;
     selectedApplications: AddInternRequest[];
 }
-
 export const ViewAddInternPopup: React.FC<ViewAddInternPopupProps> = ({ isOpen, onClose, companyId, onSelectIntern,selectedApplications}) => {
     const [animationClass, setAnimationClass] = useState("popup-entering");
     const [isClosing, setIsClosing] = useState(false);
@@ -57,7 +56,7 @@ export const ViewAddInternPopup: React.FC<ViewAddInternPopupProps> = ({ isOpen, 
             setLoading(true);
             try {
                 if (companyId) {
-                    const data = await fetchInterns(companyId, 0, 1000); // Fetch a large number of records
+                    const data = await fetchInterns(companyId, 0, 1000);
                     if (data) {
                         setAllInterns(data.userAccountList);
                         setInternList(data.userAccountList.slice(0, pageSize));

@@ -8,37 +8,48 @@ import AuthService from "../../service/AuthService";
 import header2 from "../../images/header4.png";
 import { JobList } from "../JobPage/JobList";
 import { useToast } from "../../context/ToastContext";
+import { motion } from "framer-motion";
 
 export const HeaderWorkplace: React.FC = () => {
-  const [user, setUser] = useState<{ fullName: string } | null>(null);
-  const [search, setSearch] = useState<string>('');
+  const [user, setUser] = useState<{ fullName: string; role: string } | null>(
+    null
+  );
+  const [search, setSearch] = useState<string>("");
+  const [role, setRole] = useState<string>("");
   const navigate = useNavigate();
   const { showToast } = useToast();
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setRole(parsedUser.role);
     }
   }, []);
 
   const handleLogout = async () => {
     await AuthService.logout();
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     const storedUser = localStorage.getItem("user");
     console.log(storedUser);
     navigate("/");
     setUser(null);
-    showToast("Logout successful!", 'success');
+    showToast("Logout successful!", "success");
   };
-  const handleViewProfile = ()=>{
+  const handleViewProfile = () => {
     navigate("/profile");
-  }
+  };
+  const manager = "Workplace Manager".split(" ");
+  const mentor = "Workplace Mentor".split(" ");
+  const coordinator = "Workplace Coordinator".split(" ");
+  const intern = "Workplace Intern".split(" ");
+  const admin = "Workplace Admin".split(" ");
   return (
     <div>
       <header role="banner" id="headerSmallerHeight">
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
           <div className="container-fluid">
-          <svg
+            <svg
               width="50"
               height="50"
               viewBox="0 0 146 146"
@@ -50,7 +61,9 @@ export const HeaderWorkplace: React.FC = () => {
                 fill="#006ACC"
               />
             </svg>
-            <Link className="navbar-brand" to="/home">InternBridge</Link>
+            <Link className="navbar-brand" to="/home">
+              InternBridge
+            </Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -63,15 +76,25 @@ export const HeaderWorkplace: React.FC = () => {
               <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse ms-5" id="navbarsExample05">
+            <div
+              className="collapse navbar-collapse ms-5"
+              id="navbarsExample05"
+            >
               <ul className="navbar-nav ml-auto pl-lg-5 pl-0">
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link active" to="/home">Home</Link>
+                  <Link className="nav-link active" to="/home">
+                    Home
+                  </Link>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <Link className="nav-link" to="/jobs">Jobs</Link>
+                  <Link className="nav-link" to="/jobs">
+                    Jobs
+                  </Link>
                 </li>
-                <li className="nav-item dropdown" style={{ paddingRight: "2rem" }}>
+                <li
+                  className="nav-item dropdown"
+                  style={{ paddingRight: "2rem" }}
+                >
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -83,17 +106,29 @@ export const HeaderWorkplace: React.FC = () => {
                     Workplace
                   </a>
                   <div className="dropdown-menu" aria-labelledby="dropdown04">
-                  <Link className="dropdown-item" to="/Workplace/Manager">Manager</Link>
-                    <Link className="dropdown-item" to="/coordinator/course">Internship Coordinator</Link>
-                    <Link className="dropdown-item" to="/intern">Internship</Link>
-                    <Link className="dropdown-item" to="/mentor">Mentor</Link>
+                    <Link className="dropdown-item" to="/Workplace/Manager">
+                      Manager
+                    </Link>
+                    <Link className="dropdown-item" to="/coordinator/course">
+                      Internship Coordinator
+                    </Link>
+                    <Link className="dropdown-item" to="/intern">
+                      Internship
+                    </Link>
+                    <Link className="dropdown-item" to="/mentor">
+                      Mentor
+                    </Link>
                   </div>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link" href="#">About us</a>
+                  <a className="nav-link" href="#">
+                    About us
+                  </a>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>
-                  <a className="nav-link" href="/help">Helps</a>
+                  <a className="nav-link" href="/help">
+                    Helps
+                  </a>
                 </li>
                 <div>
                   {user && (
@@ -108,18 +143,24 @@ export const HeaderWorkplace: React.FC = () => {
                       >
                         Hello, {user.fullName}
                       </a>
-                      <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdown04"
+                        id="dropdown"
+                      >
                         <li
-                            style={{marginBottom:"1em"}}
-                            onClick={handleViewProfile}
-                            className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                            id="button-sign-out">
+                          style={{ marginBottom: "1em" }}
+                          onClick={handleViewProfile}
+                          className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                          id="button-sign-out"
+                        >
                           View Profile
                         </li>
                         <li
-                            onClick={handleLogout}
-                            className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                            id="button-sign-out">
+                          onClick={handleLogout}
+                          className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                          id="button-sign-out"
+                        >
                           Logout
                         </li>
                       </div>
@@ -130,10 +171,10 @@ export const HeaderWorkplace: React.FC = () => {
 
               <ul className="navbar-nav ml-auto">
                 {!user && (
-                    <li className="nav-item cta-btn">
-                      <Link
-                          type="button"
-                          className="btn btn-mod btn-border btn-circle btn-large"
+                  <li className="nav-item cta-btn">
+                    <Link
+                      type="button"
+                      className="btn btn-mod btn-border btn-circle btn-large"
                       id="button-sign-in"
                       to="/login"
                     >
@@ -147,7 +188,63 @@ export const HeaderWorkplace: React.FC = () => {
         </nav>
         <div className="container-fluid d-flex justify-content-center">
           <div className="title-header">
-            <h1 className="Tilte-h1">Workplace</h1>
+            <h1 className="Tilte-h1">
+              {user?.role === "ROLE_INTERNSHIP_COORDINATOR" &&
+                coordinator.map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.25, delay: i * 0.1 }}
+                  >
+                    {word}{" "}
+                  </motion.span>
+                ))}
+                {user?.role === "ROLE_MANAGER" &&
+                manager.map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.25, delay: i * 0.1 }}
+                  >
+                    {word}{" "}
+                  </motion.span>
+                ))}
+                {user?.role === "ROLE_ADMIN" &&
+                admin.map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.25, delay: i * 0.5 }}
+                  >
+                    {word}{" "}
+                  </motion.span>
+                ))}
+                {user?.role === "ROLE_INTERN" &&
+                intern.map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.25, delay: i * 0.1 }}
+                  >
+                    {word}{" "}
+                  </motion.span>
+                ))}
+                {user?.role === "ROLE_MENTOR" &&
+                mentor.map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.25, delay: i * 0.1 }}
+                  >
+                    {word}{" "}
+                  </motion.span>
+                ))}
+            </h1>
           </div>
         </div>
       </header>

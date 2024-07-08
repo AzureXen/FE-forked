@@ -8,6 +8,8 @@ import logoSample from "../../images/logoSample-.png";
 import { applyJob } from "../../apis/ApiApplyJob";
 import { useToast } from "../../context/ToastContext";
 import { Loading } from "../Loading/Loading";
+import { motion} from "framer-motion";
+
 
 export const JobDetailList: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -59,7 +61,8 @@ export const JobDetailList: React.FC = () => {
     setLoading(true);
     try {
       const response = await applyJob(parseInt(id), email, fullName, cv);
-      showToast("success","success");
+      showToast("Success to apply!!","success");
+      showToast("Please check your email to verify job application","warn");
       setFullName("");
       setEmail("");
       setCv(null);
@@ -71,12 +74,18 @@ export const JobDetailList: React.FC = () => {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div><Loading/></div>;
   if (!job) return <div>Job not found</div>;
 
   return (
     <div className="job-detail">
-      <div className="container rounded mt-5 mb-5" id="job-block">
+      <motion.div
+      className="container rounded mt-5 mb-5 d-flex justify-content-center align-items-center" 
+      id="job-block"
+      initial={{ opacity: 0, x: -200 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+      >
         <div className="row">
           <div className="col-md-2">
             <img src={logoSample} alt="" id="logo" />
@@ -90,34 +99,34 @@ export const JobDetailList: React.FC = () => {
                 <p id="p-location">{job.company.location}</p>
                 <p>Company: {job.company.companyName}</p>
               </div>
-              <div className="col-md-3">
-                <button id="btn-apply">
-                  Apply
-                  <span className="first"></span>
-                  <span className="second"></span>
-                  <span className="third"></span>
-                  <span className="fourth"></span>
-                </button>
-              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
+      </motion.div>
+      <motion.div
         className="container rounded mt-5 mb-5 col-md-12"
         id="job-description-block"
+        initial={{ opacity: 0, x: -200 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
       >
         <h1 id="h1-job-description">Job Description</h1>
         {formatParagraphs(job.jobDescription)}
-      </div>
-      <div className="container rounded mb-5" id="job-block">
+      </motion.div>
+      <div className="container rounded mb-5 d-flex justify-content-center align-items-center" id="job-block">
         <div className="row input-container">
           <h1 id="h1-apply-now"> Apply Now</h1>
         {loading ? (
           <Loading/>
         ):(
-          <form onSubmit={handleSubmit}>
-          <div className="col-xs-12">
+          <form onSubmit={handleSubmit}
+          >
+         <motion.div
+         initial={{ opacity: 0, x: -200 }}
+         animate={{ opacity: 1, x: 0 }}
+         transition={{ duration: 0.5 }}
+         >
+         <div className="col-xs-12">
             <div className="styled-input wide">
               <input
                 type="text"
@@ -168,6 +177,7 @@ export const JobDetailList: React.FC = () => {
                 <span className="fourth"></span>
               </button>
           </div>
+         </motion.div>
         </form>
         )}
         </div>

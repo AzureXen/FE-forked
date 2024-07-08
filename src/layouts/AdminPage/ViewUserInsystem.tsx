@@ -163,13 +163,7 @@ export const ViewUserInsystem = () => {
                     <td>{user.role}</td>
                     <td>{user.companyName}</td>
                     <td>
-                      <button onClick={() => openPopup(user)}>Update</button>
                       <button onClick={() => handleDeleteUser(user.id)}>Delete</button>
-                      <UpdateUserInSystemPopup
-                        isOpen={isPopupOpen}
-                        onClose={closePopup}
-                        userInSysTem={selectedUserInSystem}
-                      />
                     </td>
                   </tr>
                 ))}
