@@ -19,7 +19,7 @@ const CourseActivities : React.FC<CAProps> =({courseId,internId}) => {
             }
         }
         fetchData();
-    }, []);
+    }, [courseId,internId]);
     console.log(activities);
     if (activities.length>0){
         return(

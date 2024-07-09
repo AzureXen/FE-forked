@@ -42,7 +42,7 @@ import MentorFeedbackInternPage
   from "./layouts/MentorPage/FeedbackPages/MentorFeedbackInternPage/MentorFeedbackInternPage";
 import MentorFeedbackCoursePage
   from "./layouts/MentorPage/FeedbackPages/MentorFeedbackCoursePage/MentorFeedbackCoursePage";
-import FeedbackPage from "./layouts/InternPage/FeedbackPage/FeedbackPage";
+import FeedbackPage from "./layouts/InternPage/FeedbackPages/FeedbackPage";
 import CoordinatorFeedbackCoursePage
   from "./layouts/CoordinatorPage/FeedbackPages/CoordinatorFeedbackCoursePage/CoordinatorFeedbackCoursePage";
 import CoordinatorFeedbackInternPage
@@ -61,6 +61,7 @@ import { AdminViewRequestPage } from "./layouts/AdminPage/RequestAdmin/AdminView
 import { MyPieChart } from "./layouts/ManagerPage/Chart/PieChartManager";
 import { ReportManager } from "./layouts/ManagerPage/Chart/ReportManager";
 import { CoordinatorViewSchedulePage } from "./layouts/CoordinatorCoursePage/CoordinatorViewSchedulePage";
+import CourseFeedbackPage from "./layouts/InternPage/FeedbackPages/CourseFeedbackPage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -90,6 +91,7 @@ export const App = () => {
               <Route path="/intern" element={<DashboardPage />} />
               <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
               <Route path="/intern/feedback" element={<FeedbackPage/>} />
+              <Route path="/intern/sendFeedback/:courseId" element={<CourseFeedbackPage/>} />
               <Route path="/mentor" element={<MentorDashboard />} />
               <Route path="/mentor/:courseId" element={<MentorActivityPage/>}/>
               <Route path="/mentor/feedback" element={<MentorFeedbackCoursePage/>}/>

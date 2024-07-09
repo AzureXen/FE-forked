@@ -30,7 +30,7 @@ const FeedbackPage = () =>{
             if (checkedInternId) fetchData();
         },[checkedInternId])
     }catch(error){
-        console.log("FeedbackPage: found an error while fetching feedback: ",error);
+        console.log("FeedbackPages: found an error while fetching feedback: ",error);
     }
     //  PAGINATION
     const maxMessages = 10;

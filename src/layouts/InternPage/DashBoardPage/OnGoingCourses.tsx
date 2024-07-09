@@ -24,7 +24,7 @@ const OnGoingCourses : React.FC<OnGoingCourseProps>= ({internId} ) => {
         fetchData();
     }, []);
     const showMoreCourses = () => {
-        setVisibleCount(prevCount => prevCount + 5); // Increment the count by 5 each time
+        setVisibleCount(prevCount => prevCount + 5);
     };
     if(courseIntern.length>0){
         return (
@@ -36,6 +36,7 @@ const OnGoingCourses : React.FC<OnGoingCourseProps>= ({internId} ) => {
                         courseId = {courseIntern.course_id}
                         courseName={courseIntern.course_description}
                         mentorName={courseIntern.course_mentor}
+                        type = "OnGoing"
                     />
                 ))}
                 {visibleCount < courseIntern.length && (
