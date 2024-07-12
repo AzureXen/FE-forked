@@ -9,7 +9,7 @@ interface endedCoursesProps{
 }
 const EndedCourses :React.FC<endedCoursesProps> = ({internId}) =>{
     const [endedCourses, setEndedCourses] = useState<CourseIntern[]>([]);
-    const [visibleCount, setVisibleCount] = useState(5);
+    const [visibleCount, setVisibleCount] = useState(6);
     useEffect(()=>{
         const fetchData = async ()=>{
             try{
@@ -29,12 +29,12 @@ const EndedCourses :React.FC<endedCoursesProps> = ({internId}) =>{
     }, [endedCourses]);
 
     const showMoreCourses = () => {
-        setVisibleCount(prevCount => prevCount + 5);
+        setVisibleCount(prevCount => prevCount + 6);
     };
     if(FACourses.length>0){
         return (
             <div>
-                <p className="highlight1" style={{display:"block"}}>Ended Courses:</p>
+                <p className="highlight1" style={{display:"block"}}>Courses to feedback:</p>
                 {FACourses.slice(0, visibleCount).map(courseIntern => (
                     <CourseCard
                         key={courseIntern.course_id}

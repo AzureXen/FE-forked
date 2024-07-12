@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 export const Header: React.FC = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<{ fullName: string } | null>(null);
+  const [role, setRole] = useState<string>("");
   const { showToast } = useToast();
 
   
@@ -19,6 +20,8 @@ export const Header: React.FC = () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser !=null) {
       setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setRole(parsedUser.role);
     }
   }, []);
 
@@ -72,85 +75,117 @@ export const Header: React.FC = () => {
               id="navbarsExample05"
             >
               <ul className="navbar-nav ml-auto pl-lg-5 pl-0">
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <a className="nav-link active" href="index.html">
                     Home
                   </a>
                 </li>
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <Link className="nav-link" to="/jobs">
                     Jobs
                   </Link>
                 </li>
-                <li
-                  className="nav-item dropdown"
-                  style={{ paddingRight: "2rem" }}
-                >
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="dropdown04"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Workplace
-                  </a>
-                  <div className="dropdown-menu" aria-labelledby="dropdown04">
-                    <Link className="dropdown-item" to="/Workplace/Manager">
-                      Manager
-                    </Link>
-                    <Link className="dropdown-item" to="/coordinator/course">
-                      Internship Coordinator
-                    </Link>
-                    <a className="dropdown-item" href="/intern">
-                      Internship
-                    </a>
-                    <Link className="dropdown-item" to="/mentor">
-                      Mentor
-                    </Link>
-                  </div>
+                {/*<li*/}
+                {/*    className="nav-item dropdown"*/}
+                {/*    style={{paddingRight: "2rem"}}*/}
+                {/*>*/}
+                {/*  <a*/}
+                {/*      className="nav-link dropdown-toggle"*/}
+                {/*      href="#"*/}
+                {/*      id="dropdown04"*/}
+                {/*      data-toggle="dropdown"*/}
+                {/*      aria-haspopup="true"*/}
+                {/*      aria-expanded="false"*/}
+                {/*  >*/}
+                {/*    Workplace*/}
+                {/*  </a>*/}
+                {/*  <div className="dropdown-menu" aria-labelledby="dropdown04">*/}
+                {/*    <Link className="dropdown-item" to="/Workplace/Manager">*/}
+                {/*      Manager*/}
+                {/*    </Link>*/}
+                {/*    <Link className="dropdown-item" to="/coordinator/course">*/}
+                {/*      Internship Coordinator*/}
+                {/*    </Link>*/}
+                {/*    <a className="dropdown-item" href="/intern">*/}
+                {/*      Internship*/}
+                {/*    </a>*/}
+                {/*    <Link className="dropdown-item" to="/mentor">*/}
+                {/*      Mentor*/}
+                {/*    </Link>*/}
+                {/*  </div>*/}
+                {/*</li>*/}
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
+                  {role === "ROLE_INTERN" &&
+                      (<Link className="nav-link active" to="/intern">
+                        Workplace
+                      </Link>)}
+
+                  {role === "ROLE_MENTOR" &&
+                      (<Link className="nav-link active" to="/mentor">
+                        Workplace
+                      </Link>)}
+
+                  {role === "ROLE_INTERNSHIP_COORDINATOR" &&
+                      (<Link className="nav-link active" to="/coordinator/course">
+                        Workplace
+                      </Link>)}
+
+                  {role === "ROLE_MANAGER" &&
+                      (<Link className="nav-link active" to="/Workplace/Manager">
+                        Workplace
+                      </Link>)}
+
+                  {role === "ROLE_ADMIN" &&
+                      (<Link className="nav-link active" to="/admin">
+                        Workplace
+                      </Link>)}
+                  {role === "" &&
+                      (<Link className="nav-link active" to="#">
+                        Workplace
+                      </Link>)}
                 </li>
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+
+
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <Link className="nav-link" to="/home">
                     About us
                   </Link>
                 </li>
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <a className="nav-link" href="/help">
                     Helps
                   </a>
                 </li>
                 <div>
-              {user && (
-                <div>
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="dropdown04"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Hello, {user.fullName}
-                  </a>
-                  <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
-                    <li
-                        style={{marginBottom:"1em"}}
-                        onClick={handleViewProfile}
-                        className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                        id="button-sign-out">
-                      View Profile
-                    </li>
-                    <Link
-                        onClick={handleLogout}
-                        className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                        id="button-sign-out" to="/">
-                      Logout
-                    </Link>
-                  </div>
-                </div>
-              )}
+                  {user && (
+                      <div>
+                        <a
+                            className="nav-link dropdown-toggle"
+                            href="#"
+                            id="dropdown04"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                          Hello, {user.fullName}
+                        </a>
+                        <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
+                          <li
+                              style={{marginBottom: "1em"}}
+                              onClick={handleViewProfile}
+                              className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                              id="button-sign-out">
+                            View Profile
+                          </li>
+                          <Link
+                              onClick={handleLogout}
+                              className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                              id="button-sign-out" to="/">
+                            Logout
+                          </Link>
+                        </div>
+                      </div>
+                  )}
                 </div>
               </ul>
 
@@ -160,15 +195,15 @@ export const Header: React.FC = () => {
                       <Link
                           type="button"
                           className="btn btn-mod btn-border btn-circle btn-large"
-                      id="button-sign-in"
-                      to="/login"
-                    >
-                      Sign In
-                    </Link>
-                  </li>
+                          id="button-sign-in"
+                          to="/login"
+                      >
+                        Sign In
+                      </Link>
+                    </li>
                 )}
               </ul>
-              
+
             </div>
 
           </div>

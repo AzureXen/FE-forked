@@ -1,6 +1,6 @@
 .dashboard-container {
-    background: radial-gradient(circle at center, #c3d6f5, #a3c7f2);
     padding: 20px;
+    background: radial-gradient(circle at center, #c3d6f5, #a3c7f2);
     box-shadow: 0 2px 4px rgb(0, 0, 0, 0.1);
 }
 

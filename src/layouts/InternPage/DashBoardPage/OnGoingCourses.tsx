@@ -10,7 +10,7 @@ interface OnGoingCourseProps{
 
 const OnGoingCourses : React.FC<OnGoingCourseProps>= ({internId} ) => {
     const [courseIntern, setCourseIntern] = useState<Course[]>([]);
-    const [visibleCount, setVisibleCount] = useState(5);
+    const [visibleCount, setVisibleCount] = useState(6);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -24,7 +24,7 @@ const OnGoingCourses : React.FC<OnGoingCourseProps>= ({internId} ) => {
         fetchData();
     }, []);
     const showMoreCourses = () => {
-        setVisibleCount(prevCount => prevCount + 5);
+        setVisibleCount(prevCount => prevCount + 6);
     };
     if(courseIntern.length>0){
         return (
