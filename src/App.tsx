@@ -62,6 +62,10 @@ import { MyPieChart } from "./layouts/ManagerPage/Chart/PieChartManager";
 import { ReportManager } from "./layouts/ManagerPage/Chart/ReportManager";
 import { CoordinatorViewSchedulePage } from "./layouts/CoordinatorCoursePage/CoordinatorViewSchedulePage";
 import CourseFeedbackPage from "./layouts/InternPage/FeedbackPages/CourseFeedbackPage";
+import SelectCourseFeedbackPage
+  from "./layouts/CoordinatorPage/FeedbackPages/SelectCourseFeedbackPage/SelectCourseFeedbackPage";
+import ViewCourseFeedbackPage
+  from "./layouts/CoordinatorPage/FeedbackPages/ViewCourseFeedbackPage/ViewCourseFeedbackPage";
 export const App = () => {
 
   const currentUser = AuthService.getCurrentUser();
@@ -119,6 +123,8 @@ export const App = () => {
               <Route path="/coordinator/createIntern" element={<CoordinatorAddInternToCoursePage/>}/>
               <Route path="/coordinator/feedback" element={<CoordinatorFeedbackCoursePage/>}/>
               <Route path="/coordinator/feedback/:courseId" element={<CoordinatorFeedbackInternPage/>}/>
+              <Route path="/coordinator/viewFeedback" element={<SelectCourseFeedbackPage/>}/>
+              <Route path="/coordinator/viewFeedback/:courseId" element={<ViewCourseFeedbackPage/>}/>
               <Route path="/verifyEmail" element={<VerificationEmail />} />
               <Route path="/help" element={<HelpPage />} />
               <Route path="/profile" element={<ViewProfilePage/>}/>

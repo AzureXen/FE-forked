@@ -94,7 +94,7 @@ const ViewProfilePage = () =>{
                 <HeaderWorkplace/>
                 {/*Background*/}
                 <div style={{background: "radial-gradient(circle at center, #c3d6f5, #a3c7f2)"}}>
-                    <h2 className="highlight1" style={{color:"red"}}>USER PROFILE</h2>
+                    <h2 className="highlight1">USER PROFILE</h2>
 
                     <hr style={{height: '4px', backgroundColor: 'aliceblue', border: 'none'}}/>
                     <div className="info-background">

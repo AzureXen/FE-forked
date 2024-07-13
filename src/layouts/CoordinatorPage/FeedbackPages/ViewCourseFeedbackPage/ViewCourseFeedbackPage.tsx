@@ -1,14 +1,18 @@
+import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import InternFeedback from "../../../model/Intern/InternFeedback"
-import fetchAllFeedbacks from "../../../apis/InternApis/AllFeedbacks";
-import "../../../css/Intern/FeedbackPage.css"
-import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
-import {Footer} from "../../HeaderAndFooter/Footer";
-import NavbarIntern from "../NavbarIntern/NavbarIntern";
-import useAuth from "../../../context/useAuth";
-const FeedbackPage = () =>{
+import {HeaderWorkplace} from "../../../HeaderAndFooter/HeaderWorkplace";
+import {NavbarCoordinator} from "../../../HeaderAndFooter/Navbar/NavbarCoordinator";
+import {Footer} from "../../../HeaderAndFooter/Footer";
+import fetchCourseFeedbackContent from "../../../../apis/CoordinatorApis/GetCourseFeedback";
+import CourseFeedbackContent from "../../../../model/Coordinator/CourseFeedbackContent";
+
+const ViewCourseFeedbackPage = ()=>{
+    //get course id
+    const {courseId} = useParams()
+    const checkedCourseId = courseId ? courseId : ""; //prevents from being undefined
+
     // check user---------------
-    const [user, setUser] = useState<{ user_id: number, email:string } | null>(null);
+    const [user, setUser] = useState<{ user_id: number } | null>(null);
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -16,22 +20,26 @@ const FeedbackPage = () =>{
             setUser(JSON.parse(storedUser));
         }
     }, []);
-    const StringInternId = user?.user_id.toString(); // Convert to string
-    const checkedInternId = StringInternId ?? ""; // prevent from being unidentified
-    //----------------------------------------------
+    const StringCoordinatorId = user?.user_id.toString(); // Convert to string
+    const checkedCoordinatorId = StringCoordinatorId ?? ""; // prevent from being unidentified
 
-    const [feedbackList, setFeedbackList] = useState<InternFeedback[]>([])
-    try{
-        useEffect(()=>{
-            const fetchData = async () => {
-                const data = await fetchAllFeedbacks(checkedInternId);
-                setFeedbackList(data);
+    //Fetch Course Feedbacks from Interns
+    const [feedbacks, setFeedbacks]
+        = useState<CourseFeedbackContent[]>([])
+    useEffect(()=>{
+        if(checkedCoordinatorId && checkedCourseId){
+            try{
+                const fetchData = async ()=>{
+                    const data = await fetchCourseFeedbackContent(checkedCourseId, checkedCoordinatorId);
+                    setFeedbacks(data);
+                }
+                fetchData();
+            }catch(error){
+                console.log("error while fetching course feedbacks: ",error);
             }
-            if (checkedInternId) fetchData();
-        },[checkedInternId])
-    }catch(error){
-        console.log("FeedbackPages: found an error while fetching feedback: ",error);
-    }
+        }
+    },[checkedCoordinatorId,checkedCourseId])
+    console.log("courseId:", checkedCourseId);
     //  PAGINATION
     const maxMessages = 10;
     const [pageAmount, setPageAmount] = useState(1);
@@ -56,22 +64,16 @@ const FeedbackPage = () =>{
     }
     useEffect(
         ()=>{
-            setPageAmount(Math.ceil(feedbackList.length/maxMessages));
+            setPageAmount(Math.ceil(feedbacks.length/maxMessages));
         }
-    ,[feedbackList])
-    if (!user) {
-        return <p>Loading...</p>;
-    }
+        ,[feedbacks])
     return(
         <>
-        <div>
-            <HeaderWorkplace/>
-        </div>
             <div>
-                <NavbarIntern internId={checkedInternId} selectedPage="Feedback"/>
+                <HeaderWorkplace/>
             </div>
-
-            {feedbackList.length>0 && (
+            <NavbarCoordinator/>
+            {feedbacks.length>0 && (
                 <div className="feedback-background">
                     <div style={{margin: "1rem 1rem 1rem 3rem"}}>
                         <p className="highlight1">All feedbacks: </p>
@@ -86,10 +88,10 @@ const FeedbackPage = () =>{
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {feedbackList.slice(maxMessages * currentPage - maxMessages, maxMessages * currentPage).map((feedback, index) => (
+                                {feedbacks.slice(maxMessages * currentPage - maxMessages, maxMessages * currentPage).map((feedback, index) => (
                                     <tr key={index}>
-                                        <td>{feedback.senderName}</td>
-                                        <td>{feedback.content}</td>
+                                        <td>{feedback.internName}</td>
+                                        <td>{feedback.feedbackContent}</td>
                                     </tr>
                                 ))}
                                 </tbody>
@@ -109,20 +111,18 @@ const FeedbackPage = () =>{
                     </div>
                 </div>
             )}
-
-            {feedbackList.length<=0 && (
+            {feedbacks.length<=0 && (
                 <div className="feedback-background">
                     <div style={{margin: "1rem 1rem 1rem 3rem"}}>
                         <p className="highlight1">
-                            You dont have any feedbacks yet, stay tuned!
+                            No intern has sent feedback to this course yet...
                         </p>
                     </div>
                 </div>
             )}
-            <div>
-                <Footer/>
-            </div>
+
+            <Footer/>
         </>
     )
 }
-export default FeedbackPage;
+export default ViewCourseFeedbackPage;

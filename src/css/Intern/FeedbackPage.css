@@ -72,3 +72,14 @@ table,tr,td,th{
     color: black;
     font-weight: bold;
 }
+.feedback-container table {
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.feedback-container table th,
+.feedback-container table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
