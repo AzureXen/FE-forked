@@ -6,6 +6,7 @@ import { Footer } from '../../HeaderAndFooter/Footer';
 import { HeaderWorkplace } from '../../HeaderAndFooter/HeaderWorkplace';
 import { useToast } from '../../../context/ToastContext';
 import { motion} from "framer-motion";
+import Cookies from 'js-cookie';
 
 const CreateCourseComponent: React.FC = () => {
     const [mentorId, setMentorId] = useState<number>(0);
@@ -20,7 +21,7 @@ const CreateCourseComponent: React.FC = () => {
     const { showToast } = useToast();
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { ApiShowSchedule } from "../../../apis/CoordinatorApis/ShowSchedule/ApiShowSchedule";
 import ScheduleResponse from "../../../model/Coordinator/ScheduleResponse";
 import { DeleteSchedule } from "../../../apis/CoordinatorApis/ShowSchedule/DeleteSchedule";
+import Cookies from "js-cookie";
 
 export const ViewSchedule = () => {
   const [allSchedules, setAllSchedules] = useState<ScheduleResponse[]>([]);
@@ -26,7 +27,7 @@ export const ViewSchedule = () => {
   } | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

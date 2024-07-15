@@ -9,6 +9,7 @@ import header2 from "../../images/header4.png";
 import { JobList } from "../JobPage/JobList";
 import { useToast } from "../../context/ToastContext";
 import { motion } from "framer-motion";
+import Cookies from "js-cookie";
 
 export const HeaderWorkplace: React.FC = () => {
   const [user, setUser] = useState<{ fullName: string; role: string } | null>(
@@ -19,7 +20,7 @@ export const HeaderWorkplace: React.FC = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
       const parsedUser = JSON.parse(storedUser);

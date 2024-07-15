@@ -6,13 +6,14 @@ import {HeaderWorkplace} from "./HeaderWorkplace";
 import {Footer} from "./Footer";
 import profileIcon from "../../images/profile-icon-design-free-vector.jpg"
 import fetchCompanyName from "../../apis/GetCompanyName";
+import Cookies from "js-cookie";
 const ViewProfilePage = () =>{
     // check user---------------
     const [user, setUser]
         = useState<{ user_id: number, username:string, email:string, role:string, fullName:string, company_id:number } | null>(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

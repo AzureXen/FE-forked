@@ -6,12 +6,13 @@ import { Footer } from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";
 import { useEffect, useState } from 'react';
 import useAuth from "../../../context/useAuth";
+import Cookies from 'js-cookie';
 
 export const DashboardPage: React.FC = () => {
     const [user, setUser] = useState<{ user_id: number } | null>(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

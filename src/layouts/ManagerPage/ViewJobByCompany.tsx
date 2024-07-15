@@ -9,6 +9,7 @@ import { UpdateJobInCompanyPopup } from "../popup/UpdateJobInCompanyPopup";
 import { ApiDeleteJobInCompany } from "../../apis/ManagerApis/ApiDeleteJobInCompany";
 import { ConfirmDialog } from "../popup/ConfirmationPopup";
 import { motion} from "framer-motion";
+import Cookies from "js-cookie";
 
 export const ViewJobByCompany = () => {
   const [jobList, setJobList] = useState<JobByCompanyResponse[]>([]);
@@ -28,7 +29,7 @@ export const ViewJobByCompany = () => {
   const [allJob, setAllJob] = useState<JobByCompanyResponse[]>([]);
   const [filteredJobNewList, setFilteredJobNewList] = useState<JobByCompanyResponse[]>([]);
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

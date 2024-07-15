@@ -1,6 +1,6 @@
 .certificate-container {
-    width: 1123px; /* A4 width in pixels at 96 DPI */
-    height: 794px; /* A4 height in pixels at 96 DPI */
+    max-width: 100%;
+    height: auto;
     padding: 40px;
     text-align: center;
     background-color: #fff;
@@ -12,10 +12,6 @@
     background-size: cover;
     margin: 0 auto; 
     transition: all .5s ease !important;
-  }
-  .position-out{
-    position: absolute;
-    right: 1000%;
   }
   
   .certificate-header {

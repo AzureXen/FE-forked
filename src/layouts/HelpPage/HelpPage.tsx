@@ -7,6 +7,7 @@ import { HeaderSmaller } from "../HeaderAndFooter/HeaderSmaller";
 import { Footer } from "../HeaderAndFooter/Footer";
 import aboutUsImage from "../../images/aboutUs.png";
 import { motion } from "framer-motion";
+import Cookies from "js-cookie";
 
 export const HelpPage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -26,7 +27,7 @@ export const HelpPage: React.FC = () => {
     const [time, setTime] = useState<string>("");
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
             setUser(parsedUser);
@@ -80,7 +81,6 @@ export const HelpPage: React.FC = () => {
                          Send Us Your Request
                     </h1>
                     <div className="d-flex flex-wrap justify-content-between mt-5 mb-5">
-                    <img id="img-about-us" src={aboutUsImage} alt="aboutus" />
                     <motion.div
                          initial={{ opacity: 0, x: -200 }}
                          animate={{ opacity: 1, x: 0 }}

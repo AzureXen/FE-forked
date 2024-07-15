@@ -61,15 +61,14 @@ import { AdminViewRequestPage } from "./layouts/AdminPage/RequestAdmin/AdminView
 import { MyPieChart } from "./layouts/ManagerPage/Chart/PieChartManager";
 import { ReportManager } from "./layouts/ManagerPage/Chart/ReportManager";
 import { CoordinatorViewSchedulePage } from "./layouts/CoordinatorCoursePage/CoordinatorViewSchedulePage";
+import ProtectedRoute from "./context/ProtectedRoute";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 export const App = () => {
-
-  const currentUser = AuthService.getCurrentUser();
-
-  // currentUser ? <Navigate to="/" /> : 
   return (
     <ToastProvider>
       <Router>
-        <div className="d-flex flex-column min-vh-100">
+       <div className="d-flex flex-column min-vh-100">
           <div className="flex-grow-1">
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -87,9 +86,11 @@ export const App = () => {
               <Route path="/Workplace/Manager/viewEmployee" element={<ViewEmployeePage/>}/>
               <Route path="/Workplace/Manager/Report" element={<ReportManager/>}/>
               <Route path="/Admin" element={<AdminPage />} />
-              <Route path="/intern" element={<DashboardPage />} />
-              <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
-              <Route path="/intern/feedback" element={<FeedbackPage/>} />
+              <Route element={<ProtectedRoute allowedRoles={['ROLE_INTERN']} />}>
+                    <Route path="/intern" element={<DashboardPage />} />
+                    <Route path="/intern/course/:courseId" element={<CourseActivityPage />} />
+                    <Route path="/intern/feedback" element={<FeedbackPage/>} />
+              </Route>
               <Route path="/mentor" element={<MentorDashboard />} />
               <Route path="/mentor/:courseId" element={<MentorActivityPage/>}/>
               <Route path="/mentor/feedback" element={<MentorFeedbackCoursePage/>}/>

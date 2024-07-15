@@ -10,6 +10,7 @@ import {useEffect, useState} from "react";
 import useAuth from "../../../context/useAuth";
 import CourseVerify from "../../../apis/InternApis/CourseVerify";
 import {useToast} from "../../../context/ToastContext";
+import Cookies from "js-cookie";
 const CourseActivityPage: React.FC = () => {
     //useToast
     const { showToast } = useToast();
@@ -21,7 +22,7 @@ const CourseActivityPage: React.FC = () => {
     const [user, setUser] = useState<{ user_id: number } | null>(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

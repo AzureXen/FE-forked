@@ -8,6 +8,7 @@ import {Footer} from "../../../HeaderAndFooter/Footer";
 import fetchInternOfCourse from "../../../../apis/CoordinatorApis/GetInternOfCourse"
 import {NavbarCoordinator} from "../../../HeaderAndFooter/Navbar/NavbarCoordinator";
 import {useToast} from "../../../../context/ToastContext";
+import Cookies from "js-cookie";
 
 const CoordinatorFeedbackInternPage = () =>{
     // USE TOAST
@@ -37,7 +38,7 @@ const CoordinatorFeedbackInternPage = () =>{
     const [user, setUser] = useState<{ user_id: number } | null>(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

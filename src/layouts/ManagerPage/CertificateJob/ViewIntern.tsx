@@ -12,6 +12,7 @@ import { Fade } from "react-awesome-reveal";
 import { motion } from "framer-motion";
 import InternInSystem from "../../../model/Manager/InternInSystem";
 import { UpdateUserInSystemPopup } from "../../popup/UpdateUserInSystemPopup";
+import Cookies from "js-cookie";
 
 export const ViewIntern = () => {
   const [allUsers, setAllUsers] = useState<InternInSystem[]>([]);
@@ -41,7 +42,7 @@ export const ViewIntern = () => {
   const [userPdfUrls, setUserPdfUrls] = useState<{ [key: number]: string | undefined }>({});
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
@@ -294,13 +295,15 @@ export const ViewIntern = () => {
         <div className={`${selectedUser ? 'col-md-6' : 'position-out'}`}>
           <Fade>
             {selectedUser && (
-              <CertificateJob
+             <div className="container-fluid">
+               <CertificateJob
                 user={selectedUser}
                 onComplete={() => setSelectedUser(null)}
                 managerName={fullNameOnGoingUser}
                 resetPdfUrl={() => handlePdfUrlUpdate(selectedUser.id, undefined)}
                 updatePdfUrl={(url: string) => handlePdfUrlUpdate(selectedUser.id, url)}
               />
+             </div>
             )}
           </Fade>
         </div>

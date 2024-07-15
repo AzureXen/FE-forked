@@ -3,6 +3,7 @@ import "../../css/popup.css";
 import { JobApplication } from "../../model/JobApplication";
 import { ApiUpdateStatus } from "../../apis/ApiUpdateStatus";
 import { useToast } from "../../context/ToastContext";
+import Cookies from "js-cookie";
 
 interface UpdateJobApplicationPopupProps {
   isOpen: boolean;
@@ -25,7 +26,7 @@ export const UpdateJobApplicationPopup: React.FC<
     company_id: number;
   } | null>(null);
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

@@ -8,6 +8,7 @@ import "../../css/managertable.css"; // Nhớ import CSS đã tạo
 import { ShowCourse } from './ShowCourse';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext';
+import Cookies from 'js-cookie';
 
 export const ManagerPage: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -18,7 +19,7 @@ export const ManagerPage: React.FC = () => {
   const {showToast}= useToast();
   const [role,setRole]= useState<string>("");
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

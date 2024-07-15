@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import AuthService from "../../service/AuthService";
 import { useToast } from "../../context/ToastContext";
 import { motion } from "framer-motion";
+import Cookies from "js-cookie";
 
 
 
@@ -16,16 +17,26 @@ export const Header: React.FC = () => {
 
   
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = Cookies.get('user');
     if (storedUser !=null) {
       setUser(JSON.parse(storedUser));
     }
+
+    const interval = setInterval(() => {
+      const storedUser = Cookies.get('user');
+      if (storedUser == null) {
+        setUser(null);
+      }
+    }, 1000); // Check every second
+
+    return () => clearInterval(interval);
   }, []);
+
 
 
   const handleLogout = async () => {
     await AuthService.logout();
-    localStorage.removeItem('user');
+    Cookies.remove('user');
     navigate("/");
     setUser(null);
     showToast("Logout successful!", 'success');
@@ -82,10 +93,7 @@ export const Header: React.FC = () => {
                     Jobs
                   </Link>
                 </li>
-                <li
-                  className="nav-item dropdown"
-                  style={{ paddingRight: "2rem" }}
-                >
+                <li className="nav-item dropdown" style={{ paddingRight: "2rem" }}>
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -97,18 +105,10 @@ export const Header: React.FC = () => {
                     Workplace
                   </a>
                   <div className="dropdown-menu" aria-labelledby="dropdown04">
-                    <Link className="dropdown-item" to="/Workplace/Manager">
-                      Manager
-                    </Link>
-                    <Link className="dropdown-item" to="/coordinator/course">
-                      Internship Coordinator
-                    </Link>
-                    <a className="dropdown-item" href="/intern">
-                      Internship
-                    </a>
-                    <Link className="dropdown-item" to="/mentor">
-                      Mentor
-                    </Link>
+                    <Link className="dropdown-item" to="/Workplace/Manager">Manager</Link>
+                    <Link className="dropdown-item" to="/coordinator/course">Internship Coordinator</Link>
+                    <Link className="dropdown-item" to="/intern">Internship</Link>
+                    <Link className="dropdown-item" to="/mentor">Mentor</Link>
                   </div>
                 </li>
                 <li className="nav-item" style={{ paddingRight: "2rem" }}>

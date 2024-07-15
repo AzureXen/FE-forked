@@ -6,6 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { Field } from "../../model/Field";
 import {getField } from "../../apis/ApiJob";
+import { getCompanyLogo } from "../../apis/Home/ApiLogo";
+import { JobLogo } from "./Logo/Logo";
 interface JobListProps {
   search: string;
 }
@@ -23,7 +25,8 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
   const rounded = useTransform(count, Math.round);
   const [roundedCount, setRoundedCount] = useState<number>(0);
   const [fieldId, setFieldId] = useState<string>("");
-
+  const [logoUrl, setLogoUrl] = useState<string>("");
+  const [jobId, setJobId] = useState<string>("");
   useEffect(() => {
     const unsubscribe = rounded.onChange((v) => setRoundedCount(v));
     return () => unsubscribe();
@@ -45,6 +48,8 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
         setJobs(data.jobs);
         setTotalItems(data.totalItems);
         animate(count, data.totalItems, { duration: 1 });
+        const logo = await getCompanyLogo(jobId);
+          setLogoUrl(logo);
       } catch (error) {
         console.error("Error fetching jobs:", error);
       } finally {
@@ -53,7 +58,7 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
     };
 
     fetchJobs();
-  }, [location.search, pageNo, pageSize]);
+  }, [location.search, pageNo, pageSize,jobId]);
 
   useEffect(() => {
     setPageSize(5);
@@ -85,7 +90,7 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
   };
   return (
     <div className="application-container-job">
-      <h1 className="text-start py-3" id="h1-aboutUs">
+      <h1 className="text-start py-3 display-4 display-sm-3 display-md-2 display-lg-1" id="h1-aboutUs">
         {roundedCount} jobs in Vietnam
       </h1>
       <select 
@@ -113,7 +118,7 @@ export const JobList: React.FC<JobListProps> = ({ search }) => {
             <div className="container-fluid rounded mt-5 mb-5" id="job-block">
               <div className="row">
                 <div className="col-md-2">
-                  <img src={logoSample} alt="" id="logo" />
+               <JobLogo jobId={job.id}/>
                 </div>
                 <div className="col-md-10">
                 <div className="row">

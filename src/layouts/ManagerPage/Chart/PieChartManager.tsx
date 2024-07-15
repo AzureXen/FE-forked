@@ -5,6 +5,7 @@ import { ApiReport } from "../../../apis/ManagerApis/Report/ApiReport";
 import ReportResponse from "../../../model/Manager/ReportResponse";
 import { motion } from "framer-motion";
 import { Loading } from "../../Loading/Loading";
+import Cookies from "js-cookie";
 
 export const MyPieChart: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,7 +27,7 @@ export const MyPieChart: React.FC = () => {
   };
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

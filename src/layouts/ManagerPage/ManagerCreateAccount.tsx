@@ -9,6 +9,7 @@ import { ShowCourse } from './ShowCourse';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext';
 import { CreateEmployee } from './CreateEmployee';
+import Cookies from 'js-cookie';
 
 export const ManagerCreateAccount: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -18,7 +19,7 @@ export const ManagerCreateAccount: React.FC = () => {
   const {showToast}= useToast();
   const [user, setUser] = useState<{ role: string } | null>(null);
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

@@ -10,6 +10,7 @@ import { getField } from "../../apis/ApiJob";
 import { Field } from "../../model/Field";
 import { postJob } from "../../apis/PostJobApi";
 import { motion} from "framer-motion";
+import Cookies from "js-cookie";
 
 export const PostJob: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -20,7 +21,7 @@ export const PostJob: React.FC = () => {
   const [user, setUser] = useState<{ company_id: number }>({ company_id: 0 });
   
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }

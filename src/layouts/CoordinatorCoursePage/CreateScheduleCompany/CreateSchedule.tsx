@@ -8,6 +8,7 @@ import AddScheduleRequest from "../../../model/AddScheduleRequest";
 import CourseMentorModel from "../../../model/CourseMentorModel";
 import "../../../css/Coordinator/CreateScheduleCoordinator.css";
 import { motion} from "framer-motion";
+import Cookies from "js-cookie";
 
 export const CreateSchedule: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -24,7 +25,7 @@ export const CreateSchedule: React.FC = () => {
   const [acceptedApplications, setAcceptedApplications] = useState<AddScheduleRequest[]>([]); // New state
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

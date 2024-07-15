@@ -3,6 +3,7 @@ import {HeaderWorkplace} from "../../../HeaderAndFooter/HeaderWorkplace";
 import {NavbarMentor} from "../../../HeaderAndFooter/Navbar/NavbarMentor";
 import {Footer} from "../../../HeaderAndFooter/Footer";
 import MentorFeedbackCourses from "./MentorFeedbackCourses";
+import Cookies from "js-cookie";
 
 
 const MentorFeedbackCoursePage = () =>{
@@ -10,7 +11,7 @@ const MentorFeedbackCoursePage = () =>{
     const [user, setUser] = useState<{ user_id: number } | null>(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

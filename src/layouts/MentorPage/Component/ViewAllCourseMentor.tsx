@@ -5,6 +5,7 @@ import CourseMentorModel from "../../../model/CourseMentorModel";
 import { ApiViewAllCourseMentor } from "../../../apis/ApiViewAllCourseMentor";
 import { Loading } from "../../Loading/Loading";
 import { InsertActivitesPopup } from "../../popup/InsertActivitesPopup";
+import Cookies from "js-cookie";
 
 export const ViewAllCourseMentor = () => {
   const [courses, setCourses] = useState<CourseMentorModel[]>([]);
@@ -25,7 +26,7 @@ export const ViewAllCourseMentor = () => {
   const [user, setUser] = useState<{ user_id: number } | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }

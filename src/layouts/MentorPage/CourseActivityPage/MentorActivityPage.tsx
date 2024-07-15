@@ -9,6 +9,7 @@ import useAuth from "../../../context/useAuth";
 import {useToast} from "../../../context/ToastContext";
 import CourseVerify from "../../../apis/InternApis/CourseVerify";
 import MentorCourseVerify from "../../../apis/MentorApis/MentorCourseVerify";
+import Cookies from "js-cookie";
 
 
 const MentorActivityPage = () =>{
@@ -21,7 +22,7 @@ const MentorActivityPage = () =>{
     const [user, setUser] = useState<{ user_id: number } | null>(null);
     const {courseId} = useParams()
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

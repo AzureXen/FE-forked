@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Fade } from "react-awesome-reveal";
 import { motion } from "framer-motion";
 import { ApiViewEmployee } from "../../../apis/ManagerApis/ApiViewEmployee";
+import Cookies from "js-cookie";
 
 export const ViewEmployee = () => {
   const [allUsers, setAllUsers] = useState<UserInSysTem[]>([]);
@@ -37,21 +38,13 @@ export const ViewEmployee = () => {
   } | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
       setUserId(parsedUser.user_id);
       setCompanyId(parsedUser.company_id);
       setFullNameOnGoingUser(parsedUser.fullName);
-      console.log(
-        "User ID: " +
-          parsedUser.user_id +
-          " Company ID: " +
-          parsedUser.company_id +
-          "Name: " +
-          parsedUser.fullName
-      ); // Debugging log
     }
   }, []);
 

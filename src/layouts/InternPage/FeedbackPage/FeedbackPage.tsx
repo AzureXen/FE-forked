@@ -6,12 +6,13 @@ import {HeaderWorkplace} from "../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";
 import useAuth from "../../../context/useAuth";
+import Cookies from "js-cookie";
 const FeedbackPage = () =>{
     // check user---------------
     const [user, setUser] = useState<{ user_id: number, email:string } | null>(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

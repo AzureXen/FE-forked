@@ -20,7 +20,7 @@ export const ViewAddInternPopup: React.FC<ViewAddInternPopupProps> = ({ isOpen, 
     const { showToast } = useToast();
     const [loading, setLoading] = useState<boolean>(false);
     const [pageNo, setPageNo] = useState<number>(0);
-    const [pageSize, setPageSize] = useState<number>(3);
+    const [pageSize, setPageSize] = useState<number>(8);
     const [internList, setInternList] = useState<InternInfo[]>([]);
     const [allInterns, setAllInterns] = useState<InternInfo[]>([]);
     const [totalItems, setTotalItems] = useState<number>(0);
@@ -141,7 +141,7 @@ export const ViewAddInternPopup: React.FC<ViewAddInternPopupProps> = ({ isOpen, 
     return (
         <div className={`blur-background ${animationClass}`}>
             <div className="container position-absolute top-50 start-50 translate-middle">
-                <div className="application-container">
+                <div className="application-container-popup">
                     <button className="close-button" onClick={onClose}>Close</button>
                     <h1 className="h1-add-intern">Add Intern</h1>
                     <div className="filter-controls">
@@ -238,16 +238,7 @@ export const ViewAddInternPopup: React.FC<ViewAddInternPopupProps> = ({ isOpen, 
                         </a>
                     </div>
                     <div className="container d-flex justify-content-around">
-                        <div className="page-size-controls col-md-4">
-                            <label>
-                                Page Size:
-                                <select value={pageSize} onChange={handlePageSizeChange}>
-                                    <option value={3}>3</option>
-                                    <option value={4}>4</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div className="submit-controls col-md-8">
+                        <div className="submit-controls col-md-12">
                             <button
                                 className="add-application"
                                 onClick={handleSubmit}

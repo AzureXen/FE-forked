@@ -8,6 +8,7 @@ import "../../css/managertable.css"; // Nhớ import CSS đã tạo
 import { PostJob } from './PostJob';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../context/ToastContext';
+import Cookies from 'js-cookie';
 
 export const PostJobPage: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -18,7 +19,7 @@ export const PostJobPage: React.FC = () => {
   const {showToast}= useToast();
   const [user, setUser] = useState<{ role: string } | null>(null);
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

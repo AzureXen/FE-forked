@@ -1,14 +1,15 @@
 import axios from "axios";
-import CreateCompanyRequest from "../model/CreateCompanyRequest";
-export const CreateCompany = async (CreateCompanyRequest: CreateCompanyRequest) => {
-    try {
-        const response = await axios.post(`http://localhost:8080/internbridge/admin/createCompany`,CreateCompanyRequest, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-        return response.data;
-    } catch (error) {
-        
-    }
-  };
+
+export const CreateCompany = async (formData: FormData) => {
+  try {
+    const response = await axios.post(`http://localhost:8080/internbridge/admin/createCompany`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating company:", error);
+    throw error;
+  }
+};

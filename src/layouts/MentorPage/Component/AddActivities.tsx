@@ -9,6 +9,7 @@ import { ApiAddActivities } from "../../../apis/MentorApis/ApiAddActivities";
 import CourseMentorModel from "../../../model/CourseMentorModel";
 import fetchCourseMentor from "../../../apis/MentorApis/CourseMentor";
 import { ApiGetAllCourseOfMentor } from "../../../apis/MentorApis/ApiGetAllCourseOfMentor";
+import Cookies from "js-cookie";
 
 export const AddActivities: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,7 +24,7 @@ export const AddActivities: React.FC = () => {
   const [user, setUser] = useState<{user_id: number;company_id: number;} | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

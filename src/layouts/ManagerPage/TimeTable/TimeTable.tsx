@@ -16,6 +16,7 @@ import { Footer } from "../../HeaderAndFooter/Footer";
 import { NavbarManager } from "../../HeaderAndFooter/Navbar/NavbarManager";
 import { HeaderWorkplace } from "../../HeaderAndFooter/HeaderWorkplace";
 import { motion } from "framer-motion";
+import Cookies from "js-cookie";
 const localizer = momentLocalizer(moment);
 
 interface Event {
@@ -33,7 +34,7 @@ const MyCalendar: React.FC = () => {
   const [user, setUser] = useState<{ company_id: number;fullName: string;} | null>(null);
   const [fullNameOnGoingUser, setFullNameOnGoingUser] = useState<string>("");
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

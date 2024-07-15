@@ -9,6 +9,7 @@ import {Footer} from "../../../HeaderAndFooter/Footer";
 import {NavbarMentor} from "../../../HeaderAndFooter/Navbar/NavbarMentor";
 import { useToast } from "../../../../context/ToastContext"
 import MentorCourseVerify from "../../../../apis/MentorApis/MentorCourseVerify";
+import Cookies from "js-cookie";
 const MentorFeedbackInternPage = () =>{
     //----verify if mentor is in that course
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ const MentorFeedbackInternPage = () =>{
     const [user, setUser] = useState<{ user_id: number } | null>(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

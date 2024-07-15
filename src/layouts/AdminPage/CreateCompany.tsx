@@ -10,6 +10,7 @@ import { Field } from "../../model/Field";
 import { postJob } from "../../apis/PostJobApi";
 import { CreateCompany } from "../../apis/ApiCreateCompany";
 import { Loading } from "../Loading/Loading";
+import Cookies from "js-cookie";
 
 export const CreateCompanyPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -18,10 +19,11 @@ export const CreateCompanyPage: React.FC = () => {
   const [location, setLocation] = useState<string>("");
   const { showToast } = useToast();
   const [fields, setFields] = useState<Field[]>([]);
+  const [image, setImage] = useState<File | null>(null);
   const [user, setUser] = useState<{ company_id: number }>({ company_id: 0 });
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -34,10 +36,16 @@ export const CreateCompanyPage: React.FC = () => {
       if (
         companyName != null &&
         companyDescription != null &&
-        location != null
+        location != null &&
+        image != null
       ) {
-        const companyData = { companyName, companyDescription, location };
-        const response = await CreateCompany(companyData);
+        const formData = new FormData();
+        formData.append("companyName", companyName);
+        formData.append("companyDescription", companyDescription);
+        formData.append("location", location);
+        formData.append("image", image);
+
+        const response = await CreateCompany(formData);
         showToast("success", "success");
         setCompanyDescription("");
         setCompanyName("");
@@ -51,7 +59,19 @@ export const CreateCompanyPage: React.FC = () => {
         setLoading(false);
     }
   };
-
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+  
+    if (file && !allowedTypes.includes(file.type)) {
+      showToast("File must be an image (JPEG, JPG, PNG, GIF)", "error");
+      setImage(null);
+      (document.getElementById("input-cv") as HTMLInputElement).value = "";
+    } else if (file) {
+      setImage(file);
+    }
+  };
+  
   return (
     <div className="job-detail">
       {loading ? (
@@ -101,6 +121,17 @@ export const CreateCompanyPage: React.FC = () => {
                     <label>Company Location</label>
                   </div>
                 </div>
+                <div className="col-md-6 col-sm-12">
+                <div className="styled-input" style={{ float: "right" }}>
+              <input
+                className=""
+                type="file"
+                id="input-cv"
+                onChange={handleFileChange}
+                required
+              />
+            </div>
+          </div>
                 <div className="col-xs-12">
                   <button
                     type="submit"

@@ -5,6 +5,7 @@ import OnGoingCourses from "../../InternPage/DashBoardPage/OnGoingCourses";
 import {Footer} from "../../HeaderAndFooter/Footer";
 import { NavbarMentor } from "../../HeaderAndFooter/Navbar/NavbarMentor";
 import useAuth from "../../../context/useAuth";
+import Cookies from "js-cookie";
 
 
 const MentorDashboard: React.FC = () => {
@@ -12,7 +13,7 @@ const MentorDashboard: React.FC = () => {
     useAuth(['ROLE_MENTOR']);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

@@ -192,8 +192,8 @@ export const ViewAcceptedJobApplicationPopup: React.FC<
   return (
     <div className={`blur-background ${animationClass}`}>
       <div className="container d-flex align-items-center justify-content-center">
-      <div className="application-list-container">
-      <div className="application-container">
+      <div className="application-list-container container-fluid">
+      <div className="application-container-popup">
           <button className="close-button" onClick={onClose}>
             Close
           </button>

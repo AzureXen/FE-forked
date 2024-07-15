@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from './ToastContext';
+import Cookies from 'js-cookie';
 
 interface User {
   role: string;
@@ -12,7 +13,7 @@ const useAuth = (allowedRoles: string[]) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = Cookies.get('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       if (!allowedRoles.includes(parsedUser.role)) {

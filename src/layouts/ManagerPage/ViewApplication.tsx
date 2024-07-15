@@ -9,6 +9,7 @@ import { registerInterns } from "../../apis/ApiCreateUser";
 import { useToast } from "../../context/ToastContext";
 import { Loading } from "../Loading/Loading";
 import { motion} from "framer-motion";
+import Cookies from "js-cookie";
 
 export const ViewApplication = () => {
   const [allJobList, setAllJobList] = useState<Job[]>([]);
@@ -40,7 +41,7 @@ export const ViewApplication = () => {
   };
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

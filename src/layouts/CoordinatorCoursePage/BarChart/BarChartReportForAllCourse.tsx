@@ -17,6 +17,7 @@ import { ApiViewResultInMentor } from "../../../apis/MentorApis/ApiViewResultInM
 import "../../../css/Mentor/BarChart.css";
 import { ApiViewResultCoordinator } from "../../../apis/CoordinatorApis/ApiViewResultCoordinator";
 import { motion} from "framer-motion";
+import Cookies from "js-cookie";
 
 export const BarChartReportForAllCourse: React.FC = () => {
   const [courseId, setCourseId] = useState<string>("");
@@ -32,7 +33,7 @@ export const BarChartReportForAllCourse: React.FC = () => {
   const itemsPerPage = 5;
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

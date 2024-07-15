@@ -15,6 +15,7 @@ import { Loading } from "../../Loading/Loading";
 import InternResult from "../../../model/Mentor/InternResult";
 import { ApiViewResultInMentor } from "../../../apis/MentorApis/ApiViewResultInMentor";
 import "../../../css/Mentor/BarChart.css";
+import Cookies from "js-cookie";
 
 export const BarChartReport: React.FC = () => {
   const [courseId, setCourseId] = useState<string>("");
@@ -27,7 +28,7 @@ export const BarChartReport: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<InternResult[]>([]);
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

@@ -5,6 +5,7 @@ import { HeaderSmaller } from "../HeaderAndFooter/HeaderSmaller";
 import { Footer } from "../HeaderAndFooter/Footer";
 import { SearchBar } from "./SearchBar";
 import { NavbarMentor } from "../HeaderAndFooter/Navbar/NavbarMentor";
+import { HeaderWorkplace } from "../HeaderAndFooter/HeaderWorkplace";
 
 interface ShowCourseListProps {
     courseId: number;
@@ -37,7 +38,7 @@ export const ShowCourse = () => {
 
     return (
         <div>
-            <HeaderSmaller />
+            <HeaderWorkplace />
             
             <div>
                 <SearchBar />

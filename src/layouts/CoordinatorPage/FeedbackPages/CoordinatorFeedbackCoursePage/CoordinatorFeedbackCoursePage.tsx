@@ -3,6 +3,7 @@ import {HeaderWorkplace} from "../../../HeaderAndFooter/HeaderWorkplace";
 import {Footer} from "../../../HeaderAndFooter/Footer";
 import CoordinatorFeedbackCourses from "./CoordinatorFeedbackCourses";
 import {NavbarCoordinator} from "../../../HeaderAndFooter/Navbar/NavbarCoordinator";
+import Cookies from "js-cookie";
 
 
 const CoordinatorFeedbackCoursePage = () =>{
@@ -10,7 +11,7 @@ const CoordinatorFeedbackCoursePage = () =>{
     const [user, setUser] = useState<{ user_id: number } | null>(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

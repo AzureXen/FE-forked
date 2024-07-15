@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 interface CreateCourseRequest {
     mentorId: number;
@@ -10,7 +11,7 @@ interface CreateCourseRequest {
 const createCourse = async (createCourseRequest: CreateCourseRequest) => {
     try {
         // Retrieve user information from local storage
-        const storedUser = localStorage.getItem('user');
+        const storedUser = Cookies.get('user');
         if (!storedUser) {
             throw new Error('User not logged in');
         }

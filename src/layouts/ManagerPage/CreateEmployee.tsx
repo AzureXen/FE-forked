@@ -8,6 +8,7 @@ import { ApiGetAllCompany } from "../../apis/ApiGetAllCompany";
 import { registerUser } from "../../apis/ApiCreateOneUser";
 import InformationRegisterUser from "../../model/InformationRegisterUser";
 import { motion} from "framer-motion";
+import Cookies from "js-cookie";
 
 export const CreateEmployee: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -22,7 +23,7 @@ export const CreateEmployee: React.FC = () => {
   const[fullname, setFullName] = useState<string>("");
   const [user, setUser] = useState<{ company_id: number } | null>(null);
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);

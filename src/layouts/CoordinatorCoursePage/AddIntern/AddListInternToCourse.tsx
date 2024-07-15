@@ -12,6 +12,7 @@ import AddInternRequest from "../../../model/Coordinator/AddInternRequest";
 import { ApiAddInternToCourse } from "../../../apis/CoordinatorApis/ApiAddInternToCourse";
 import { ApiGetAllCourseInSystem } from "../../../apis/CoordinatorApis/ApiGetAllCourseInSystem";
 import { motion} from "framer-motion";
+import Cookies from "js-cookie";
 
 export const AddListInternToCourse: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +29,7 @@ export const AddListInternToCourse: React.FC = () => {
   const [acceptedApplications, setAcceptedApplications] = useState<AddInternRequest[]>([]); // New state
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
@@ -39,7 +40,6 @@ export const AddListInternToCourse: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("awefawef"+companyId);
         const data = await ApiGetAllCourseInSystem(companyId);
         setCourses(data.courses);
         console.log(data);
@@ -57,8 +57,6 @@ export const AddListInternToCourse: React.FC = () => {
     event.preventDefault();
     try {
       setLoading(true);
-        console.log("akfjewkjfwekjf awekjf wekjf ewakjf aj fjewakjfn")
-
       const InternRequest = {
         internId: selectedApplications.map((intern) => ({ internId: intern.internId })),
       };

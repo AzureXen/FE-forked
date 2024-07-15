@@ -10,6 +10,7 @@ import { HeaderWorkplace } from "../HeaderAndFooter/HeaderWorkplace";
 import { NavbarCoordinator } from "../HeaderAndFooter/Navbar/NavbarCoordinator";
 import useAuth from "../../context/useAuth";
 import { motion} from "framer-motion";
+import Cookies from "js-cookie";
 
 export const ViewCourseInsystemByCoordinator = () => {
     const [courses, setCourses] = useState<CourseInSystem[]>([]);
@@ -30,7 +31,7 @@ export const ViewCourseInsystemByCoordinator = () => {
     const [user, setUser] = useState<{ company_id: number } | null>(null);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }

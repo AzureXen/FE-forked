@@ -9,6 +9,7 @@ import header2 from "../../images/header3.png";
 import { JobList } from "../JobPage/JobList";
 import { useToast } from "../../context/ToastContext";
 import { motion } from "framer-motion";
+import Cookies from "js-cookie";
 export const HeaderSmaller: React.FC = () => {
   const [user, setUser] = useState<{ fullName: string } | null>(null);
   const [search, setSearch] = useState<string>('');
@@ -17,7 +18,7 @@ export const HeaderSmaller: React.FC = () => {
   
   
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -25,7 +26,7 @@ export const HeaderSmaller: React.FC = () => {
 
   const handleLogout = async () => {
     await AuthService.logout();
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     console.log("HeaderSmaller "+storedUser);
     navigate("/");
     setUser(null);
@@ -149,7 +150,7 @@ export const HeaderSmaller: React.FC = () => {
         </nav>
         <div className="container-fluid d-flex justify-content-center">
           <div className="title-header">
-            <h1 className="Tilte-h1">
+            <h1 className="Tilte-h1 display-4 display-sm-3 display-md-2 display-lg-1">
               {text1.map((word, i) => (
                 <motion.span
                   key={i}

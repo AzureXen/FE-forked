@@ -6,6 +6,7 @@ import { ApiViewReq } from "../../../apis/Admin/ApiViewReq";
 import { Loading } from "../../Loading/Loading";
 import { motion } from "framer-motion";
 import { ApiUpdateStatusRequest } from "../../../apis/Admin/ApiUpdateStatusRequest";
+import Cookies from "js-cookie";
 
 const useDebounce = (value: string, delay: number): string => {
   const [debouncedValue, setDebouncedValue] = useState<string>(value);
@@ -39,7 +40,7 @@ export const AdminViewRequest: React.FC = () => {
   const debouncedSearchTerm = useDebounce(searchTerm, 580); // 580ms debounce delay
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -136,7 +137,7 @@ export const AdminViewRequest: React.FC = () => {
     try {
       setLoadingRequestId(id);
       await ApiUpdateStatusRequest(id);
-      showToast("User deleted successfully", "success");
+      showToast("Approve successfully", "success");
       fetchUserList();
     } catch (error: unknown) {
       if (error instanceof Error) {

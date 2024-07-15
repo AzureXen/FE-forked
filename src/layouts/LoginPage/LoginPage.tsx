@@ -6,6 +6,7 @@ import "../../css/loginStyle.css";
 import image from "../../images/loginIMG.jpg";
 import { useToast } from "../../context/ToastContext";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -19,8 +20,8 @@ const LoginPage: React.FC = () => {
     company_id: number;
   } | null>(null);
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
+    const storedUser = Cookies.get("user");
+        if (storedUser) {
       setUser(JSON.parse(storedUser));
       navigate("/")
     }
@@ -35,7 +36,8 @@ const LoginPage: React.FC = () => {
     try {
       const response = await AuthService.login(loginRequest);
       if ("user_id" in response) {
-        localStorage.setItem("user", JSON.stringify(response));
+        const expires = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+        Cookies.set("user", JSON.stringify(response), { expires });
         setMessage("Login successful!");
         showToast("Login successful!", 'success');
         navigate("/");

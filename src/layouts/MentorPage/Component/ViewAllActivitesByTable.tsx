@@ -8,6 +8,7 @@ import { CourseAndAllTaskResponse, Task } from "../../../model/CourseAndAllTaskR
 import "../../../css/Mentor/ViewAllActivitiesByTable.css";
 import { FunctionOnTaskPopup } from "../../popup/Mentor/FunctionOnTaskPopup";
 import { ApiDeleteTask } from "../../../apis/MentorApis/ApiDeleteTask";
+import Cookies from "js-cookie";
 
 export const ViewAllActivitesByTable = () => {
   const [courses, setCourses] = useState<CourseAndAllTaskResponse[]>([]);
@@ -28,7 +29,7 @@ export const ViewAllActivitesByTable = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = Cookies.get("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }

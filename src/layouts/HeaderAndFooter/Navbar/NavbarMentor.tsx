@@ -6,7 +6,18 @@ export const NavbarMentor = () => {
       <div className="nav-workplace" role="banner" id="headerSmallerHeight">
         <nav className="navbar navbar-expand-md navbar-dark nav-custom" id="nav-workplace">
           <div className="container-fluid">
-            <div className="collapse navbar-collapse ms-5" id="navbarsExample05">
+          <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarsExample06"
+              aria-controls="navbarsExample06"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse ms-5" id="navbarsExample06">
               <ul className="navbar-nav ml-auto pl-lg-5 pl-0">
                 <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <li
