@@ -102,6 +102,7 @@ const CoordinatorFeedbackInternPage = () =>{
         <>
             <HeaderWorkplace/>
             <NavbarCoordinator/>
+            <div className="feedback-background">
             <div>
                 <p style={{marginLeft:"3rem", marginTop:"1rem"
                     , fontSize:"2rem", color:"#3A5AC6", fontWeight:"bold"}}>Send Feedback to Intern</p>
@@ -144,6 +145,7 @@ const CoordinatorFeedbackInternPage = () =>{
                 </div>
             )}
         </div>
+            </div>
             <Footer/>
         </>
     )

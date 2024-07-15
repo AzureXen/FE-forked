@@ -147,3 +147,19 @@ input[type=checkbox]:checked + label {
     margin: 0 40% !important;
     padding: 5px 5% !important;
 }
+.job-detail{
+    box-shadow: 0 2px 4px rgb(0, 0, 0, 0.1);
+    margin-bottom: 0;
+}
+#job-block{
+    display:flex;
+    justify-content: center;
+    border:none;
+    margin-bottom: 0 !important;
+}
+.create-activity-container{
+    display:flex;
+    justify-content: center;
+}
+.create-activity-label{
+}

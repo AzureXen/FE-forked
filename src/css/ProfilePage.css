@@ -44,7 +44,8 @@
 .highlight1{
     font-size: 30px;
     font-weight: bold;
+    margin: 1rem 2rem;
     color: #245B8F;
-    display:block;
+    display:inline-block;
     padding : 0px;
 }

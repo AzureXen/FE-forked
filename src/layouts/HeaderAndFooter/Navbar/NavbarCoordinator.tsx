@@ -79,6 +79,9 @@ export const NavbarCoordinator = () => {
                 <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <Link className="nav-link" to="/coordinator/feedback">Feedback</Link>
                 </li>
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
+                  <Link className="nav-link" to="/coordinator/viewFeedback">View Course Feedbacks</Link>
+                </li>
               </ul>
             </div>
           </div>

@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 export const HeaderSmaller: React.FC = () => {
   const [user, setUser] = useState<{ fullName: string } | null>(null);
   const [search, setSearch] = useState<string>('');
+  const [role, setRole] = useState<string>("");
   const navigate = useNavigate();
   const { showToast } = useToast();
   
@@ -21,6 +22,8 @@ export const HeaderSmaller: React.FC = () => {
     const storedUser = Cookies.get("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setRole(parsedUser.role);
     }
   }, []);
 
@@ -68,65 +71,95 @@ export const HeaderSmaller: React.FC = () => {
 
             <div className="collapse navbar-collapse ms-5" id="navbarsExample05">
               <ul className="navbar-nav ml-auto pl-lg-5 pl-0">
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <Link className="nav-link active" to="/home">Home</Link>
                 </li>
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <Link className="nav-link" to="/jobs">Jobs</Link>
                 </li>
-                <li className="nav-item dropdown" style={{ paddingRight: "2rem" }}>
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="dropdown04"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Workplace
-                  </a>
-                  <div className="dropdown-menu" aria-labelledby="dropdown04">
-                    <Link className="dropdown-item" to="/Workplace/Manager">Manager</Link>
-                    <Link className="dropdown-item" to="/coordinator/course">Internship Coordinator</Link>
-                    <Link className="dropdown-item" to="/intern">Internship</Link>
-                    <Link className="dropdown-item" to="/mentor">Mentor</Link>
-                  </div>
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
+                  {role === "ROLE_INTERN" &&
+                      (<Link className="nav-link active" to="/intern">
+                        Workplace
+                      </Link>)}
+
+                  {role === "ROLE_MENTOR" &&
+                      (<Link className="nav-link active" to="/mentor">
+                        Workplace
+                      </Link>)}
+
+                  {role === "ROLE_INTERNSHIP_COORDINATOR" &&
+                      (<Link className="nav-link active" to="/coordinator/course">
+                        Workplace
+                      </Link>)}
+
+                  {role === "ROLE_MANAGER" &&
+                      (<Link className="nav-link active" to="/Workplace/Manager">
+                        Workplace
+                      </Link>)}
+
+                  {role === "ROLE_ADMIN" &&
+                      (<Link className="nav-link active" to="/admin">
+                        Workplace
+                      </Link>)}
+                  {role === "" &&
+                      (<Link className="nav-link active" to="#">
+                        Workplace
+                      </Link>)}
                 </li>
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                {/*<li className="nav-item dropdown" style={{paddingRight: "2rem"}}>*/}
+                {/*  <a*/}
+                {/*      className="nav-link dropdown-toggle"*/}
+                {/*      href="#"*/}
+                {/*      id="dropdown04"*/}
+                {/*      data-toggle="dropdown"*/}
+                {/*      aria-haspopup="true"*/}
+                {/*      aria-expanded="false"*/}
+                {/*  >*/}
+                {/*    Workplace*/}
+                {/*  </a>*/}
+                {/*  <div className="dropdown-menu" aria-labelledby="dropdown04">*/}
+                {/*    <Link className="dropdown-item" to="/Workplace/Manager">Manager</Link>*/}
+                {/*    <Link className="dropdown-item" to="/coordinator/course">Internship Coordinator</Link>*/}
+                {/*    <Link className="dropdown-item" to="/intern">Internship</Link>*/}
+                {/*    <Link className="dropdown-item" to="/mentor">Mentor</Link>*/}
+                {/*  </div>*/}
+                {/*</li>*/}
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <a className="nav-link" href="#">About us</a>
                 </li>
-                <li className="nav-item" style={{ paddingRight: "2rem" }}>
+                <li className="nav-item" style={{paddingRight: "2rem"}}>
                   <a className="nav-link" href="/help">Helps</a>
                 </li>
                 <div>
                   {user && (
-                    <div>
-                      <a
-                        className="nav-link dropdown-toggle"
-                        href="#"
-                        id="dropdown04"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Hello, {user.fullName}
-                      </a>
-                      <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
-                        <li
-                            style={{marginBottom: "1em"}}
-                            onClick={handleViewProfile}
-                            className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                            id="button-sign-out">
-                          View Profile
-                        </li>
-                        <li
-                            onClick={handleLogout}
-                            className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
-                            id="button-sign-out">
-                          Logout
-                        </li>
+                      <div>
+                        <a
+                            className="nav-link dropdown-toggle"
+                            href="#"
+                            id="dropdown04"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                          Hello, {user.fullName}
+                        </a>
+                        <div className="dropdown-menu" aria-labelledby="dropdown04" id="dropdown">
+                          <li
+                              style={{marginBottom: "1em"}}
+                              onClick={handleViewProfile}
+                              className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                              id="button-sign-out">
+                            View Profile
+                          </li>
+                          <li
+                              onClick={handleLogout}
+                              className="nav-item cta-btn dropdown-item btn btn-mod btn-border btn-circle btn-large"
+                              id="button-sign-out">
+                            Logout
+                          </li>
+                        </div>
                       </div>
-                    </div>
                   )}
                 </div>
               </ul>
@@ -137,12 +170,12 @@ export const HeaderSmaller: React.FC = () => {
                       <Link
                           type="button"
                           className="btn btn-mod btn-border btn-circle btn-large"
-                      id="button-sign-in"
-                      to="/login"
-                    >
-                      Sign In
-                    </Link>
-                  </li>
+                          id="button-sign-in"
+                          to="/login"
+                      >
+                        Sign In
+                      </Link>
+                    </li>
                 )}
               </ul>
             </div>
@@ -152,18 +185,18 @@ export const HeaderSmaller: React.FC = () => {
           <div className="title-header">
             <h1 className="Tilte-h1 display-4 display-sm-3 display-md-2 display-lg-1">
               {text1.map((word, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.25, delay: i * 0.1 }}
-                >
-                  {word}{" "}
-                </motion.span>
+                  <motion.span
+                      key={i}
+                      initial={{opacity: 0}}
+                      animate={{opacity: 1}}
+                      transition={{duration: 0.25, delay: i * 0.1}}
+                  >
+                    {word}{" "}
+                  </motion.span>
               ))}
             </h1>
             <div>
-              <SearchButton search={search} setSearch={setSearch} />
+              <SearchButton search={search} setSearch={setSearch}/>
             </div>
           </div>
         </div>

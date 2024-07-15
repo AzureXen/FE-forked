@@ -1,0 +1,5 @@
+.intern-course-feedback{
+    display:flex;
+    justify-content: center;
+    background: radial-gradient(circle at center, #c3d6f5, #a3c7f2);
+}

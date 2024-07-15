@@ -96,8 +96,8 @@ export const AddActivities: React.FC = () => {
       ) : (
         <>
           <div className="container rounded mb-5" id="job-block">
-            <div className="row input-container">
-              <h1 id="h1-apply-now">Create Activities Now</h1>
+            <div className="row input-container create-activity-container">
+              <h1 id="h1-apply-now" className="create-activity-label">Creating Activity</h1>
               <form onSubmit={handleSubmit}>
                 <div className="col-xs-12">
                   <div className="styled-input wide">

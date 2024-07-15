@@ -31,7 +31,7 @@ const FeedbackPage = () =>{
             if (checkedInternId) fetchData();
         },[checkedInternId])
     }catch(error){
-        console.log("FeedbackPage: found an error while fetching feedback: ",error);
+        console.log("FeedbackPages: found an error while fetching feedback: ",error);
     }
     //  PAGINATION
     const maxMessages = 10;
@@ -72,43 +72,54 @@ const FeedbackPage = () =>{
                 <NavbarIntern internId={checkedInternId} selectedPage="Feedback"/>
             </div>
 
-            <div className="feedback-background">
-                <div style={{margin: "1rem 1rem 1rem 3rem"}}>
-                    <p className="highlight1">All feedbacks: </p>
-                </div>
-                <div style={{display:"flex", justifyContent:"center"}}>
-                    <div className="feedback-container">
-                        <table>
-                            <thead>
-                            <tr className="table-header">
-                                <th>Sender</th>
-                                <th>Feedback content</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {feedbackList.slice(maxMessages * currentPage - maxMessages, maxMessages * currentPage).map((feedback, index) => (
-                                <tr key={index}>
-                                    <td>{feedback.senderName}</td>
-                                    <td>{feedback.content}</td>
+            {feedbackList.length>0 && (
+                <div className="feedback-background">
+                    <div style={{margin: "1rem 1rem 1rem 3rem"}}>
+                        <p className="highlight1">All feedbacks: </p>
+                    </div>
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        <div className="feedback-container">
+                            <table>
+                                <thead>
+                                <tr className="table-header">
+                                    <th>Sender</th>
+                                    <th>Feedback content</th>
                                 </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                        <div className="pagination-items">
-                            <button onClick={() => handlePaginationClick("leftMost")}
-                                    className="pagination-button">&lt;&lt;</button>
-                            <button onClick={() => handlePaginationClick("toLeft")}
-                                    className="pagination-button">&lt;</button>
-                            <p className="pagination-page">{currentPage}/{pageAmount}</p>
-                            <button onClick={() => handlePaginationClick("toRight")}
-                                    className="pagination-button">&gt;</button>
-                            <button onClick={() => handlePaginationClick("rightMost")}
-                                    className="pagination-button">&gt;&gt;</button>
+                                </thead>
+                                <tbody>
+                                {feedbackList.slice(maxMessages * currentPage - maxMessages, maxMessages * currentPage).map((feedback, index) => (
+                                    <tr key={index}>
+                                        <td>{feedback.senderName}</td>
+                                        <td>{feedback.content}</td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                            <div className="pagination-items">
+                                <button onClick={() => handlePaginationClick("leftMost")}
+                                        className="pagination-button">&lt;&lt;</button>
+                                <button onClick={() => handlePaginationClick("toLeft")}
+                                        className="pagination-button">&lt;</button>
+                                <p className="pagination-page">{currentPage}/{pageAmount}</p>
+                                <button onClick={() => handlePaginationClick("toRight")}
+                                        className="pagination-button">&gt;</button>
+                                <button onClick={() => handlePaginationClick("rightMost")}
+                                        className="pagination-button">&gt;&gt;</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
 
+            {feedbackList.length<=0 && (
+                <div className="feedback-background">
+                    <div style={{margin: "1rem 1rem 1rem 3rem"}}>
+                        <p className="highlight1">
+                            You dont have any feedbacks yet, stay tuned!
+                        </p>
+                    </div>
+                </div>
+            )}
             <div>
                 <Footer/>
             </div>

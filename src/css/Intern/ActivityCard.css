@@ -8,9 +8,6 @@
     gap: 20px;
     margin : 20px;
 }
-.course-activity-cards-container:first-child{
-    margin-left : 60px;
-}
 
 .course-activity-card {
     border: 1px solid #ccc;

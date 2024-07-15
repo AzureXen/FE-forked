@@ -6,6 +6,7 @@ import { Footer } from "../../HeaderAndFooter/Footer";
 import NavbarIntern from "../NavbarIntern/NavbarIntern";
 import { useEffect, useState } from 'react';
 import useAuth from "../../../context/useAuth";
+import EndedCourses from "./EndedCourses";
 import Cookies from 'js-cookie';
 
 export const DashboardPage: React.FC = () => {
@@ -29,11 +30,15 @@ export const DashboardPage: React.FC = () => {
             <div className="dashboard-container">
                 <p className="highlight1">On Going Courses:</p>
                 <div className="course-container">
-                    {checkedInternId && <OnGoingCourses internId={checkedInternId} />}
+                    {checkedInternId && <OnGoingCourses internId={checkedInternId}/>}
+                </div>
+
+                <div className="ended-course-container">
+                    {checkedInternId && <EndedCourses internId={checkedInternId}/>}
                 </div>
             </div>
             <div>
-                <Footer />
+                <Footer/>
             </div>
         </>
     );

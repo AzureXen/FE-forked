@@ -54,7 +54,7 @@ const CourseActivityPage: React.FC = () => {
     useEffect(()=>{
         if(!isInCourse){
             showToast("You are not/no longer in this course!","error");
-            navigate("/mentor");
+            navigate("/intern");
         }
     },[isInCourse])
     if (!user) {

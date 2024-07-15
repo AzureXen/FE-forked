@@ -42,7 +42,7 @@ import MentorFeedbackInternPage
   from "./layouts/MentorPage/FeedbackPages/MentorFeedbackInternPage/MentorFeedbackInternPage";
 import MentorFeedbackCoursePage
   from "./layouts/MentorPage/FeedbackPages/MentorFeedbackCoursePage/MentorFeedbackCoursePage";
-import FeedbackPage from "./layouts/InternPage/FeedbackPage/FeedbackPage";
+import FeedbackPage from "./layouts/InternPage/FeedbackPages/FeedbackPage";
 import CoordinatorFeedbackCoursePage
   from "./layouts/CoordinatorPage/FeedbackPages/CoordinatorFeedbackCoursePage/CoordinatorFeedbackCoursePage";
 import CoordinatorFeedbackInternPage
@@ -61,6 +61,11 @@ import { AdminViewRequestPage } from "./layouts/AdminPage/RequestAdmin/AdminView
 import { MyPieChart } from "./layouts/ManagerPage/Chart/PieChartManager";
 import { ReportManager } from "./layouts/ManagerPage/Chart/ReportManager";
 import { CoordinatorViewSchedulePage } from "./layouts/CoordinatorCoursePage/CoordinatorViewSchedulePage";
+import CourseFeedbackPage from "./layouts/InternPage/FeedbackPages/CourseFeedbackPage";
+import SelectCourseFeedbackPage
+  from "./layouts/CoordinatorPage/FeedbackPages/SelectCourseFeedbackPage/SelectCourseFeedbackPage";
+import ViewCourseFeedbackPage
+  from "./layouts/CoordinatorPage/FeedbackPages/ViewCourseFeedbackPage/ViewCourseFeedbackPage";
 import ProtectedRoute from "./context/ProtectedRoute";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
@@ -118,6 +123,8 @@ export const App = () => {
               <Route path="/coordinator/createIntern" element={<CoordinatorAddInternToCoursePage/>}/>
               <Route path="/coordinator/feedback" element={<CoordinatorFeedbackCoursePage/>}/>
               <Route path="/coordinator/feedback/:courseId" element={<CoordinatorFeedbackInternPage/>}/>
+              <Route path="/coordinator/viewFeedback" element={<SelectCourseFeedbackPage/>}/>
+              <Route path="/coordinator/viewFeedback/:courseId" element={<ViewCourseFeedbackPage/>}/>
               <Route path="/verifyEmail" element={<VerificationEmail />} />
               <Route path="/help" element={<HelpPage />} />
               <Route path="/profile" element={<ViewProfilePage/>}/>
