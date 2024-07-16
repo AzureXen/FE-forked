@@ -2,7 +2,7 @@
 import axios from "axios";
 import Intern from "../../model/Intern/Intern";
 
-const fetchInternOfCourse = async (mentorId:String, courseId:String) =>{
+const fetchInternOfCourse = async (mentorId:string, courseId:string) =>{
     try{
         const response = await axios.get(`http://localhost:8080/internbridge/mentor/course/allIntern/${courseId}&${mentorId}`)
         return response.data.internResponseList.map( (intern:any)=> new Intern(

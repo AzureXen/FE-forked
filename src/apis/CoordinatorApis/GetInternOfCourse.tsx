@@ -2,7 +2,7 @@
 import axios from "axios";
 import Intern from "../../model/Intern/Intern";
 
-const fetchInternOfCourse = async (coordinatorId:String, courseId:String) =>{
+const fetchInternOfCourse = async (coordinatorId:string, courseId:string) =>{
     try{
         console.log("fetchInternOfCourse:");
         console.log("coordinatorId: ", coordinatorId);

@@ -5,9 +5,9 @@ export default class CourseTask {
     activity_content : string;
     start_date : Date;
     end_date : Date;
-    status : Boolean;
+    status : boolean;
     constructor(activity_id : number, course_id : number, activity_content : string
-    ,start_date : Date, end_date : Date, status : Boolean){
+    ,start_date : Date, end_date : Date, status : boolean){
         this.activity_id = activity_id;
         this.course_id = course_id;
         this.activity_content = activity_content;

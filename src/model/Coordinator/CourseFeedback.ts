@@ -8,7 +8,7 @@ export default class CourseFeedback{
     mentorName: string;
     startDate: Date;
     endDate: Date;
-    status: Boolean;
+    status: boolean;
         constructor(course_id: number, course_name: string, company_id: number, company_name:string , mentor_id: number
     , mentor_name: string, start_date: Date, end_date: Date, status: boolean) {
         this.courseId = course_id;

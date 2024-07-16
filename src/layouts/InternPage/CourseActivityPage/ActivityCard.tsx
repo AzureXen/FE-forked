@@ -7,7 +7,7 @@ interface ActivityCard {
     activityDescription: string;
     startDate: Date;
     endDate: Date;
-    status: Boolean;
+    status: boolean;
     intern_id : string;
 }
 const CourseActivityCard:React.FC<ActivityCard> = ({activityId, activityDescription, startDate, endDate, status,intern_id})=>{
