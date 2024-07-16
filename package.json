@@ -73,5 +73,6 @@
     "globals": "^15.8.0",
     "jest": "^27.5.1",
     "typescript-eslint": "^7.16.1"
-  }
+  },
+  "overrides": { "eslint": "^9.7.0" }
 }
