@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --config eslint.config.mjs ."
@@ -69,11 +69,14 @@
     "@testing-library/dom": "^10.1.0",
     "@types/jest": "^29.5.12",
     "@types/react-big-calendar": "^1.8.9",
+    "cross-env": "^7.0.3",
     "eslint": "^9.7.0",
     "eslint-plugin-react": "^7.34.4",
     "globals": "^15.8.0",
     "jest": "^27.5.1",
     "typescript-eslint": "^7.16.1"
   },
-  "overrides": { "eslint": "^9.7.0" }
+  "overrides": {
+    "eslint": "^9.7.0"
+  }
 }
