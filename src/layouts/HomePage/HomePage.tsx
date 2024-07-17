@@ -4,7 +4,7 @@ import { Footer } from "../HeaderAndFooter/Footer";
 import { Header } from "../HeaderAndFooter/Header";
 import JobCategory from "../HeaderAndFooter/JobCategory";
 export const HomePage = () => {
-
+    console.log("TESTING DEPLOYED API")
   
   return (
     <>
