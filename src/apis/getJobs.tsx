@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/internbridge/jobs';
+const API_URL = 'http://45.117.177.107:8090/internbridge/jobs';
 
 export interface Company {
   id: number;
